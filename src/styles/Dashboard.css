@@ -1,0 +1,177 @@
+.dashboard {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  padding: 0%;
+  margin: 0%;
+}
+
+.left-side {
+  background-color: #004170;
+  color: white;
+  width: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 10px;
+
+  position: sticky;  
+  top: 0;           
+  left: 0;          
+  height: 100vh;
+  z-index: 100;
+  font-size: small;     
+}
+
+
+.left-side-header {
+  margin-bottom: 30px;
+}
+.logo {
+  width: 120px;
+}
+
+.left-side-services {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.service-item {
+  width: 100%;
+}
+
+.service-btn {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0066a1;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-size: small;
+}
+
+.service-btn:hover {
+  background-color: #005080;
+}
+
+.service-icon {
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.chevron {
+  display: flex;
+  align-items: center;
+}
+
+.sub-services {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+  margin-left: 20px;
+  transition: all 0.3s ease;
+}
+
+.sub-service-btn {
+  width: calc(100% - 20px);
+  padding: 10px 15px;
+  margin-bottom: 5px;
+  background-color: #005080;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.3s;
+}
+
+.sub-service-btn:hover {
+  background-color: #003f66;
+}
+
+.right-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column; /* needed for sticky header to work properly */
+}
+
+.right-side-header {
+  background-color: #003f66;
+  color: white;
+  font-size: 18px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.notification{
+    margin-right: 20px;
+}
+
+.avatar-img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.user-company {
+  font-size: 12px;
+  color: #cfd8dc;
+  margin: 0;
+}
+@media (max-width: 768px) {
+  .left-side {
+    width: 60px;
+    padding: 20px 5px;
+  }
+
+  .left-side-services button {
+    font-size: 0;
+    padding: 12px 5px;
+  }
+
+  .service-icon {
+    margin: 0;
+    font-size: 20px;
+  }
+
+  .chevron {
+    display: none;
+  }
+
+  .sub-services {
+    display: none;
+  }
+}
