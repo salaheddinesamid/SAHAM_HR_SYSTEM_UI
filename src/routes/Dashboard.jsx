@@ -5,12 +5,13 @@ import { FaChevronDown, FaChevronUp, FaHome, FaCalendarAlt } from "react-icons/f
 import { LeaveRequest } from "../components/LeaveRequest";
 import Avatar from '@mui/material/Avatar';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import BasicPie from "../components/charts/PieChart";
 
 export const Dashboard = () => {
 
   // Available services:
   const services = [
-    { id: 1, name: "Aperçu", icon: <FaHome />, view: <div>Aperçu Content</div> },
+    { id: 1, name: "Aperçu", icon: <FaHome />, view: <BasicPie/> },
     {
       id: 2,
       name: "Demande de Congé",

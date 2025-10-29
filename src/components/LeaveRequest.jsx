@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/LeaveRequest.css";
 import { TextField } from "@mui/material";
 
@@ -11,10 +11,7 @@ export const LeaveRequest = () => {
     { id: 3, name: "Medjool Star" },
   ];
 
-  const requestTypes = [
-    { id: 1, name: "Avance" },
-    { id: 2, name: "Pre-interne" }
-  ]
+  
 
   const leaveTypes = [
     { id: 1, name: "Congé annuel" },
@@ -24,49 +21,31 @@ export const LeaveRequest = () => {
     { id: 5, name: "Autre" },
   ];
 
+  const handleLeaveTypeChange = (id)=>{
+    setSelectedRequest(id)
+  }
+
   const AdvanceRequest = () => {
+
+    const [requestDto,setRequestDto] = useState(null);
+
+    const [from,setFrom] = useState("");
+    const [to, setTo] = useState("");
+
+    const [totalDays,setTotalDays] = useState(0);
+
+
+    useEffect(() => {
+    if (from && to) {
+      const fromDate = new Date(from);
+      const toDate = new Date(to);
+      const diffTime = toDate - fromDate; // difference in milliseconds
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // +1 if you want inclusive
+      setTotalDays(diffDays > 0 ? diffDays : 0);
+    }
+  }, [from, to]);
     return (
       <div style={{ padding: 20 }}>
-        <h3 style={{ marginBottom: 20, color: "#1E3A8A", fontWeight: 600 }}>
-          Demande de congé
-        </h3>
-        <div style={{ display: "flex", gap: "20px", margin: "15px 0" }}>
-            {requestTypes.map((type) => (
-                <label
-                key={type.id}
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    background: "#f3f4f6",
-                    padding: "10px 16px",
-                    borderRadius: "8px",
-                    cursor: "pointer",
-                    transition: "all 0.2s ease",
-                }}
-                onMouseEnter={(e) =>
-                    (e.currentTarget.style.backgroundColor = "#e0e7ff")
-                }
-                
-                onMouseLeave={(e) =>
-                    (e.currentTarget.style.backgroundColor = "#f3f4f6")
-                }
-                >
-                    <input
-                    type="radio"
-                    name="requestType"
-                    value={type.id}
-                    style={{
-                        accentColor: "#1e3a8a",
-                        width: "18px",
-                        height: "18px",
-                    }}
-                    />
-                    <span style={{ fontSize: "15px", color: "#1f2937" }}>{type.name}</span>
-                </label>
-            ))}
-        </div>
-
         <div className="request-form">
           <div style={{ display: "flex", gap: "10px", margin: "10px 0" }}>
             <input
@@ -87,6 +66,7 @@ export const LeaveRequest = () => {
               fullWidth
               InputLabelProps={{ shrink: true }}
               variant="outlined"
+              onChange={(e)=> setFrom(e.target.value)}
             />
             <TextField
               label="Date de fin"
@@ -94,21 +74,22 @@ export const LeaveRequest = () => {
               fullWidth
               InputLabelProps={{ shrink: true }}
               variant="outlined"
+              onChange={(e)=> setTo(e.target.value)}
             />
           </div>
           <div style={{ display: "flex", gap: "10px", margin: "10px 0" }}>
-            <select className="styled-select">
+            <div className="col-xl-6">
+                <select className="styled-select">
               <option>-- Sélectionnez une entité --</option>
               {entities.map((e) => (
                 <option key={e.id}>{e.name}</option>
               ))}
             </select>
+            </div>
 
-            <input
-              type="text"
-              placeholder="Remplaçant (si applicable)"
-              className="styled-input"
-            />
+            <div className="col">
+                <p>Nombre des jours: {totalDays}</p>
+            </div>
           </div>
 
           <div style={{ margin: "15px 0" }}>
@@ -139,9 +120,57 @@ export const LeaveRequest = () => {
     );
   };
 
+  const requestTypes = [
+    { id: 1, name: "Avance", view: <AdvanceRequest/> },
+    { id: 2, name: "Pre-interne", view: <></> }
+  ]
+
   return (
     <div style={{ padding: "20px" }}>
-      <AdvanceRequest />
+        <h3 style={{ marginBottom: 20, color: "#1E3A8A", fontWeight: 600 }}>
+          Demande de congé
+        </h3>
+        <div style={{ display: "flex", gap: "20px", margin: "15px 0" }}>
+            {requestTypes.map((type) => (
+                <label
+                key={type.id}
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    background: "#f3f4f6",
+                    padding: "10px 16px",
+                    borderRadius: "8px",
+                    cursor: "pointer",
+                    transition: "all 0.2s ease",
+                }}
+                onMouseEnter={(e) =>
+                    (e.currentTarget.style.backgroundColor = "#e0e7ff")
+                }
+                
+                onMouseLeave={(e) =>
+                    (e.currentTarget.style.backgroundColor = "#f3f4f6")
+                }
+                >
+                    <input
+                    type="radio"
+                    name="requestType"
+                    checked={type.id === selectedRequest}
+                    value={type.id}
+                    onClick={()=> handleLeaveTypeChange(type.id)}
+                    style={{
+                        accentColor: "#1e3a8a",
+                        width: "18px",
+                        height: "18px",
+                    }}
+                    />
+                    <span style={{ fontSize: "15px", color: "#1f2937" }}>{type.name}</span>
+                </label>
+            ))}
+        </div>
+      {requestTypes.map((type)=>(
+        type.id === selectedRequest ? type.view : ""
+      ))}
     </div>
   );
 };
