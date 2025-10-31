@@ -2,23 +2,25 @@ import React, { useState } from "react";
 import "../styles/Dashboard.css";
 import logo from "../logo.png";
 import { FaChevronDown, FaChevronUp, FaHome, FaCalendarAlt } from "react-icons/fa";
-import { LeaveRequest } from "../components/LeaveRequest";
-import Avatar from '@mui/material/Avatar';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+
 import BasicPie from "../components/charts/PieChart";
+import { LeaveRequest } from "../components/Leave";
+import { UserProfile } from "../components/UserProfile";
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import { Home } from "../components/Home";
 
 export const Dashboard = () => {
 
   // Available services:
   const services = [
-    { id: 1, name: "Aperçu", icon: <FaHome />, view: <BasicPie/> },
+    { id: 1, name: "Acceuil", icon: <FaHome />, view: <Home/> },
     {
       id: 2,
-      name: "Demande de Congé",
+      name: "Demande administratif",
       icon: <FaCalendarAlt />,
       view: <></>,
       subServices: [
-        { id: 1, name: "Nouvelle demande", view: <LeaveRequest /> },
+        { id: 1, name: "Demande de conge", view: <LeaveRequest /> },
         { id: 2, name: "Historique", view: <div>Historique Content</div> },
       ],
     },
@@ -33,23 +35,6 @@ export const Dashboard = () => {
     } else {
       setOpenServices([...openServices, id]);
     }
-  };
-
-  const UserInformation = () => {
-    return (
-      <div className="user-info">
-        <div className="notification">
-          <NotificationsIcon />
-        </div>
-        <div className="user-avatar">
-          <Avatar />
-        </div>
-        <div className="user-details">
-          <p className="user-name">Salaheddine Samid</p>
-          <p className="user-company">SAHAM</p>
-        </div>
-      </div>
-    );
   };
 
   return (
@@ -94,8 +79,13 @@ export const Dashboard = () => {
             <p className="page-title">{selectedService.name}</p>
           </div>
 
-          <div className="header-right">
-            <UserInformation />
+          <div className="header-right d-flex">
+            <div className="notification">
+              <NotificationsIcon />
+            </div>
+            <div>
+              <UserProfile />
+            </div>
           </div>
         </div>
         <div className="right-side-content">
