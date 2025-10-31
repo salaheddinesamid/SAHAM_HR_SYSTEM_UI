@@ -8,6 +8,7 @@ import { LeaveHistory } from "./LeaveHistory";
 export const LeaveRequest = () => {
   const [selectedService, setSelectedService] = useState(1);
   const [requestLoading, setRequestLoading] = useState(false);
+  const [selectedType,setSelectedType] = useState("");
 
   const entities = [
     { id: 1, name: "SAHAM Management Company" },
@@ -16,11 +17,17 @@ export const LeaveRequest = () => {
   ];
 
   const leaveTypes = [
-    { id: 1, name: "Congé annuel" },
-    { id: 2, name: "Congé maladie" },
-    { id: 3, name: "Congé sans solde" },
-    { id: 4, name: "Congé maternité / paternité" },
-    { id: 5, name: "Autre" },
+    { id: 1, name: "Annuel" },
+    { id: 2, name: "Exceptionnel", subTypes: [
+      {id: 1, name: "Mariage du salarié "},
+      {id: 2, name: "Mariage d’un enfant du salarié "},
+      {id: 3, name: "Naissance "},
+      {id: 4, name: "Circoncision de l’enfant "},
+      {id: 5, name: "Déménagement "},
+      {id: 6, name: "Opération chirurgicale grave du conjoint ou d’un enfant "},
+      {id: 7, name: "Décès du conjoint, d’un descendant ou d’un ascendant du salarié"},
+      {id: 8, name: "Décès d’un ascendant du conjoint, frère ou sœur du salarié ou de son conjoint"}
+    ]}
   ];
 
   const RequestForm = () => {
@@ -122,8 +129,12 @@ export const LeaveRequest = () => {
 
           <div style={{ display: "flex", gap: "10px", margin: "10px 0" }}>
             <div className="col-xl-6">
-              <select className="styled-select">
-                <option>-- Sélectionnez une entité --</option>
+              <select className="styled-select" style={{
+                fontSize : "12px"
+              }}>
+                <option style={{
+                  fontSize : "10px"
+                }}>-- Sélectionnez une entité --</option>
                 {entities.map((e) => (
                   <option key={e.id}>{e.name}</option>
                 ))}
@@ -149,16 +160,32 @@ export const LeaveRequest = () => {
                     display: "flex",
                     alignItems: "center",
                     gap: "10px",
-                    fontSize: "15px",
+                    fontSize: "13px",
                   }}
                 >
                   <input
                     type="radio"
                     name="type"
                     value={leave.name}
-                    onChange={handleChange}
+                    onChange={()=> 
+                      setSelectedType(leave.name)
+                    }
                   />
                   {leave.name}
+                  {leave.subTypes && selectedType === "Exceptionnel" &&
+                   <div className="row ms-3">
+                    <select className="styled-select" style={{
+                      fontSize : "12px"
+                    }}>
+                      <option>-- Sélectionnez un type de congé --</option>
+                   {leave.subTypes.map((sub)=>(
+                    <option>
+                      {sub.name}
+                    </option>
+                    
+                   ))}
+                   </select>
+                  </div>}
                 </label>
               ))}
             </div>
@@ -183,16 +210,14 @@ export const LeaveRequest = () => {
   };
 
   const services = [
-    { id: 1, name: "Nouvelle Demande", view: <RequestForm /> },
-    { id: 2, name: "Historique des demandes", view: <LeaveHistory/> },
+    { id: 1, name: "Profil", view: <UserInformationCard/> },
+    { id: 2, name: "Nouvelle Demande", view: <RequestForm /> },
+    { id: 3, name: "Historique des demandes", view: <LeaveHistory/> },
   ];
 
   return (
     <div style={{ padding: "20px" }}>
-      <div>
-        <UserInformationCard />
-      </div>
-      <div style={{ display: "flex", gap: "10px", margin: "30px 0px" }}>
+      <div style={{ display: "flex", gap: "10px", margin: "0px 0px" }}>
         {services.map((service) => (
           <p
             key={service.id}
@@ -206,6 +231,10 @@ export const LeaveRequest = () => {
           </p>
         ))}
       </div>
+      <div>
+        {selectedService === 1 ? <></>: <UserInformationCard />}
+      </div>
+      
 
       <div className="row">
         {services.map((s) => (s.id === selectedService ? s.view : ""))}

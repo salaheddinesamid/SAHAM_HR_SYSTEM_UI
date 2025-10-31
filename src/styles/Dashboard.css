@@ -52,7 +52,7 @@
   padding: 12px 15px;
   margin-bottom: 8px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background-color: #0066a1;
   color: white;
@@ -97,6 +97,9 @@
   cursor: pointer;
   text-align: left;
   transition: background 0.3s ease;
+  font-size: 10px;
+  display: flex;
+  justify-content: center;
 }
 
 .sub-service-btn:hover {

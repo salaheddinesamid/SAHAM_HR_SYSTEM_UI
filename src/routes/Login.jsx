@@ -53,8 +53,11 @@ export const Login = () => {
     >
       <div className="overlay">
         <div className="top-bar">
+            <div></div>
             <div>
-                <img src={logo} alt="logo" className="top-logo" />
+                <img src={logo} alt="logo" className="top-logo" style={{
+                    marginLeft : "100px"
+                }}/>
             </div>
           <button
             className="login-btn top-right-btn"
@@ -64,7 +67,9 @@ export const Login = () => {
           </button>
         </div>
         {/*<img src={logo} alt="logo" className="" />*/}
-        <h1 className="welcome-text">Bienvenue chez SAHAM HR System</h1>
+        <h1 className="welcome-text" style={{
+            margin : "200px"
+        }}>Bienvenue sur votre espace MY HR SAHAM</h1>
       </div>
 
       {showForm && <LoginForm />}

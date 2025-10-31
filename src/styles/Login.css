@@ -75,7 +75,6 @@
   width: 100%;
   max-width: 380px;
   text-align: center;
-
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
@@ -114,8 +113,8 @@
 
 .login-form-overlay {
   position: absolute;
-  top: 60%;
-  right: 4%;
+  top: 38%;
+  right: 0%;
   transform: translateY(-50%);
 
   z-index: 10;

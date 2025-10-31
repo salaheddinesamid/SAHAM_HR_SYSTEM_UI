@@ -13,15 +13,16 @@ export const Dashboard = () => {
 
   // Available services:
   const services = [
-    { id: 1, name: "Acceuil", icon: <FaHome />, view: <Home/> },
+    { id: 1, name: "Home", icon: <FaHome />, view: <Home/> },
     {
       id: 2,
-      name: "Demande administratif",
+      name: "Demandes administratif",
       icon: <FaCalendarAlt />,
       view: <></>,
       subServices: [
-        { id: 1, name: "Demande de conge", view: <LeaveRequest /> },
-        { id: 2, name: "Historique", view: <div>Historique Content</div> },
+        { id: 1, name: "Congé", view: <LeaveRequest /> },
+        { id: 2, name: "Documents administratif", view: <></> },
+        
       ],
     },
   ];

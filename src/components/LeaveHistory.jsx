@@ -68,6 +68,7 @@ export const LeaveHistory = () => {
               <th>Type</th>
               <th>Date de début</th>
               <th>Date de fin</th>
+              <th>Nombre de jours</th>
               <th>Status</th>
               <th>Commentaire</th>
             </tr>
@@ -79,6 +80,7 @@ export const LeaveHistory = () => {
                 <td>{req.type}</td>
                 <td>{req.startDate}</td>
                 <td>{req.endDate}</td>
+                <td></td>
                 <td>
                     {(() => {
                         const { message, color } = statusMapper(req.status);

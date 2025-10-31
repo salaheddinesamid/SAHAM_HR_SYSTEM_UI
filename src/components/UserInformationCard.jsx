@@ -39,30 +39,48 @@ export const UserInformationCard = () => {
     <div className="user-information-card card shadow p-3 rounded-3">
       <div className="card-body">
         <div className="row">
-            <h3>Information Personnelle :</h3>
             <div className="col">
-                <p>Nom: {user?.fullName}</p>
+                <p>Nom et Prénom : {user?.fullName}</p>
             </div>
             <div className="col">
-                <p>Occupation:</p>
+                <p>Poste : </p>
             </div>
             <div className="col">
-                <p>E-mail Address: {user?.email}</p>
+                <p>Matricule : </p>
+            </div>
+            
+        </div>
+        <div className="row">
+            <div className="col">
+                <p>Date d'entrée : </p>
+            </div>
+            <div className="col">
+                <p>Entitée : {user?.createdAt}</p>
+            </div>
+            <div className="col">
+                <p>Responsable : </p>
+            </div>
+        </div>
+        <div className="row">
+            <div className="col">
+                <p>Direction /Departement : </p>
             </div>
         </div>
         <div className="row mt-3">
-            <h3>Solde :</h3>
             <div className="col">
-                <p>Nombre de jours initiale : <b>{user.balanceDetails?.initialBalance} Jours</b></p>
+                <p>Solde 2024 : <b>{user.balanceDetails?.initialBalance} Jours</b></p>
             </div>
             <div className="col">
-                <p>Jours Cumules : <b>{user.balanceDetails?.accumulatedBalance} Jours</b></p>
+                <p>Droit annuel : <b>{user.balanceDetails?.accumulatedBalance} Jours</b></p>
             </div>
             <div className="col">
-                <p>Utilisee : <b>{user.balanceDetails.usedBalance} Jours</b></p>
+                <p>Jours Cumulés : <b>{user.balanceDetails?.accumulatedBalance} Jours</b></p>
             </div>
             <div className="col">
-                <p>Restants : <b>{user.balanceDetails?.leftBalance} Jours</b></p>
+                <p>Pris : <b>{user.balanceDetails.usedBalance} Jours</b></p>
+            </div>
+            <div className="col">
+                <p>Reliquat : <b>{user.balanceDetails?.leftBalance} Jours</b></p>
             </div>
         </div>
       </div>

@@ -5,9 +5,9 @@ import { Briefcase, HeartPulse, FileText, Gift, Activity, Wallet } from "lucide-
 
 export const Home = () => {
   const services = [
-    { id: 1, name: "Demande de congé", icon: <FileText /> },
-    { id: 2, name: "Demande de prêt", icon: <Wallet /> },
-    { id: 3, name: "Demande d’avance", icon: <Briefcase /> },
+    { id: 1, name: "Demandes de congé", icon: <FileText /> },
+    { id: 2, name: "Demandes de prêt", icon: <Wallet /> },
+    { id: 3, name: "Demandes d’avance", icon: <Briefcase /> },
     { id: 4, name: "Les bons plans Saham", icon: <Gift /> },
     { id: 5, name: "Informations médicales et d'urgence", icon: <HeartPulse /> },
     { id: 6, name: "Mes remboursements médicaux", icon: <Activity /> },
@@ -17,8 +17,7 @@ export const Home = () => {
   return (
     <div className="home-container">
       <div className="home-header">
-        <h2>Bienvenue dans votre espace employé</h2>
-        <p>Accédez à vos services RH et outils internes</p>
+        <h2>Bienvenue dans votre espace collaborateur</h2>
       </div>
 
       <div className="home-content">
