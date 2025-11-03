@@ -8,6 +8,8 @@ import { LeaveRequest } from "../components/Leave";
 import { UserProfile } from "../components/UserProfile";
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Home } from "../components/Home";
+import { DocumentRequest } from "../components/DocumentRequest";
+import { Avance } from "../components/Avance";
 
 export const Dashboard = () => {
 
@@ -16,12 +18,13 @@ export const Dashboard = () => {
     { id: 1, name: "Home", icon: <FaHome />, view: <Home/> },
     {
       id: 2,
-      name: "Demandes administratif",
+      name: "Demandes administratifs",
       icon: <FaCalendarAlt />,
       view: <></>,
       subServices: [
-        { id: 1, name: "Congé", view: <LeaveRequest /> },
-        { id: 2, name: "Documents administratif", view: <></> },
+        { id: 1, name: "Congés", view: <LeaveRequest /> },
+        { id: 2, name: "Documents administratifs", view: <DocumentRequest/> },
+        {id: 3, name: "Prets / Avances", view: <Avance/>}
         
       ],
     },

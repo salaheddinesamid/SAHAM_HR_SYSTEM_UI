@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "../styles/UserInformationCard.css";
 import { getEmployee } from "../services/EmployeeService";
 
-export const UserInformationCard = () => {
+export const UserInformationCard = ({exception}) => {
   const [user, setUser] = useState(null);
   const [loading,setLoading] = useState(false);
 
@@ -66,7 +66,9 @@ export const UserInformationCard = () => {
                 <p>Direction /Departement : </p>
             </div>
         </div>
-        <div className="row mt-3">
+        {
+            exception !== "Without solde" ? 
+            <div className="row mt-3">
             <div className="col">
                 <p>Solde 2024 : <b>{user.balanceDetails?.initialBalance} Jours</b></p>
             </div>
@@ -82,7 +84,8 @@ export const UserInformationCard = () => {
             <div className="col">
                 <p>Reliquat : <b>{user.balanceDetails?.leftBalance} Jours</b></p>
             </div>
-        </div>
+        </div> : <></>
+        }
       </div>
     </div>
   );
