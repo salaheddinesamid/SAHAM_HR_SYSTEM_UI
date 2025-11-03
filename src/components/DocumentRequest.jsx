@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { UserInformationCard } from "./UserInformationCard";
+import { requestDocument } from "../services/DocumentService";
 
 export const DocumentRequest = ()=>{
 
@@ -50,8 +51,21 @@ export const DocumentRequest = ()=>{
             })
         }
 
-        const handleSubmit = ()=>{
-            console.log(requestDto);
+        const handleSubmit = async()=>{
+
+            const emailTest = "salaheddine.samid@saham.com";
+            try{
+                setRequestLoading(true);
+                console.log(requestDto);
+                const res = await requestDocument(emailTest,requestDto);
+                console.log(res)
+                alert("Demande envoyée avec succès !");
+            }catch(err){
+                console.error(err);
+            }finally{
+                setRequestLoading(false);
+            }
+            
         }
         return(
             <div>
