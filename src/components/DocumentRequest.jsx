@@ -24,16 +24,44 @@ export const DocumentRequest = ()=>{
 
     const RequestForm = ()=>{
 
+        const [requestDto,setRequestDto] = useState({
+            documents : [],
+            entity : ""
+        })
+        const handleChange = (e)=>{
+            const {name, value} = e.target;
+            
+            setRequestDto((prev)=>(
+                {...prev, [name] : value}
+            ))
+
+        }
+
+        const handleDocumentToggle = (document)=>{
+             
+            setRequestDto((prev)=>{
+                const isSelected = prev.documents.includes(document);
+
+                return{
+                    ...prev,
+                    documents : isSelected ? prev.documents.filter((doc)=> doc !== document) : 
+                    [...prev.documents, document]
+                }
+            })
+        }
+
+        const handleSubmit = ()=>{
+            console.log(requestDto);
+        }
         return(
             <div>
                 <div className="row mt-4">
-                    
                     <div className="col">
                         <p><b>Sélectionnez le type de document : </b></p>
                         {
                             documentTypes.map((type)=>(
                                 <label className="d-flex">
-                                    <input type="checkbox" name="" id="" />
+                                    <input type="checkbox" name="document" id="" onChange={()=>handleDocumentToggle(type.name)}/>
                                     {type.name} 
                                     {type.component && type.component}
                                 </label>
@@ -43,7 +71,7 @@ export const DocumentRequest = ()=>{
                     <div className="col">
                         <select className="styled-select" style={{
                             fontSize : "12px"
-                        }}>
+                        }} onChange={(e)=>handleChange(e)} value={requestDto.entity} name="entity">
                             <option style={{
                                 fontSize : "10px"
                             }}>-- Sélectionnez une entité --</option>
@@ -57,7 +85,7 @@ export const DocumentRequest = ()=>{
                 </div>
                 <div className="row">
                     <div className="col-xl-12">
-                        <button className="submit-btn">
+                        <button className="submit-btn" onClick={handleSubmit}>
                         Soumettre
                     </button>
                     </div>
