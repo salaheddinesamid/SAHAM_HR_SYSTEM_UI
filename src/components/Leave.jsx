@@ -64,6 +64,7 @@ export const LeaveRequest = () => {
         alert("Erreur lors de la soumission de la demande !");
       } finally {
         setRequestLoading(false);
+        console.log(requestDto);
       }
     };
 
@@ -84,7 +85,6 @@ export const LeaveRequest = () => {
 
     return (
       <div style={{ padding: 20, position: "relative" }}>
-        {/* Overlay when loading */}
         {requestLoading && (
           <div
             style={{
@@ -176,13 +176,12 @@ export const LeaveRequest = () => {
                    <div className="row ms-3">
                     <select className="styled-select" style={{
                       fontSize : "12px"
-                    }}>
+                    }} value={requestDto.type} name="type" onChange={(e)=> handleChange(e)}>
                       <option>-- Sélectionnez un type de congé --</option>
-                   {leave.subTypes.map((sub)=>(
-                    <option>
-                      {sub.name}
-                    </option>
-                    
+                      {leave.subTypes.map((sub)=>(
+                        <option>
+                          {sub.name}
+                      </option>
                    ))}
                    </select>
                   </div>}

@@ -25,7 +25,6 @@ export const DocumentRequest = ()=>{
     ]
 
     const RequestForm = ()=>{
-
         const [requestDto,setRequestDto] = useState({
             documents : [],
             entity : ""
@@ -38,7 +37,6 @@ export const DocumentRequest = ()=>{
             ))
 
         }
-
         const handleDocumentToggle = (document)=>{
              
             setRequestDto((prev)=>{
@@ -55,6 +53,7 @@ export const DocumentRequest = ()=>{
         const handleSubmit = async()=>{
 
             const emailTest = "salaheddine.samid@saham.com";
+            {/**
             try{
                 setRequestLoading(true);
                 console.log(requestDto);
@@ -65,7 +64,8 @@ export const DocumentRequest = ()=>{
                 console.error(err);
             }finally{
                 setRequestLoading(false);
-            }
+            }*/}
+            console.log(requestDto);
             
         }
         return(
@@ -136,8 +136,6 @@ export const DocumentRequest = ()=>{
               <div>
                 {selectedService === 1 ? <></>: <UserInformationCard exception={"Without solde"}/>}
               </div>
-              
-        
               <div className="row">
                 {services.map((s) => (s.id === selectedService ? s.view : ""))}
               </div>
