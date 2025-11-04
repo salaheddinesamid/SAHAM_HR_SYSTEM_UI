@@ -12,7 +12,7 @@ export const requestDocument = async(email, request)=>{
 // GET ALL DOCUMENT REQUESTED BY AN EMPLOYEE:
 export const getAllDocumentRequests = async(email)=>{
 
-    const res = await DocumentAPI.post("/get_requests",{
+    const res = await DocumentAPI.get("/get_requests",{
         params : {
             email: email
         }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { UserInformationCard } from "./UserInformationCard";
 import { requestDocument } from "../services/DocumentService";
+import { DocumentRequestHistory } from "./DocumentRequestHistory";
 
 export const DocumentRequest = ()=>{
 
@@ -111,7 +112,7 @@ export const DocumentRequest = ()=>{
     const services = [
         {id: 1, name: "Profil", view: <UserInformationCard exception={"Without solde"}/>},
         {id: 2, name: "Nouvelle Demande", view: <RequestForm/>},
-        {id: 3, name: "Historique des demandes", view:<></>}
+        {id: 3, name: "Historique des demandes", view:<DocumentRequestHistory/>}
     ]
 
     
