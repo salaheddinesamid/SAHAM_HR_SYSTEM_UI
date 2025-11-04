@@ -1,4 +1,4 @@
-import { Activity, Briefcase, FileText, Gift, HeartPulse, Wallet } from "lucide-react";
+import { Activity, Briefcase, FileText, Gift, Handshake, HeartPulse, RefreshCcw, Rss, Wallet } from "lucide-react";
 import { Avance } from "./Avance";
 import { DocumentRequest } from "./DocumentRequest";
 import { Home } from "./Home";
@@ -29,4 +29,8 @@ export const homeCards = [
   { id: "health", label: "Infos médicales et d'urgence", icon: <HeartPulse /> },
   { id: "refunds", label: "Mes remboursements médicaux", icon: <Activity /> },
   { id: "expenses", label: "Mes dépenses", icon: <Wallet /> },
+  { id: "talentAqcuisition", label: "Talent Acquisition", icon: <Wallet /> },
+  { id: "onboarding", label: "Onboarding", icon: <Handshake /> },
+  { id: "continuousImprovement", label: "Amélioration continue", icon: <RefreshCcw /> },
+  { id: "news", label: "SAHAM News", icon: <Rss /> },
 ];
