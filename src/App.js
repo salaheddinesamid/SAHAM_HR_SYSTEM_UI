@@ -5,6 +5,7 @@ import "bootstrap/dist/js/bootstrap.js"
 import "bootstrap/dist/css/bootstrap.css"
 import { Login } from './routes/Login';
 import { useEffect } from 'react';
+import { ServiceProvider, ViewProvider } from './context/ViewNavigatorContext';
 
 function App() {
 
@@ -36,7 +37,11 @@ function App() {
   return (
     <BrowserRouter>
      <Routes>
-      <Route path='/dashboard' element={<Dashboard/>}/>
+      <Route path='/dashboard' element={
+        <ServiceProvider>
+          <Dashboard/>
+        </ServiceProvider>
+        }/>
       <Route path='/' element={<Login/>}/>
      </Routes>
     </BrowserRouter>

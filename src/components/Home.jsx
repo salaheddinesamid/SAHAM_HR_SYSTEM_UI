@@ -1,19 +1,11 @@
 import React from "react";
-import BasicPie from "./charts/PieChart";
+import { homeCards } from "./servicesConfig";
 import "../styles/Home.css";
-import { Briefcase, HeartPulse, FileText, Gift, Activity, Wallet } from "lucide-react"; // optional icons
+import { useService } from "../context/ViewNavigatorContext";
 
-export const Home = () => {
-  const services = [
-    { id: 1, name: "Demandes de congé", icon: <FileText /> },
-    { id: 2, name: "Demandes de prêt", icon: <Wallet /> },
-    { id: 3, name: "Demandes d’avance", icon: <Briefcase /> },
-    { id: 4, name: "Les bons plans Saham", icon: <Gift /> },
-    { id: 5, name: "Informations médicales et d'urgence", icon: <HeartPulse /> },
-    { id: 6, name: "Mes remboursements médicaux", icon: <Activity /> },
-    { id: 7, name: "Mes dépenses", icon: <Wallet /> },
-  ];
+export const Home = ({ onCardClick }) => {
 
+    const {service, selectService} = useService();
   return (
     <div className="home-container">
       <div className="home-header">
@@ -22,10 +14,10 @@ export const Home = () => {
 
       <div className="home-content">
         <div className="services-grid">
-          {services.map((s) => (
-            <div key={s.id} className="service-card">
+          {homeCards.map((s) => (
+            <div key={s.id} className="service-card" onClick={() => selectService(s)}>
               <div className="service-icon">{s.icon}</div>
-              <p className="service-name">{s.name}</p>
+              <p className="service-name">{s.label}</p>
             </div>
           ))}
         </div>

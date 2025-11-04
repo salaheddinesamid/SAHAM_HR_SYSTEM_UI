@@ -1,45 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/Dashboard.css";
 import logo from "../logo.png";
-import { FaChevronDown, FaChevronUp, FaHome, FaCalendarAlt } from "react-icons/fa";
-
-import BasicPie from "../components/charts/PieChart";
-import { LeaveRequest } from "../components/Leave";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { UserProfile } from "../components/UserProfile";
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { Home } from "../components/Home";
-import { DocumentRequest } from "../components/DocumentRequest";
-import { Avance } from "../components/Avance";
+import { servicesConfig } from "../components/servicesConfig";
+import { useService } from "../context/ViewNavigatorContext";
 
 export const Dashboard = () => {
-
-  // Available services:
-  const services = [
-    { id: 1, name: "Home", icon: <FaHome />, view: <Home/> },
-    {
-      id: 2,
-      name: "Demandes administratifs",
-      icon: <FaCalendarAlt />,
-      view: <></>,
-      subServices: [
-        { id: 1, name: "Congés", view: <LeaveRequest /> },
-        { id: 2, name: "Documents administratifs", view: <DocumentRequest/> },
-        {id: 3, name: "Prets / Avances", view: <Avance/>}
-        
-      ],
-    },
-  ];
-
   const [openServices, setOpenServices] = useState([]);
-  const [selectedService, setSelectedService] = useState(services[0]);
+  const { selectedService, selectService } = useService();
 
-  const toggleService = (id) => {
-    if (openServices.includes(id)) {
-      setOpenServices(openServices.filter((sid) => sid !== id));
+  const toggleService = (name) => {
+    if (openServices.includes(name)) {
+      setOpenServices(openServices.filter(n => n !== name));
     } else {
-      setOpenServices([...openServices, id]);
+      setOpenServices([...openServices, name]);
     }
   };
+
+
+  useEffect(()=>{
+    toggleService(selectService.name);
+  },[selectedService])
 
   return (
     <div className="dashboard">
@@ -48,26 +31,35 @@ export const Dashboard = () => {
           <img src={logo} alt="Logo" className="logo" />
         </div>
         <div className="left-side-services">
-          {services.map((s) => (
+          {servicesConfig.map((s) => (
             <div key={s.id} className="service-item">
               <button
                 className="service-btn"
                 onClick={() => {
-                  toggleService(s.id);
-                  if (!s.subServices) setSelectedService(s);
+                  if (s.subServices) toggleService(s.name);
+                  else selectService(s);
                 }}
               >
                 {s.name}
                 {s.subServices && (
                   <span className="chevron">
-                    {openServices.includes(s.id) ? <FaChevronUp /> : <FaChevronDown />}
+                    {openServices.includes(s.name) ? <FaChevronUp /> : <FaChevronDown />}
                   </span>
                 )}
               </button>
-              {s.subServices && openServices.includes(s.id) && (
+              
+              {s.subServices && openServices.includes(s.name) && (
                 <div className="sub-services">
                   {s.subServices.map((sub) => (
-                    <button key={sub.id} className="sub-service-btn" onClick={() => setSelectedService(sub)}>
+                    <button
+                    key={sub.name}
+                    className={`sub-service-btn ${selectedService.name === sub.name ? "active" : ""}`}
+                    onClick={() => {
+                      selectService(sub);
+                      // Close the parent menu
+                      setOpenServices(prev => prev.filter(pName => pName !== s.name));
+                    }}
+                    >
                       {sub.name}
                     </button>
                   ))}
@@ -77,19 +69,17 @@ export const Dashboard = () => {
           ))}
         </div>
       </div>
+
       <div className="right-side">
         <div className="right-side-header">
           <div className="header-left">
             <p className="page-title">{selectedService.name}</p>
           </div>
-
           <div className="header-right d-flex">
             <div className="notification">
               <NotificationsIcon />
             </div>
-            <div>
-              <UserProfile />
-            </div>
+            <UserProfile />
           </div>
         </div>
         <div className="right-side-content">

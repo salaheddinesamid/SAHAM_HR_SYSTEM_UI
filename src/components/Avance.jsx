@@ -123,16 +123,13 @@ export const Avance = ()=>{
                             placeholder="Montant"/>
                     </div>
                     <div className="col">
-                        <label htmlFor="repaymentDate" className="">
-    Modalités de remboursement
-  </label>
-  <input
-    type="date"
-    id="repaymentDate"
-    name="repaymentDate"
-    className="form-control modern-date"
-    aria-label="Modalités de remboursement"
-  />
+                        <TextField
+                            label="Modalités de remboursement "
+                            type="date"
+                            fullWidth
+                            InputLabelProps={{ shrink: true }}
+                            variant="outlined"
+                            placeholder="Montant"/>
                         
                     </div>
                 </div>
