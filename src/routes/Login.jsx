@@ -6,7 +6,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import { useNavigate } from "react-router-dom";
 import { authenticate } from "../services/AuthService";
 import Cookies from "js-cookie";
-import { Alert } from "@mui/material";
+import { Alert, CircularProgress } from "@mui/material";
 
 export const Login = () => {
 
@@ -87,7 +87,9 @@ export const Login = () => {
           </Alert>
         )}
 
-        <input
+        {!loading ? (
+            <div className="row">
+                <input
           type="text"
           placeholder="Adresse e-mail ou identifiant"
           name="email"
@@ -107,6 +109,9 @@ export const Login = () => {
         />
 
         <button className="login-btn mt-4" onClick={handleLogin} disabled={loading}>{loading ? "Connexion..." : "Se Connecter"}</button>
+            </div>
+        ) : <CircularProgress/>
+    }
 
         <p className="login-footer mt-3">
           Mot de passe oublié ? <a href="#">Réinitialiser</a>
