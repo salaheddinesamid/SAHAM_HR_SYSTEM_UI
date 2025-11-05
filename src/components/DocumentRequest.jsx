@@ -4,7 +4,7 @@ import { requestDocument } from "../services/DocumentService";
 import { DocumentRequestHistory } from "./DocumentRequestHistory";
 
 export const DocumentRequest = ()=>{
-
+    const user = JSON.parse(localStorage.getItem("userDetails"));
     const [selectedService, setSelectedService] = useState(1);
     const [requestLoading, setRequestLoading] = useState(false);
     const [selectedType,setSelectedType] = useState("");
@@ -24,7 +24,7 @@ export const DocumentRequest = ()=>{
         {id: 5, name: "", component: <input type="text" placeholder="Autre"/>}
     ]
 
-    const RequestForm = ()=>{
+    const RequestForm = ({user})=>{
         const [requestDto,setRequestDto] = useState({
             documents : [],
             entity : ""
@@ -51,20 +51,18 @@ export const DocumentRequest = ()=>{
         }
 
         const handleSubmit = async()=>{
-
-            const emailTest = "salaheddine.samid@saham.com";
-            {/**
+            const email = user?.email;
             try{
                 setRequestLoading(true);
                 console.log(requestDto);
-                const res = await requestDocument(emailTest,requestDto);
+                const res = await requestDocument(email,requestDto);
                 console.log(res)
                 alert("Demande envoyée avec succès !");
             }catch(err){
                 console.error(err);
             }finally{
                 setRequestLoading(false);
-            }*/}
+            }
             console.log(requestDto);
             
         }
@@ -111,8 +109,8 @@ export const DocumentRequest = ()=>{
 
     const services = [
         {id: 1, name: "Profil", view: <UserInformationCard exception={"Without solde"}/>},
-        {id: 2, name: "Nouvelle Demande", view: <RequestForm/>},
-        {id: 3, name: "Historique des demandes", view:<DocumentRequestHistory/>}
+        {id: 2, name: "Nouvelle Demande", view: <RequestForm user={user}/>},
+        {id: 3, name: "Historique des demandes", view:<DocumentRequestHistory user={user}/>}
     ]
 
     

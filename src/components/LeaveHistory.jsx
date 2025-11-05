@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { getEmployeeLeaves } from "../services/LeaveService";
 import { CircularProgress } from "@mui/material";
 
-export const LeaveHistory = () => {
+export const LeaveHistory = ({user}) => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const fetchData = async () => {
-    const email = "salaheddine.samid@saham.com";
+    const email = user?.email;
     try {
       setLoading(true);
       const response = await getEmployeeLeaves(email);

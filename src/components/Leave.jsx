@@ -6,6 +6,7 @@ import { applyLeave } from "../services/LeaveService";
 import { LeaveHistory } from "./LeaveHistory";
 
 export const LeaveRequest = () => {
+  const user = JSON.parse(localStorage.getItem("userDetails")); 
   const [selectedService, setSelectedService] = useState(1);
   const [requestLoading, setRequestLoading] = useState(false);
   const [selectedType,setSelectedType] = useState("");
@@ -30,7 +31,8 @@ export const LeaveRequest = () => {
     ]}
   ];
 
-  const RequestForm = () => {
+  const RequestForm = ({user}) => {
+
     const [requestDto, setRequestDto] = useState({
       startDate: "",
       endDate: "",
@@ -53,7 +55,7 @@ export const LeaveRequest = () => {
     };
 
     const handleSubmit = async () => {
-      const email = "salaheddine.samid@saham.com";
+      const email = user?.email;
       try {
         setRequestLoading(true);
         const response = await applyLeave(email, requestDto);
@@ -210,8 +212,8 @@ export const LeaveRequest = () => {
 
   const services = [
     { id: 1, name: "Profil", view: <UserInformationCard/> },
-    { id: 2, name: "Nouvelle Demande", view: <RequestForm /> },
-    { id: 3, name: "Historique des demandes", view: <LeaveHistory/> },
+    { id: 2, name: "Nouvelle Demande", view: <RequestForm user={user}/> },
+    { id: 3, name: "Historique des demandes", view: <LeaveHistory user={user}/> },
   ];
 
   return (

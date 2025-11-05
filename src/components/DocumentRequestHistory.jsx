@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { getAllDocumentRequests } from "../services/DocumentService";
 import { Box, Button, CircularProgress, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 
-export const DocumentRequestHistory = ()=>{
+export const DocumentRequestHistory = ({user})=>{
 
     const [requests,setRequests] = useState([]);
     const [loading,setLoading] = useState(false);
@@ -18,9 +18,9 @@ export const DocumentRequestHistory = ()=>{
 
     const fetchRequests = async()=>{
         try{
-            const emailTest = "salaheddine.samid@saham.com";
+            const email = user?.email;
             setLoading(true);
-            const response = await getAllDocumentRequests(emailTest);
+            const response = await getAllDocumentRequests(email);
             setRequests(response);
             setFilteredRequests(response);
         }
