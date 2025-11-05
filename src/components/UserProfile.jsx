@@ -2,10 +2,12 @@ import Avatar from '@mui/material/Avatar';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Cookies from "js-cookie"
 import { useNavigate } from 'react-router-dom';
-import { logOut } from '../services/AuthService';
 
 export const UserProfile = () => {
     const navigate = useNavigate();
+
+    // get user details
+    const user = JSON.parse(localStorage.getItem("userDetails"));
 
     const handleLogOut = async()=>{
         try{
@@ -33,7 +35,7 @@ export const UserProfile = () => {
           <Avatar />
         </div>
         <div className="user-details">
-          <p className="user-name">Salaheddine Samid</p>
+          <p className="user-name">{user?.fullName}</p>
           <p className="user-company">SAHAM</p>
         </div>
         <div className="log-out">

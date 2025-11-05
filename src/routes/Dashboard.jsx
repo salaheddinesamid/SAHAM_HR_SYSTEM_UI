@@ -73,7 +73,7 @@ export const Dashboard = () => {
       <div className="right-side">
         <div className="right-side-header">
           <div className="header-left">
-            <p className="page-title">{selectedService.name}</p>
+            <p className="page-title">{selectedService.name !== "Home" ? selectedService.name : ""}</p>
           </div>
           <div className="header-right d-flex">
             <div className="notification">

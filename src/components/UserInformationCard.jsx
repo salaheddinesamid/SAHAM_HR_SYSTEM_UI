@@ -3,14 +3,14 @@ import "../styles/UserInformationCard.css";
 import { getEmployee } from "../services/EmployeeService";
 
 export const UserInformationCard = ({exception}) => {
-  const [user, setUser] = useState(null);
+  const user = JSON.parse(localStorage.getItem("userDetails"));
   const [loading,setLoading] = useState(false);
 
   const fetchEmployeeDetails = async()=>{
     try{
-        setLoading(true);
-        const response = await getEmployee("salaheddine.samid@saham.com");
-        setUser(response);
+        //setLoading(true);
+        //const response = await getEmployee("salaheddine.samid@saham.com");
+        //setUser(response);
         
     }catch(err){
         console.log(err);
@@ -21,7 +21,7 @@ export const UserInformationCard = ({exception}) => {
 
   useEffect(() => {
 
-    fetchEmployeeDetails();
+    console.log(user)
     /**
     const data = localStorage.getItem("user");
     if (data) {
@@ -43,22 +43,22 @@ export const UserInformationCard = ({exception}) => {
                 <p>Nom et Prénom : {user?.fullName}</p>
             </div>
             <div className="col">
-                <p>Poste : </p>
+                <p>Poste : {user?.occupation}</p>
             </div>
             <div className="col">
-                <p>Matricule : </p>
+                <p>Matricule : {user?.matriculation}</p>
             </div>
             
         </div>
         <div className="row">
             <div className="col">
-                <p>Date d'entrée : </p>
+                <p>Date d'entrée :{user?.joinDate} </p>
             </div>
             <div className="col">
-                <p>Entitée : {user?.createdAt}</p>
+                <p>Entitée : </p>
             </div>
             <div className="col">
-                <p>Responsable : </p>
+                <p>Responsable : {user?.managerName}</p>
             </div>
         </div>
         <div className="row">
@@ -79,7 +79,7 @@ export const UserInformationCard = ({exception}) => {
                 <p>Jours Cumulés : <b>{user.balanceDetails?.accumulatedBalance} Jours</b></p>
             </div>
             <div className="col">
-                <p>Pris : <b>{user.balanceDetails.usedBalance} Jours</b></p>
+                <p>Pris : <b>{user.balanceDetails?.usedBalance} Jours</b></p>
             </div>
             <div className="col">
                 <p>Reliquat : <b>{user.balanceDetails?.leftBalance} Jours</b></p>
