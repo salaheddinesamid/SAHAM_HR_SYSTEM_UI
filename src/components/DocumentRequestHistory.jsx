@@ -6,6 +6,7 @@ export const DocumentRequestHistory = ({user})=>{
 
     const [requests,setRequests] = useState([]);
     const [loading,setLoading] = useState(false);
+    const [error,setError] = useState(null)
     const [currentFilter,setCurrentFilter] = useState("ALL");
     const [filteredRequests,setFilteredRequests] = useState([])
 
@@ -109,20 +110,19 @@ export const DocumentRequestHistory = ({user})=>{
                       <CircularProgress />
                     </div>
             )}
-            {
-                requests.length === 0 ? 
-                <div>
-                    <p>No requests found.</p>
-                </div> : 
+            {!loading && !error && requests.length === 0 && (
+                <p className="text-center text-muted mt-4">Aucune demande des documents trouvée.</p>
+            )}
+            {!loading && requests.length !== 0 && (
                 <div className="row mt-3">
-                    <div className="row">
+                    <div className="row">                                                                          
                         <RequestsFilter/>
                     </div>
                     <div className="row">
                         <RequestsTable/>
                     </div>
                 </div>
-            }
+                )}
         </div>
     )
 }

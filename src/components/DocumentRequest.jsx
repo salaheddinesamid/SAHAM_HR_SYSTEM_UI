@@ -112,9 +112,6 @@ export const DocumentRequest = ()=>{
         {id: 2, name: "Nouvelle Demande", view: <RequestForm user={user}/>},
         {id: 3, name: "Historique des demandes", view:<DocumentRequestHistory user={user}/>}
     ]
-
-    
-
     return(
         <div style={{ padding: "20px" }}>
               <div style={{ display: "flex", gap: "10px", margin: "0px 0px" }}>
