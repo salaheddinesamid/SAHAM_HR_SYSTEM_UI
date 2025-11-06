@@ -28,3 +28,12 @@ export const getSubordinatesLeaves = async(email)=>{
 
     return response.data;
 }
+
+export const approveSubordinatesLeave = async(requestId)=>{
+    const response = await LeaveAPI.put("/subordinates/approve-request",null,{
+        params : {
+            requestId : requestId
+        }
+    });
+    return response.status;
+}

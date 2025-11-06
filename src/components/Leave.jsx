@@ -216,7 +216,7 @@ export const LeaveRequest = () => {
     { id: 1, name: "Profil", view: <UserInformationCard/> },
     { id: 2, name: "Nouvelle Demande", view: <RequestForm user={user}/> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},
     { id: 3, name: "Historique des demandes", view: <LeaveHistory user={user}/> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},
-    { id: 4, name: "Les demandes de (n-1)", view: <SubordinatesLeaveRequestsHistory manager={user}/>, allowedRoles:["MANAGER"]}
+    { id: 4, name: "Les demandes de vos subordonnés", view: <SubordinatesLeaveRequestsHistory manager={user}/>, allowedRoles:["MANAGER"]}
   ];
 
   const filteredServices = services.filter(service =>
