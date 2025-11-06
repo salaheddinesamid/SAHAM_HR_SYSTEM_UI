@@ -6,29 +6,7 @@ export const UserInformationCard = ({exception}) => {
   const user = JSON.parse(localStorage.getItem("userDetails"));
   const [loading,setLoading] = useState(false);
 
-  const fetchEmployeeDetails = async()=>{
-    try{
-        //setLoading(true);
-        //const response = await getEmployee("salaheddine.samid@saham.com");
-        //setUser(response);
-        
-    }catch(err){
-        console.log(err);
-    }finally{
-        setLoading(false);
-    }
-  }
-
   useEffect(() => {
-
-    console.log(user)
-    /**
-    const data = localStorage.getItem("user");
-    if (data) {
-      setUser(JSON.parse(data)); // parse JSON properly
-    }
-    console.log(JSON.parse(data))
-    */
   }, []);
 
   if (!user) {
