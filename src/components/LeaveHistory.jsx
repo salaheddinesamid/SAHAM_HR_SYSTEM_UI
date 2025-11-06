@@ -20,8 +20,7 @@ export const LeaveHistory = ({user}) => {
       setLoading(false);
     }
   };
-
-  const statusMapper = (status) => {
+    const statusMapper = (status) => {
     switch (status) {
         case "APPROVED":
             return { message: "Approuvée", color: "bg-success" };
@@ -80,7 +79,7 @@ export const LeaveHistory = ({user}) => {
                 <td>{req.type}</td>
                 <td>{req.startDate}</td>
                 <td>{req.endDate}</td>
-                <td></td>
+                <td>{req.totalDays}</td>
                 <td>
                     {(() => {
                         const { message, color } = statusMapper(req.status);

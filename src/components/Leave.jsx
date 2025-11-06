@@ -4,9 +4,11 @@ import { TextField, CircularProgress } from "@mui/material";
 import { UserInformationCard } from "./UserInformationCard";
 import { applyLeave } from "../services/LeaveService";
 import { LeaveHistory } from "./LeaveHistory";
+import { SubordinatesLeaveRequestsHistory } from "./SubordinatesLeaveRequestsHistory";
 
 export const LeaveRequest = () => {
   const user = JSON.parse(localStorage.getItem("userDetails")); 
+  const userRoles = user?.roles || [];
   const [selectedService, setSelectedService] = useState(1);
   const [requestLoading, setRequestLoading] = useState(false);
   const [selectedType,setSelectedType] = useState("");
@@ -212,14 +214,18 @@ export const LeaveRequest = () => {
 
   const services = [
     { id: 1, name: "Profil", view: <UserInformationCard/> },
-    { id: 2, name: "Nouvelle Demande", view: <RequestForm user={user}/> },
-    { id: 3, name: "Historique des demandes", view: <LeaveHistory user={user}/> },
+    { id: 2, name: "Nouvelle Demande", view: <RequestForm user={user}/> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},
+    { id: 3, name: "Historique des demandes", view: <LeaveHistory user={user}/> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},
+    { id: 4, name: "Les demandes de (n-1)", view: <SubordinatesLeaveRequestsHistory manager={user}/>, allowedRoles:["MANAGER"]}
   ];
+
+  const filteredServices = services.filter(service =>
+    !service.allowedRoles || service.allowedRoles.some(role => userRoles.includes(role)));
 
   return (
     <div style={{ padding: "20px" }}>
       <div style={{ display: "flex", gap: "10px", margin: "0px 0px" }}>
-        {services.map((service) => (
+        {filteredServices.map((service) => (
           <p
             key={service.id}
             style={{
@@ -233,7 +239,7 @@ export const LeaveRequest = () => {
         ))}
       </div>
       <div>
-        {selectedService === 1 ? <></>: <UserInformationCard />}
+        {selectedService === 4 || selectedService === 1 ? <></>: <UserInformationCard />}
       </div>
       
 

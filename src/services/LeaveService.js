@@ -18,3 +18,13 @@ export const getEmployeeLeaves = async(email)=>{
 
     return response.data;
 }
+
+export const getSubordinatesLeaves = async(email)=>{
+    const response = await LeaveAPI.get("/subordinates/get_all_requests", {
+        params : {
+            email : email
+        }
+    })
+
+    return response.data;
+}
