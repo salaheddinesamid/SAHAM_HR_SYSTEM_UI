@@ -74,7 +74,7 @@ export const LeaveRequest = () => {
         totalDays,
       };
 
-      //await applyLeave(email, payload);
+      await applyLeave(email, payload);
       console.log("Submitting request:", payload);
       alert("Demande envoyée avec succès !");
     } catch (err) {
