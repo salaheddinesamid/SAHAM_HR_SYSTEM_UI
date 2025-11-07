@@ -1,5 +1,5 @@
 import { Activity, Briefcase, FileText, Gift, Handshake, HeartPulse, RefreshCcw, Rss, UserRoundSearch, Wallet } from "lucide-react";
-import { Avance } from "./Avance";
+import { Loan } from "./Loan";
 import { DocumentRequest } from "./DocumentRequest";
 import { Home } from "./Home";
 import { LeaveRequest } from "./Leave";
@@ -15,7 +15,7 @@ export const servicesConfig = [
       subServices: [
         { id: 1, name: "Congés", view: <LeaveRequest /> },
         { id: 2, name: "Documents administratifs", view: <DocumentRequest/> },
-        {id: 3, name: "Prets / Avances", view: <Avance/>}
+        {id: 3, name: "Prêts / Avances", view: <Loan/>}
         
       ],
     },

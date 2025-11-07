@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "../styles/LeaveRequest.css";
 import { TextField, CircularProgress } from "@mui/material";
 import { UserInformationCard } from "./UserInformationCard";
@@ -10,14 +10,6 @@ export const LeaveRequest = () => {
   const user = JSON.parse(localStorage.getItem("userDetails")); 
   const userRoles = user?.roles || [];
   const [selectedService, setSelectedService] = useState(1);
-  const [requestLoading, setRequestLoading] = useState(false);
-  const [selectedType,setSelectedType] = useState("");
-
-  const entities = [
-    { id: 1, name: "SAHAM Management Company" },
-    { id: 2, name: "SAHAM Immobilier" },
-    { id: 3, name: "Medjool Star" },
-  ];
 
   const leaveTypes = [
     { id: 1, name: "Annuel" },

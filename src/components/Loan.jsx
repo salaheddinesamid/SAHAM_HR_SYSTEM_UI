@@ -3,21 +3,39 @@ import { UserInformationCard } from "./UserInformationCard"
 import { TextField } from "@mui/material";
 
 
-export const Avance = ()=>{
+export const Loan = ()=>{
+    const user = JSON.parse(localStorage.getItem("userDetails"));
+    const [selectedService, setSelectedService] = useState(1);
 
-    const [selectedService, setSelectedService] = useState(2);
+    // handle submit both requests (Pret/Avance)
+    const handleSubmitRequest = (request)=>{
+        try{
+            console.log(request);
+        }catch(err){
+
+        }finally{
+
+        }
+    }
 
     const PretInternForm = ()=>{
-        const [selectedType,setSelectedType] = useState("");
         const [requestDto,setRequestDto] = useState({
             type : "",
-            matriculation : "",
-            poste : "",
-            entity : "",
+            matriculation : user?.matriculation,
+            poste : user?.occupation,
+            entity : user?.entity,
             motif : "",
             paymentModel : "",
             
         })
+
+        const handleChange = (e)=>{
+            const {name,value} = e.target;
+            setRequestDto((prev)=>({
+                ...prev,
+                [name] : value
+            }))
+        }
 
         const types = [
             {id: 1, name: "Prêt sans intérêt (société)"},
@@ -25,33 +43,94 @@ export const Avance = ()=>{
         ]
         return(
             <div className="row">
-                <h4>Demande de Pret</h4>
+                <h4>Demande de Prêt</h4>
                 <div className="row">
-                    <p>Selectionnez le type de pret:</p>
+                    <p style={{fontSize : "10px"}}>Selectionnez le type de Prêt :</p>
                     {
                         types.map((t)=>(
                             <label>
-                                <input type="radio"/>
+                                <input type="radio" name="type" value={requestDto.type} onChange={handleChange}/>
                                 {t.name}
                             </label>
                         ))
                     }
+                </div>
+                <div className="row mt-3">
+                    <div className="col">
+                        <TextField
+                            label="Poste"
+                            type="text"
+                            fullWidth
+                            InputLabelProps={{ shrink: true }}
+                            variant="outlined"
+                            placeholder="Poste"/>
+                    </div>
+                    <div className="col">
+                        <TextField
+                            label="Montant"
+                            type="number"
+                            fullWidth
+                            InputLabelProps={{ shrink: true }}
+                            variant="outlined"
+                            placeholder="Montant"/>
+                    </div>
+                    
+                </div>
+                <div className="row mt-3">
+                    <div className="col">
+                        <TextField
+                            label="Montant"
+                            type="number"
+                            fullWidth
+                            InputLabelProps={{ shrink: true }}
+                            variant="outlined"
+                            placeholder="Montant"/>
+                    </div>
+                    <div className="col">
+                        <TextField
+                            label="Modalités de remboursement "
+                            type="date"
+                            fullWidth
+                            InputLabelProps={{ shrink: true }}
+                            variant="outlined"
+                            placeholder="Montant"/>
+                        
+                    </div>
+                </div>
+                <div className="row mt-2">
+                    <div className="col">
+                        <label for="exampleFormControlTextarea1" class="form-label">Motif</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                    <div className="col">
+
+                    </div>
+                </div>
+                <div className="row mt-3">
+                    <button className="submit-btn" onClick={()=>handleSubmitRequest(requestDto)}>Soumettre</button>
                 </div>
             </div>
         )
     }
 
     const AvanceForm = ()=>{
-        const [selectedType,setSelectedType] = useState("");
         const [requestDto,setRequestDto] = useState({
             type : "",
-            matriculation : "",
-            poste : "",
-            entity : "",
+            matriculation : user?.matriculation,
+            poste : user?.occupation,
+            entity : user?.entity,
             motif : "",
             paymentModel : "",
             
-        })
+        });
+
+        const handleChange = (e)=>{
+            const {name, value} = e.target;
+            setRequestDto((prev)=>({
+                ...prev,
+                [name] : value
+            }))
+        }
 
         const types = [
             {id: 1, name: "Avance sur salaire"},
@@ -65,7 +144,7 @@ export const Avance = ()=>{
                     {
                         types.map((t)=>(
                             <label>
-                                <input type="radio"/>
+                                <input type="radio" value={requestDto.type} onChange={handleChange}/>
                                 {t.name}
                             </label>
                         ))
@@ -151,9 +230,9 @@ export const Avance = ()=>{
 
     const NewRequest = ()=>{
 
-        const [selectedType,setSelectedType] = useState(2);
+        const [selectedType,setSelectedType] = useState(1);
         const types = [
-            {id: 1, name: "Pret Interne", view: <PretInternForm/>},
+            {id: 1, name: "Prêt Interne", view: <PretInternForm/>},
             {id: 2, name: "Avance", view: <AvanceForm/>}
         ]
         return(
@@ -163,7 +242,8 @@ export const Avance = ()=>{
                     types.map((type)=>(
                         <div className="col">
                             <label htmlFor="" >
-                            <input type="radio" value={selectedType} name="documentType" onChange={()=> setSelectedType(type.id)}/>
+                            <input type="radio" value={selectedType} 
+                            name="documentType" onChange={()=> setSelectedType(type.id)} checked={type.id === selectedType}/>
                             {type.name}
                         </label>
                         </div>
@@ -203,8 +283,6 @@ export const Avance = ()=>{
               <div>
                 {selectedService === 1 ? <></>: <UserInformationCard exception={"Without solde"}/>}
               </div>
-              
-        
               <div className="row">
                 {services.map((s) => (s.id === selectedService ? s.view : ""))}
               </div>
