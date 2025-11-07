@@ -1,9 +1,10 @@
-import { Activity, Briefcase, FileText, Gift, Handshake, HeartPulse, RefreshCcw, Rss, UserRoundSearch, Wallet } from "lucide-react";
+import { Activity, Briefcase, FileText, Gift, Handshake, HeartPulse, Network, RefreshCcw, Rss, UserRoundSearch, Wallet } from "lucide-react";
 import { Loan } from "./Loan";
 import { DocumentRequest } from "./DocumentRequest";
 import { Home } from "./Home";
 import { LeaveRequest } from "./Leave";
 import { FaCalendarAlt, FaHome } from "react-icons/fa";
+import { Annuaire } from "./Directory";
 
 export const servicesConfig = [
   { id: 1, name: "Home", icon: <FaHome />, view: <Home/> },
@@ -19,6 +20,9 @@ export const servicesConfig = [
         
       ],
     },
+    {
+        id: 3, name: "SAHAM Annuaire", icon: <></>, view: <Annuaire/>
+    }
 ];
 export const homeCards = [
   { id: "leave", label: "Demandes de congé", name:"Congés", icon: <FileText />,
@@ -33,4 +37,5 @@ export const homeCards = [
   { id: "onboarding", label: "Onboarding", icon: <Handshake /> },
   { id: "continuousImprovement", label: "Amélioration continue", icon: <RefreshCcw /> },
   { id: "news", label: "SAHAM News", icon: <Rss /> },
+  { id: "news", label: "SAHAM Annuaire", icon: <Network />, view: <Annuaire/> },
 ];
