@@ -13,6 +13,7 @@ LeaveAPI.interceptors.response.use(
             console.error("Network Error",error);
             return Promise.reject({message : "Network Error, Please try again"});
         }
+        return Promise.reject({message : "Network Error, Please try again"});
     }
 )
 

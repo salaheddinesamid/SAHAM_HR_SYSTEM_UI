@@ -12,7 +12,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { useEffect, useState, useCallback } from "react";
-import { getSubordinatesLeaves, approveLeave, rejectLeave, approveSubordinatesLeave } from "../services/LeaveService";
+import { getSubordinatesLeaves, approveLeave, rejectLeave, approveSubordinatesLeave, rejectSubordinatesLeave } from "../services/LeaveService";
 import { Check, X } from "lucide-react";
 
 export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
@@ -20,7 +20,8 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
   const [requests, setRequests] = useState([]);
   const [error, setError] = useState(null);
   const [currentRequest, setCurrentRequest] = useState(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [approvalDialogOpen, setApprovalDialogOpen] = useState(false);
+  const [rejectDialogOpen,setRejectDialogOpen] = useState(false);
 
   // ✅ Memoized fetch function (prevents unnecessary re-renders)
   const fetchRequests = useCallback(async () => {
@@ -56,14 +57,41 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
     if(!request) return null;
 
     const handleConfirm = async()=>{
+
+        const id = request?.id;
         try{
-            
+            setLoading(true);
+            const res = await rejectSubordinatesLeave(id);
+            if(res === 200){
+                fetchRequests();
+            }
         }catch(err){
-
+            console.log(err);
         }finally{
-
+            setLoading(false);
         }
     }
+
+    return(
+        <Dialog open={open} onClose={onClose}>
+            <DialogTitle>Rejeter la demande</DialogTitle>
+            <DialogContent>
+                Êtes-vous sûr de vouloir rejeter la demande de{" "}
+                <strong>{request.requestedBy}</strong> du{" "}
+                <strong>{request.startDate}</strong> au{" "}
+                <strong>{request.endDate}</strong> ?
+            </DialogContent>
+            
+            <DialogActions>
+                <Button variant="outlined" color="secondary" onClick={onClose}>
+                    Annuler
+                </Button>
+                <Button variant="contained" color="warning" onClick={handleConfirm}>
+                    Confirmer
+                </Button>
+            </DialogActions>
+        </Dialog>
+    )
   }
 
   // Separate dialog component
@@ -101,9 +129,14 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
     );
   };
 
-  const handleOpenDialog = (req) => {
+  const handleOpenApprovalDialog = (req) => {
     setCurrentRequest(req);
-    setDialogOpen(true);
+    setApprovalDialogOpen(true);
+  };
+
+  const handleOpenRejectionDialog = (req) => {
+    setCurrentRequest(req);
+    setRejectDialogOpen(true);
   };
 
   const handleReject = async (requestId) => {
@@ -167,7 +200,7 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
                           variant="contained"
                           color="success"
                           size="small"
-                          onClick={() => handleOpenDialog(req)}
+                          onClick={() => handleOpenApprovalDialog(req)}
                         >
                           <Check size={16} />
                         </Button>
@@ -176,7 +209,7 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
                           color="error"
                           size="small"
                           className="ms-1"
-                          onClick={() => handleReject(req.id)}
+                          onClick={() => handleOpenRejectionDialog(req)}
                         >
                           <X size={16} />
                         </Button>
@@ -191,10 +224,14 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
       )}
 
       <ApproveDialog
-        open={dialogOpen}
-        onClose={() => setDialogOpen(false)}
+        open={approvalDialogOpen}
+        onClose={() => setApprovalDialogOpen(false)}
         request={currentRequest}
       />
+      <RejectDialog 
+      open={rejectDialogOpen}
+        onClose={() => handleOpenRejectionDialog(false)}
+        request={currentRequest}/>
     </div>
   );
 };

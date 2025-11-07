@@ -29,11 +29,44 @@ export const getSubordinatesLeaves = async(email)=>{
     return response.data;
 }
 
+// subordinates (Approval/Rejection)
 export const approveSubordinatesLeave = async(requestId)=>{
     const response = await LeaveAPI.put("/subordinates/approve-request",null,{
         params : {
             requestId : requestId
         }
     });
+    return response.status;
+}
+
+export const rejectSubordinatesLeave = async(requestId)=>{
+    const response = await LeaveAPI.put("/subordinates/reject-request",null,{
+        params : {
+            leaveRequestId : requestId
+        }
+    });
+
+    return response.status;
+}
+
+// Final (Approval/Rejection)
+
+export const finalLeaveApproval = async(requestId)=>{
+    const response = await LeaveAPI.put("/approve-request",null,{
+        params : {
+            requestId : requestId
+        }
+    });
+
+    return response.status;
+}
+
+export const finalLeaveRejection = async(requestId)=>{
+    const response = await LeaveAPI.put("reject-request",null,{
+        params : {
+            requestId : requestId
+        }
+    });
+
     return response.status;
 }
