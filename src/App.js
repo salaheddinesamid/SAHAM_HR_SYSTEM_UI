@@ -7,6 +7,7 @@ import { Login } from './routes/Login';
 import { useEffect } from 'react';
 import { ServiceProvider, ViewProvider } from './context/ViewNavigatorContext';
 import { ProtectedRoute } from './ProtectedRoute';
+import { AltLogin } from './routes/AlternativeLogin';
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
         </ServiceProvider>
         }/>
       <Route path='/' element={<Login/>}/>
+      <Route path='/2' element={<AltLogin/>}/>
      </Routes>
     </BrowserRouter>
   );

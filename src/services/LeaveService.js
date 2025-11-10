@@ -70,3 +70,9 @@ export const finalLeaveRejection = async(requestId)=>{
 
     return response.status;
 }
+
+// Get leave requests In process and approved by Manager
+export const getAllRequestsForHr = async()=>{
+    const response = await LeaveAPI.get("hr/get_all_requests");
+    return response.data;
+}

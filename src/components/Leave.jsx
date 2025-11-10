@@ -5,6 +5,7 @@ import { UserInformationCard } from "./UserInformationCard";
 import { applyLeave } from "../services/LeaveService";
 import { LeaveHistory } from "./LeaveHistory";
 import { SubordinatesLeaveRequestsHistory } from "./SubordinatesLeaveRequestsHistory";
+import { PendingLeaveRequests } from "./PendingLeaveRequests";
 
 export const LeaveRequest = () => {
   const user = JSON.parse(localStorage.getItem("userDetails")); 
@@ -226,7 +227,8 @@ export const LeaveRequest = () => {
     { id: 1, name: "Profil", view: <UserInformationCard/> },
     { id: 2, name: "Nouvelle Demande", view: <RequestForm user={user}/> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},
     { id: 3, name: "Historique des demandes", view: <LeaveHistory user={user}/> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},
-    { id: 4, name: "Les demandes de vos subordonnés", view: <SubordinatesLeaveRequestsHistory manager={user}/>, allowedRoles:["MANAGER"]}
+    { id: 4, name: "Les demandes de vos subordonnés", view: <SubordinatesLeaveRequestsHistory manager={user}/>, allowedRoles:["MANAGER"]},
+    { id: 5, name: "Les demandes en attente", view: <PendingLeaveRequests/>, allowedRoles:["HR"]}
   ];
 
   const filteredServices = services.filter(service =>
@@ -249,7 +251,7 @@ export const LeaveRequest = () => {
         ))}
       </div>
       <div>
-        {selectedService === 4 || selectedService === 1 ? <></>: <UserInformationCard />}
+        {selectedService === 4 || selectedService === 1 || selectedService === 5 ? <></>: <UserInformationCard />}
       </div>
       
 
