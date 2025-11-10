@@ -36,7 +36,7 @@ export const Dashboard = () => {
               <button
                 className="service-btn"
                 onClick={() => {
-                  if (s.subServices) toggleService(s.name);
+                  if (s.subServices) toggleService(s);
                   else selectService(s);
                 }}
               >
