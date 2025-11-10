@@ -8,3 +8,13 @@ export const applyLoan = async(email,requestDto)=>{
     });
     return response.status;
 }
+
+export const getAllEmployeeRequests = async(email)=>{
+    const response = await LoanAPI.get("/employee-requests",{
+        params : {
+            email : email
+        }
+    });
+
+    return response.data;
+}
