@@ -1,8 +1,16 @@
-import { useEffect, useState } from "react";
-import "../styles/LeaveRequest.css";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import { TextField, CircularProgress } from "@mui/material";
-import { UserInformationCard } from "./UserInformationCard";
 import { applyLeave } from "../services/LeaveService";
+
+/*
+const SubordinatesLeaveRequestsHistory = lazy(() => import("./SubordinatesLeaveRequestsHistory"));
+const UserInformationCard = lazy(() => import("./UserInformationCard"));
+const LeaveHistory = lazy(() => import("./LeaveHistory"));
+const PendingLeaveRequests = lazy(() => import("./PendingLeaveRequests"));
+const MyTeam = lazy(() => import("./MyTeam"));
+*/
+
+import { UserInformationCard } from "./UserInformationCard";
 import { LeaveHistory } from "./LeaveHistory";
 import { SubordinatesLeaveRequestsHistory } from "./SubordinatesLeaveRequestsHistory";
 import { PendingLeaveRequests } from "./PendingLeaveRequests";
@@ -225,12 +233,22 @@ export const LeaveRequest = () => {
   );
 };
   const services = [
-    { id: 1, name: "Profil", view: <UserInformationCard/> },
+    { id: 1, name: "Profil", view: <Suspense fallback={<CircularProgress/>}>
+      <UserInformationCard/>
+      </Suspense> },
     { id: 2, name: "Nouvelle Demande", view: <RequestForm user={user}/> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},
-    { id: 3, name: "Historique des demandes", view: <LeaveHistory user={user}/> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},
-    { id: 4, name: "Les demandes de vos subordonnés", view: <SubordinatesLeaveRequestsHistory manager={user}/>, allowedRoles:["MANAGER"]},
-    { id: 5, name: "Les demandes en attente", view: <PendingLeaveRequests/>, allowedRoles:["HR"]},
-    { id: 6, name: "Mes Equipes", view: <MyTeam/>, allowedRoles:["MANAGER"]}
+    { id: 3, name: "Historique des demandes", view: <Suspense fallback={<CircularProgress/>}>
+      <LeaveHistory user={user}/>
+    </Suspense> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},
+    { id: 4, name: "Les demandes de vos subordonnés", view: <Suspense fallback={<CircularProgress/>}>
+      <SubordinatesLeaveRequestsHistory manager={user}/>
+    </Suspense>, allowedRoles:["MANAGER"]},
+    { id: 5, name: "Les demandes en attente", view: <Suspense fallback={<CircularProgress/>}>
+      <PendingLeaveRequests/>
+    </Suspense>, allowedRoles:["HR"]},
+    { id: 6, name: "Mes Equipes", view: <Suspense fallback={<CircularProgress/>}>
+      <MyTeam/>
+    </Suspense>, allowedRoles:["MANAGER"]}
   ];
 
   const filteredServices = services.filter(service =>
@@ -258,7 +276,9 @@ export const LeaveRequest = () => {
       
 
       <div className="row">
-        {services.map((s) => (s.id === selectedService ? s.view : ""))}
+        <Suspense fallback={<div style={{ display: "flex", justifyContent: "center" }}><CircularProgress /></div>}>
+        {services.find((s) => s.id === selectedService)?.view}
+      </Suspense>
       </div>
     </div>
   );
