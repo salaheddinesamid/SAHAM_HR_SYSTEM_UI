@@ -43,12 +43,12 @@ export const Dashboard = () => {
                 {s.name}
                 {s.subServices && (
                   <span className="chevron">
-                    {openServices.includes(s.name) ? <FaChevronUp /> : <FaChevronDown />}
+                    {s.subServices?.some(sub => sub.name === selectedService.name) ? <FaChevronUp /> : <FaChevronDown />}
                   </span>
                 )}
               </button>
               
-              {s.subServices && openServices.includes(s.name) && (
+              {s.subServices?.some(sub => sub.name === selectedService.name) && (
                 <div className="sub-services">
                   {s.subServices.map((sub) => (
                     <button

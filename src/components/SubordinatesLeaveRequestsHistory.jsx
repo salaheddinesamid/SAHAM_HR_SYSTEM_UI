@@ -99,8 +99,9 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
     if (!request) return null;
 
     const handleConfirm = async () => {
+        const id = request?.id;
       try {
-        await approveSubordinatesLeave(request.id);
+        await approveSubordinatesLeave(id);
         onClose();
         fetchRequests(); // Refresh list
       } catch (err) {
