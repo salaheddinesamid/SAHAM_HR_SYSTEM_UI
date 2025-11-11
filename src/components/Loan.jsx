@@ -58,27 +58,6 @@ export const Loan = ()=>{
                 <div className="row mt-3">
                     <div className="col">
                         <TextField
-                            label="Poste"
-                            type="text"
-                            fullWidth
-                            InputLabelProps={{ shrink: true }}
-                            variant="outlined"
-                            placeholder="Poste"/>
-                    </div>
-                    <div className="col">
-                        <TextField
-                            label="Montant"
-                            type="number"
-                            fullWidth
-                            InputLabelProps={{ shrink: true }}
-                            variant="outlined"
-                            placeholder="Montant"/>
-                    </div>
-                    
-                </div>
-                <div className="row mt-3">
-                    <div className="col">
-                        <TextField
                             label="Montant"
                             type="number"
                             fullWidth
@@ -146,12 +125,13 @@ export const Loan = ()=>{
                     {
                         types.map((t)=>(
                             <label>
-                                <input type="radio" value={requestDto.type} onChange={handleChange}/>
+                                <input type="radio" value={requestDto.type} name="type" onChange={handleChange}/>
                                 {t.name}
                             </label>
                         ))
                     }
                 </div>
+
                 <div className="row mt-3">
                     <div className="col">
                         <TextField
