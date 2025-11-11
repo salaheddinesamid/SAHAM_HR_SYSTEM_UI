@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useEffect, useState } from "react";
-import { TextField, CircularProgress } from "@mui/material";
+import { TextField, CircularProgress, Alert, Snackbar } from "@mui/material";
 import { applyLeave } from "../services/LeaveService";
 
 /*
@@ -16,11 +16,14 @@ import { SubordinatesLeaveRequestsHistory } from "./SubordinatesLeaveRequestsHis
 import { PendingLeaveRequests } from "./PendingLeaveRequests";
 import { MyTeam } from "./MyTeam";
 import "../styles/LeaveRequest.css"
+import { CheckIcon, TriangleAlert } from "lucide-react";
 
 export const LeaveRequest = () => {
   const user = JSON.parse(localStorage.getItem("userDetails")); 
   const userRoles = user?.roles || [];
   const [selectedService, setSelectedService] = useState(1);
+  const [error,setError] = useState("");
+  const [submitSuccess,setSubmitSuccess] = useState(false);
 
   const leaveTypes = [
     { id: 1, name: "Annuel" },
@@ -69,6 +72,11 @@ export const LeaveRequest = () => {
 
   const handleSubmit = async () => {
     const email = user?.email;
+
+    if(requestDto.startDate === "" || requestDto.startDate === ""){
+      setError("Veuillez saisire tous les information obligatoire")
+      return;
+    }
     try {
       setRequestLoading(true);
       const payload = {
@@ -77,7 +85,18 @@ export const LeaveRequest = () => {
         totalDays,
       };
 
+      // Send the request to the server:
       await applyLeave(email, payload);
+      // if success, display a snackbar:
+      setSubmitSuccess(true);
+      // init the request dto:
+      setRequestDto({
+        startDate: "",
+        endDate: "",
+        type: "",
+        comment: "",
+      })
+
       console.log("Submitting request:", payload);
       alert("Demande envoyée avec succès !");
     } catch (err) {
@@ -106,6 +125,34 @@ export const LeaveRequest = () => {
 
   return (
     <div style={{ padding: 20, position: "relative" }}>
+      <Snackbar
+        open={submitSuccess}
+        autoHideDuration={4000}
+        onClose={() => setSubmitSuccess(false)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert 
+          severity="success" 
+          icon={<CheckIcon fontSize="inherit" />}
+          sx={{ width: '100%' }}
+        >
+          Votre demande a été enregistrer avec success
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={error !== ""}
+        autoHideDuration={4000}
+        onClose={() => setError("")}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert 
+          severity="error" 
+          icon={<TriangleAlert fontSize="inherit"/>}
+          sx={{ width: '100%' }}
+        >
+          {error}
+        </Alert>
+      </Snackbar>
       {requestLoading && (
         <div
           style={{
@@ -135,20 +182,28 @@ export const LeaveRequest = () => {
 
         <div style={{ display: "flex", gap: "10px", margin: "10px 0" }}>
           <TextField
-            label="Date de début"
-            type="date"
-            fullWidth
-            InputLabelProps={{ shrink: true }}
-            variant="outlined"
-            onChange={(e) => setFrom(e.target.value)}
+          label="Date de début"
+          type="date"
+          helperText="Ce champ est obligatoire"
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+          variant="outlined"
+          onChange={(e) => setFrom(e.target.value)}
+          FormHelperTextProps={{
+            sx: { color: 'red' } // make helper text red
+          }}
           />
           <TextField
-            label="Date de fin"
-            type="date"
-            fullWidth
-            InputLabelProps={{ shrink: true }}
-            variant="outlined"
-            onChange={(e) => setTo(e.target.value)}
+          label="Date de fin"
+          type="date"
+          helperText="Ce champ est obligatoire"
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+          variant="outlined"
+          onChange={(e) => setFrom(e.target.value)}
+          FormHelperTextProps={{
+            sx: { color: 'red' } // make helper text red
+            }}
           />
         </div>
 
