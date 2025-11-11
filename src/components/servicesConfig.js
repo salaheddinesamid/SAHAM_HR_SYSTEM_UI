@@ -22,7 +22,15 @@ export const servicesConfig = [
     },
     {
         id: 3, name: "SAHAM Annuaire", icon: <></>, view: <Annuaire/>
-    }
+    },
+    { id: 4, label: "Les bons plans Saham", name: "Les bons plans Saham", icon: <Gift /> },
+  { id: 5, label: "Infos médicales et d'urgence", name: "Infos médicales et d'urgence", icon: <HeartPulse /> },
+  { id: 6, label: "Mes remboursements médicaux", name: "Mes remboursements médicaux", icon: <Activity /> },
+  { id: 7, label: "Mes dépenses", name: "Mes dépenses", icon: <Wallet /> },
+  { id: 8, label: "Talent Acquisition", name: "Talent Acquisition", icon: <UserRoundSearch /> },
+  { id: 9, label: "Onboarding", name: "Onboarding", icon: <Handshake /> },
+  { id: 10, label: "Amélioration continue", name: "Amélioration continue", icon: <RefreshCcw /> },
+  { id: 11, label: "SAHAM News", name: "SAHAM News", icon: <Rss /> }
 ];
 export const homeCards = [
   { id: "leave", label: "Demandes de congé", name:"Congés", icon: <FileText />,

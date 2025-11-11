@@ -62,7 +62,7 @@ export const Annuaire = ()=>{
                         <TableCell style={{fontWeight : "bold"}}>Poste</TableCell>
                         <TableCell style={{fontWeight : "bold"}}>Responsable Hiérarchique</TableCell>
                         <TableCell style={{fontWeight : "bold"}}>E-mail</TableCell>
-                        <TableCell style={{fontWeight : "bold"}}>Phone</TableCell>
+                        <TableCell style={{fontWeight : "bold"}}>Téléphone</TableCell>
                         <TableCell style={{fontWeight : "bold"}}>Extension</TableCell>
                     </TableRow>
                 </TableHead>

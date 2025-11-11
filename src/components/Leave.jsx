@@ -72,11 +72,6 @@ export const LeaveRequest = () => {
 
   const handleSubmit = async () => {
     const email = user?.email;
-
-    if(requestDto.startDate === "" || requestDto.startDate === ""){
-      setError("Veuillez saisire tous les information obligatoire")
-      return;
-    }
     try {
       setRequestLoading(true);
       const payload = {
@@ -200,7 +195,7 @@ export const LeaveRequest = () => {
           fullWidth
           InputLabelProps={{ shrink: true }}
           variant="outlined"
-          onChange={(e) => setFrom(e.target.value)}
+          onChange={(e) => setTo(e.target.value)}
           FormHelperTextProps={{
             sx: { color: 'red' } // make helper text red
             }}
