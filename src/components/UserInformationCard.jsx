@@ -48,7 +48,7 @@ export const UserInformationCard = ({exception}) => {
             exception !== "Without solde" ? 
             <div className="row mt-3">
             <div className="col">
-                <p>Solde 2024 : <b>{user.balanceDetails?.initialBalance} Jours</b></p>
+                <p>Solde {user?.balanceDetails?.year} : <b>{user.balanceDetails?.initialBalance} Jours</b></p>
             </div>
             <div className="col">
                 <p>Droit annuel : <b>{user.balanceDetails?.accumulatedBalance} Jours</b></p>

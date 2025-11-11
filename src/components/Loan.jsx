@@ -18,6 +18,7 @@ export const Loan = ()=>{
         }
     }
 
+    // This form handles (Pret-interne) loan requests
     const PretInternForm = ()=>{
         const [requestDto,setRequestDto] = useState({
             type : "",
@@ -94,6 +95,7 @@ export const Loan = ()=>{
         )
     }
 
+    // This form handles (Avance) loan requests
     const AvanceForm = ()=>{
         const [requestDto,setRequestDto] = useState({
             type : "",
@@ -171,13 +173,10 @@ export const Loan = ()=>{
         )
     }
 
+    // This component is responsible for rendering new loan request forms.
     const NewRequest = ()=>{
-
         const [selectedType,setSelectedType] = useState(1);
-        const types = [
-            {id: 1, name: "Prêt Interne", view: <PretInternForm/>},
-            {id: 2, name: "Avance", view: <AvanceForm/>}
-        ]
+        const types = [{id: 1, name: "Prêt Interne", view: <PretInternForm/>},{id: 2, name: "Avance", view: <AvanceForm/>}]
         return(
             <div className="row mt-4">
                 <div className="row">
@@ -199,14 +198,13 @@ export const Loan = ()=>{
             </div>
         )
     }
+
+    // This array contains services provided and rendered by Loan service
     const services = [
         {id: 1, name: "Profil", view: <UserInformationCard exception={"Without solde"}/>},
         {id: 2, name: "Nouvelle Demande", view: <NewRequest/>},
         {id: 3, name: "Historique des demandes", view:<></>}
     ]
-
-    
-
     return(
         <div style={{ padding: "20px" }}>
               <div style={{ display: "flex", gap: "10px", margin: "0px 0px" }}>

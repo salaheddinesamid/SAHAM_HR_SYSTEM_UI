@@ -164,9 +164,8 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
 
   return (
     <div className="container mt-3">
-      <h5></h5>
       {requests.length === 0 ? (
-        <p>Aucune demande trouvée.</p>
+        <p className="text-center">Aucune demande trouvée.</p>
       ) : (
         <Table className="table table-striped">
           <TableHead>

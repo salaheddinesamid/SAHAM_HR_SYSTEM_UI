@@ -6,11 +6,13 @@ import { UserProfile } from "../components/UserProfile";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { servicesConfig } from "../components/servicesConfig";
 import { useService } from "../context/ViewNavigatorContext";
+import { motion, AnimatePresence } from "framer-motion";
 
 export const Dashboard = () => {
   const [openServices, setOpenServices] = useState([]);
   const { selectedService, selectService } = useService();
 
+  // Toggle open/close for sidebar sections
   const toggleService = (serviceName) => {
     setOpenServices((prev) =>
       prev.includes(serviceName)
@@ -19,10 +21,14 @@ export const Dashboard = () => {
     );
   };
 
-  // Automatically open the section containing the selected service
+  // Auto-open parent section when a sub-service is selected
   useEffect(() => {
-    if (selectedService?.name) {
-      toggleService(selectedService.name);
+    if (selectedService?.parent) {
+      setOpenServices((prev) =>
+        prev.includes(selectedService.parent)
+          ? prev
+          : [...prev, selectedService.parent]
+      );
     }
   }, [selectedService]);
 
@@ -34,52 +40,60 @@ export const Dashboard = () => {
         </div>
 
         <div className="left-side-services">
-          {servicesConfig.map((s) => (
-            <div key={s.id} className="service-item">
-              <button
-                className="service-btn"
-                onClick={() => {
-                  if (s.subServices) toggleService(s.name);
-                  else selectService(s);
-                }}
-              >
-                {s.name}
-                {s.subServices && (
-                  <span className="chevron">
-                    {openServices.includes(s.name) ? (
-                      <FaChevronUp />
-                    ) : (
-                      <FaChevronDown />
-                    )}
-                  </span>
-                )}
-              </button>
+          {servicesConfig.map((s) => {
+            const isOpen =
+              openServices.includes(s.name) ||
+              s.subServices?.some((sub) => sub.name === selectedService.name);
 
-              {openServices.includes(s.name) && s.subServices && (
-                <div className="sub-services">
-                  {s.subServices.map((sub) => (
-                    <button
-                      key={sub.name}
-                      className={`sub-service-btn ${
-                        selectedService.name === sub.name ? "active" : ""
-                      }`}
-                      onClick={() => selectService(sub)}
+            return (
+              <div key={s.id} className="service-item">
+                <button
+                  className="service-btn"
+                  onClick={() => {
+                    if (s.subServices) toggleService(s.name);
+                    else selectService(s);
+                  }}
+                >
+                  {s.name}
+                  {s.subServices && (
+                    <span className="chevron">
+                      {isOpen ? <FaChevronUp /> : <FaChevronDown />}
+                    </span>
+                  )}
+                </button>
+                <AnimatePresence initial={false}>
+                  {isOpen && s.subServices && (
+                    <motion.div
+                      className="sub-services"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.25, ease: "easeInOut" }}
                     >
-                      {sub.name}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
+                      {s.subServices.map((sub) => (
+                        <button
+                          key={sub.name}
+                          className={`sub-service-btn ${
+                            selectedService.name === sub.name ? "active" : ""
+                          }`}
+                          onClick={() => selectService({ ...sub, parent: s.name })}
+                        >
+                          {sub.name}
+                        </button>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
         </div>
       </div>
-
       <div className="right-side">
         <div className="right-side-header">
           <div className="header-left">
             <p className="page-title">
-              {selectedService.name !== "Home" ? selectedService.name : ""}
+              {selectedService?.name !== "Home" ? selectedService.name : ""}
             </p>
           </div>
           <div className="header-right d-flex">
@@ -90,7 +104,7 @@ export const Dashboard = () => {
           </div>
         </div>
 
-        <div className="right-side-content">{selectedService.view}</div>
+        <div className="right-side-content">{selectedService?.view}</div>
       </div>
     </div>
   );
