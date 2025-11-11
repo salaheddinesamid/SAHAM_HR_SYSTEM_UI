@@ -27,8 +27,8 @@ export const servicesConfig = [
 export const homeCards = [
   { id: "leave", label: "Demandes de congé", name:"Congés", icon: <FileText />,
     view: <LeaveRequest /> },
-  { id: "loan", label: "Demandes de prêt", icon: <Wallet /> },
-  { id: "advance", label: "Demandes d’avance", icon: <Briefcase /> },
+  { id: "loan", label: "Demandes de prêt", name: "Prêts / Avances", icon: <Wallet />,  view:<Loan/> },
+  { id: "advance", label: "Demandes d’avance", name: "Prêts / Avances", icon: <Briefcase/>, view: <Loan/> },
   { id: "plans", label: "Les bons plans Saham", icon: <Gift /> },
   { id: "health", label: "Infos médicales et d'urgence", icon: <HeartPulse /> },
   { id: "refunds", label: "Mes remboursements médicaux", icon: <Activity /> },

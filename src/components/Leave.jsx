@@ -15,6 +15,7 @@ import { LeaveHistory } from "./LeaveHistory";
 import { SubordinatesLeaveRequestsHistory } from "./SubordinatesLeaveRequestsHistory";
 import { PendingLeaveRequests } from "./PendingLeaveRequests";
 import { MyTeam } from "./MyTeam";
+import "../styles/LeaveRequest.css"
 
 export const LeaveRequest = () => {
   const user = JSON.parse(localStorage.getItem("userDetails")); 

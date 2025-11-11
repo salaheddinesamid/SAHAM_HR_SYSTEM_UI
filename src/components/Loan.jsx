@@ -1,34 +1,20 @@
 import { useState } from "react";
 import { UserInformationCard } from "./UserInformationCard"
 import { TextField } from "@mui/material";
-import { applyLoan } from "../services/LoanService";
 
 
 export const Loan = ()=>{
     const user = JSON.parse(localStorage.getItem("userDetails"));
     const [selectedService, setSelectedService] = useState(1);
-    const [loading,setLoading] = useState(false);
-
-    const [requestDto,setRequestDto] = useState({
-        type : "",
-        matriculation : user?.matriculation,
-        poste : user?.occupation,
-        entity : user?.entity,
-        motif : "",
-        paymentModel : ""
-    })
 
     // handle submit both requests (Pret/Avance)
-    const handleSubmitRequest = async(request)=>{
-        const email = user?.email;
+    const handleSubmitRequest = (request)=>{
         try{
-            setLoading(true);
-            const res = await applyLoan(email,request);
+            console.log(request);
         }catch(err){
-            console.log(err);
-        }
-        finally{
-            setLoading(true);
+
+        }finally{
+
         }
     }
 
@@ -72,6 +58,27 @@ export const Loan = ()=>{
                 <div className="row mt-3">
                     <div className="col">
                         <TextField
+                            label="Poste"
+                            type="text"
+                            fullWidth
+                            InputLabelProps={{ shrink: true }}
+                            variant="outlined"
+                            placeholder="Poste"/>
+                    </div>
+                    <div className="col">
+                        <TextField
+                            label="Montant"
+                            type="number"
+                            fullWidth
+                            InputLabelProps={{ shrink: true }}
+                            variant="outlined"
+                            placeholder="Montant"/>
+                    </div>
+                    
+                </div>
+                <div className="row mt-3">
+                    <div className="col">
+                        <TextField
                             label="Montant"
                             type="number"
                             fullWidth
@@ -100,7 +107,9 @@ export const Loan = ()=>{
                     </div>
                 </div>
                 <div className="row mt-3">
-                    <button className="submit-btn" onClick={()=>handleSubmitRequest(requestDto)}>Soumettre</button>
+                    <div className="col-xl-4">
+                        <button className="submit-btn" onClick={()=>handleSubmitRequest(requestDto)}>Soumettre</button>
+                    </div>
                 </div>
             </div>
         )
@@ -137,7 +146,7 @@ export const Loan = ()=>{
                     {
                         types.map((t)=>(
                             <label>
-                                <input type="radio" value={requestDto.type} name="type" onChange={handleChange}/>
+                                <input type="radio" value={requestDto.type} onChange={handleChange}/>
                                 {t.name}
                             </label>
                         ))
@@ -174,7 +183,9 @@ export const Loan = ()=>{
                     </div>
                 </div>
                 <div className="row mt-3">
-                    <button className="submit-btn">Soumettre</button>
+                    <div className="col-xl-4">
+                        <button className="submit-btn" onClick={()=>handleSubmitRequest(requestDto)}>Soumettre</button>
+                    </div>
                 </div>
             </div>
         )

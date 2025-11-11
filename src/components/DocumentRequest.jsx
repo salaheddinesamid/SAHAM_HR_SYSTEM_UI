@@ -10,9 +10,9 @@ export const DocumentRequest = ()=>{
     const [selectedType,setSelectedType] = useState("");
 
     const entities = [
-        { id: 1, name: "SAHAM Management Company" },
-        { id: 2, name: "SAHAM Immobilier" },
-        { id: 3, name: "Medjool Star" },
+        { id: 1, name: "SAHAM Horizon" },
+        { id: 2, name: "SAHAM Finances" },
+        { id: 3, name: "SAHAM Foundation" },
     ];
 
 
