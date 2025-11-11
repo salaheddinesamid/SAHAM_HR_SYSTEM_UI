@@ -10,13 +10,15 @@ export const servicesConfig = [
   { id: 1, name: "Home", icon: <FaHome />, view: <Home/> },
     {
       id: 2,
-      name: "Demandes administratifs",
+      name: "Demandes administratives",
       icon: <FaCalendarAlt />,
       view: <></>,
       subServices: [
         { id: 1, name: "Congés", view: <LeaveRequest /> },
-        { id: 2, name: "Documents administratifs", view: <DocumentRequest/> },
-        {id: 3, name: "Prêts / Avances", view: <Loan/>}
+        { id: 2, name: "Documents administratives", view: <DocumentRequest/> },
+        { id: 5, name: "Mes Bulletins", view: <></> },
+        {id: 3, name: "Prêts / Avances", view: <Loan/>},
+        {id: 4, name: "Support RH", view: <></>}
         
       ],
     },

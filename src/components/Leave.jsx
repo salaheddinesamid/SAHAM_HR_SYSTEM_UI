@@ -93,7 +93,7 @@ export const LeaveRequest = () => {
       })
 
       console.log("Submitting request:", payload);
-      alert("Demande envoyée avec succès !");
+      //alert("Demande envoyée avec succès !");
     } catch (err) {
       console.error(err);
       alert("Erreur lors de la soumission de la demande !");

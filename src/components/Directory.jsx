@@ -42,8 +42,7 @@ export const Annuaire = ()=>{
         {id: 34, fullName: "ZEMMAMA MAMOUN ", occupation : "Senior Investment Analyst", supervisor : "BENSOUDA RIM ", email : "mamoun.zemmama@sahamfamilyoffice.com", phone : "+212 650217576", extension : 7541},
     ];
 
-    const filteredDirectory = directory.filter((employee) =>
-        employee.fullName.toLowerCase().includes(searchQuery.toLowerCase()))
+    const filteredDirectory = directory.filter((employee) => employee.occupation.toLowerCase().includes(searchQuery.toLowerCase()))
 
     return(
         <div className="row">
