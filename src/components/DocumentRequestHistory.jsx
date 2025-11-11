@@ -21,6 +21,7 @@ export const DocumentRequestHistory = ({user})=>{
         try{
             const email = user?.email;
             setLoading(true);
+            console.log("Fetching....")
             const response = await getAllDocumentRequests(email);
             setRequests(response);
             setFilteredRequests(response);

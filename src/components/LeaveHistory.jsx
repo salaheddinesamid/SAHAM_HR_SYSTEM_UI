@@ -11,6 +11,7 @@ export const LeaveHistory = ({user}) => {
     const email = user?.email;
     try {
       setLoading(true);
+      console.log("Fetching Data...");
       const response = await getEmployeeLeaves(email);
       setRequests(response || []); // ensure safe access
     } catch (err) {

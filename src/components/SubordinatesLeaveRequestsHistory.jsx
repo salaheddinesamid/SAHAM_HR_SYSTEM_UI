@@ -28,7 +28,8 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
     if (!manager?.email) return;
     try {
       setLoading(true);
-      const data = await getSubordinatesLeaves(manager.email);
+      console.log("...Fetching data")
+      const data = await getSubordinatesLeaves(manager?.email);
       setRequests(data || []);
     } catch (err) {
       console.error("Failed to fetch subordinates' leave requests:", err);
@@ -40,7 +41,7 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
 
   useEffect(() => {
     fetchRequests();
-  }, [fetchRequests]);
+  }, []);
 
   const statusMapper = (status) => {
     const map = {

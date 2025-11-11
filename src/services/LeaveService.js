@@ -13,7 +13,7 @@ export const getEmployeeLeaves = async(email)=>{
     const response = await LeaveAPI.get("get",{
         params : {
             email: email
-        }
+        },
     });
 
     return response.data;
