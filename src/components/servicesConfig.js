@@ -1,4 +1,18 @@
-import { Activity, Briefcase, FileText, Gift, Handshake, HeartPulse, Network, RefreshCcw, Rss, UserRoundSearch, Wallet } from "lucide-react";
+import { 
+  Activity, 
+  Briefcase, 
+  ChartNoAxesCombined, 
+  FileText, 
+  Gift, 
+  GraduationCap, 
+  Handshake, 
+  HeartPulse, 
+  Info, 
+  Network, 
+  Syringe, 
+  UserStar, 
+  Wallet 
+} from "lucide-react";
 import { Loan } from "./Loan";
 import { DocumentRequest } from "./DocumentRequest";
 import { Home } from "./Home";
@@ -7,45 +21,72 @@ import { FaCalendarAlt, FaHome } from "react-icons/fa";
 import { Annuaire } from "./Directory";
 
 export const servicesConfig = [
-  { id: 1, name: "Home", icon: <FaHome />, view: <Home/> },
-    {
-      id: 2,
-      name: "Demandes administratives",
-      icon: <FaCalendarAlt />,
-      view: <></>,
-      subServices: [
-        { id: 1, name: "Congés", view: <LeaveRequest /> },
-        { id: 2, name: "Documents administratives", view: <DocumentRequest/> },
-        { id: 5, name: "Mes Bulletins", view: <></> },
-        {id: 3, name: "Prêts / Avances", view: <Loan/>},
-        {id: 4, name: "Support RH", view: <></>}
-        
-      ],
-    },
-    {
-        id: 3, name: "SAHAM Annuaire", icon: <></>, view: <Annuaire/>
-    },
-    { id: 4, label: "Les bons plans Saham", name: "Les bons plans Saham", icon: <Gift /> },
-  { id: 5, label: "Infos médicales et d'urgence", name: "Infos médicales et d'urgence", icon: <HeartPulse /> },
-  { id: 6, label: "Mes remboursements médicaux", name: "Mes remboursements médicaux", icon: <Activity /> },
-  { id: 7, label: "Mes dépenses", name: "Mes dépenses", icon: <Wallet /> },
-  { id: 8, label: "Talent Acquisition", name: "Talent Acquisition", icon: <UserRoundSearch /> },
-  { id: 9, label: "Onboarding", name: "Onboarding", icon: <Handshake /> },
-  { id: 10, label: "Amélioration continue", name: "Amélioration continue", icon: <RefreshCcw /> },
-  { id: 11, label: "SAHAM News", name: "SAHAM News", icon: <Rss /> }
-];
-export const homeCards = [
-  { id: "leave", label: "Demandes de congé", name:"Congés", icon: <FileText />,
-    view: <LeaveRequest /> },
-  { id: "loan", label: "Demandes de prêt", name: "Prêts / Avances", icon: <Wallet />,  view:<Loan/> },
-  { id: "advance", label: "Demandes d’avance", name: "Prêts / Avances", icon: <Briefcase/>, view: <Loan/> },
-  { id: "plans", label: "Les bons plans Saham", name: "Les bons plans Saham", icon: <Gift /> },
-  { id: "health", label: "Infos médicales et d'urgence", name: "Infos médicales et d'urgence", icon: <HeartPulse /> },
-  { id: "refunds", label: "Mes remboursements médicaux", name: "Mes remboursements médicaux", icon: <Activity /> },
-  { id: "expenses", label: "Mes dépenses", name: "Mes dépenses", icon: <Wallet /> },
-  { id: "talentAqcuisition", label: "Talent Acquisition", name: "Talent Acquisition", icon: <UserRoundSearch /> },
-  { id: "onboarding", label: "Onboarding", icon: <Handshake /> },
-  { id: "continuousImprovement", label: "Amélioration continue", icon: <RefreshCcw /> },
-  { id: "news", label: "SAHAM News", icon: <Rss /> },
-  { id: "news", label: "SAHAM Annuaire", icon: <Network />, view: <Annuaire/> },
+  { 
+    id: 1, 
+    name: "Home", 
+    icon: <FaHome />, 
+    view: <Home/>, 
+    color: "#F5F7FA"  // Light neutral gray-blue
+  },
+  {
+    id: 2,
+    name: "Demandes administratives",
+    icon: <FaCalendarAlt />,
+    view: <></>,
+    color: "#E3F2FD", // Light blue
+    subServices: [
+      { id: 1, name: "Congés & Absences", view: <LeaveRequest />, icon: <FileText />, color: "#E3F2FD" },
+      { id: 2, name: "Attestations & Documents", view: <DocumentRequest/>, color: "#E3F2FD" },
+      { id: 5, name: "Bulletins de paie", view: <></>, color: "#E3F2FD" },
+      { id: 3, name: "Prêts", view: <Loan/>, icon: <Wallet />, color: "#E3F2FD" },
+      { id: 4, name: "Guide RH", view: <></>, icon: <Info />, color: "#E3F2FD" },
+      { id: 7, name: "Mes dépenses", icon: <Wallet />, color: "#E3F2FD" },
+    ],
+  },
+  {
+    id: 3, 
+    name: "Vie au Bureau", 
+    view: <></>,
+    color: "#FFF3E0", // Warm orange
+    subServices: [
+      { id: 1, name: "Les bons plans Saham", icon: <Gift />, color: "#FFF3E0" },
+      { id: 2, name: "Annuaire", icon: <Network />, color: "#FFF3E0" },
+      { id: 3, name: "Guide Collaborateur", color: "#FFF3E0" },
+      { id: 4, name: "Tribus", color: "#FFF3E0" },
+      { id: 5, name: "Evénements SAHAM", color: "#FFF3E0" },
+    ],
+  },
+  {
+    id: 4, 
+    name: "Santé & avantages", 
+    view: <></>,
+    color: "#E8F5E9", // Light green
+    subServices: [
+      { id: 1, name: "Infos médicales & d’urgence", icon: <HeartPulse />, color: "#E8F5E9" },
+      { id: 2, name: "Mes remboursements médicaux", icon: <Activity />, color: "#E8F5E9" },
+      { id: 3, name: "Conventions & Tiers Payant", color: "#E8F5E9" },
+      { id: 4, name: "Campagne de Vaccination", icon: <Syringe />, color: "#E8F5E9" },
+    ],
+  },
+  {
+    id: 5, 
+    name: "Développement RH", 
+    view: <></>,
+    color: "#F3E5F5", // Light lavender
+    subServices: [
+      { id: 1, name: "Recrutement", color: "#F3E5F5" },
+      { id: 2, name: "Onboarding", icon: <Handshake />, color: "#F3E5F5" },
+      { id: 3, name: "Performance", icon: <UserStar />, color: "#F3E5F5" },
+      { id: 4, name: "Formation", icon: <GraduationCap />, color: "#F3E5F5" },
+    ],
+  },
+  {
+    id: 6, 
+    name: "Dashboard", 
+    view: <></>,
+    color: "#E0F7FA", // Light cyan
+    subServices: [
+      { id: 1, name: "Dashboard RH", icon: <ChartNoAxesCombined />, color: "#E0F7FA" },
+    ],
+  }
 ];
