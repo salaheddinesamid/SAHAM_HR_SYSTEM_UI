@@ -1,7 +1,8 @@
-import { CircularProgress, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { CircularProgress, Paper, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { useEffect, useState } from "react"
 import { ExpenseFormDialog } from "./dialogs/NewExpenseDialog";
 import { getAllExpenses } from "../services/ExpenseService";
+import { Download, DownloadCloudIcon } from "lucide-react";
 
 
 export const Expenses = ()=>{
@@ -28,6 +29,10 @@ export const Expenses = ()=>{
         }finally{
             setLoadingExpenses(false);
         }
+    };
+
+    const handleDownloadPDF = (expenseDetails)=>{
+
     }
 
     useEffect(()=>{
@@ -50,12 +55,17 @@ export const Expenses = ()=>{
             )}
 
             {expenses.length !== 0 && !loadingExpenses && (
-                <Table>
+                <Paper style={{
+                    marginTop : 20
+                }}>
+                    <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Date de creation</TableCell>
-                            <TableCell>Motif</TableCell>
-                            <TableCell>Total</TableCell>
+                            <TableCell><b>Date de creation</b></TableCell>
+                            <TableCell><b>Motif</b></TableCell>
+                            <TableCell><b>Total (DH)</b></TableCell>
+                            <TableCell><b>Telecharger PDF</b></TableCell>
+                            <TableCell><b>Status</b></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -63,13 +73,18 @@ export const Expenses = ()=>{
                             expenses.map((e)=>(
                                 <TableRow>
                                     <TableCell>{e?.createdAt}</TableCell>
-                                    <TableCell>{e?.motif}</TableCell>
-                                    <TableCell>{e?.createdAt}</TableCell>
+                                    <TableCell>{e?.motif || "None"}</TableCell>
+                                    <TableCell>{e?.totalAmount}</TableCell>
+                                    <TableCell>
+                                        <button className="btn" onClick={()=>handleDownloadPDF(e)}><Download/></button>
+                                    </TableCell>
+                                    <TableCell></TableCell>
                                 </TableRow>
                             ))
                         }
                     </TableBody>
-                </Table>
+                    </Table>
+                </Paper>
             )}
             <ExpenseFormDialog open={newExpenseDialogOpen} onClose={handleCloseNewExpenseDialog}/>
         </div>

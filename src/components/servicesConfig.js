@@ -20,6 +20,7 @@ import { LeaveRequest } from "./Leave";
 import { FaCalendarAlt, FaHome } from "react-icons/fa";
 import { Annuaire } from "./Directory";
 import { Expenses } from "./Expenses";
+import { HRGuide } from "./HRGuide";
 
 export const servicesConfig = [
   { 
@@ -40,7 +41,7 @@ export const servicesConfig = [
       { id: 2, name: "Attestations & Documents", view: <DocumentRequest/>, color: "#E3F2FD" },
       { id: 5, name: "Bulletins de paie", view: <></>, color: "#E3F2FD" },
       { id: 3, name: "Prêts", view: <Loan/>, icon: <Wallet />, color: "#E3F2FD" },
-      { id: 4, name: "Guide RH", view: <></>, icon: <Info />, color: "#E3F2FD" },
+      { id: 4, name: "Guide RH", view: <HRGuide/>, icon: <Info />, color: "#E3F2FD" },
       { id: 7, name: "Mes dépenses", view: <Expenses/> , icon: <Wallet />, color: "#E3F2FD" },
     ],
   },
@@ -71,14 +72,17 @@ export const servicesConfig = [
   },
   {
     id: 5, 
-    name: "Développement RH", 
+    name: "Parcours Collaborateur", 
     view: <></>,
     color: "#F3E5F5", // Light lavender
     subServices: [
-      { id: 1, name: "Recrutement", color: "#F3E5F5" },
-      { id: 2, name: "Onboarding", icon: <Handshake />, color: "#F3E5F5" },
-      { id: 3, name: "Performance", icon: <UserStar />, color: "#F3E5F5" },
-      { id: 4, name: "Formation", icon: <GraduationCap />, color: "#F3E5F5" },
+      { id: 1, name: "Identification et recrutement des talents", color: "#F3E5F5" },
+      { id: 2, name: "Pré-intégration", icon: <Handshake />, color: "#F3E5F5" },
+      { id: 3, name: "Intégration (accueil, orientation et formation initiale)", icon: <UserStar />, color: "#F3E5F5" },
+      { id: 5, name: "Rémunération et avantages sociaux", icon: <GraduationCap />, color: "#F3E5F5" },
+      { id: 6, name: "Formation et développement continu", icon: <GraduationCap />, color: "#F3E5F5" },
+      { id: 7, name: "Performance, feedback et évaluations", icon: <GraduationCap />, color: "#F3E5F5" },
+      { id: 8, name: "Départ à la retraite, fin de contrat ou démission", icon: <GraduationCap />, color: "#F3E5F5" },
     ],
   },
   {

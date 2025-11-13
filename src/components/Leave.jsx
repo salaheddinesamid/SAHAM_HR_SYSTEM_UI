@@ -26,8 +26,8 @@ export const LeaveRequest = () => {
   const [submitSuccess,setSubmitSuccess] = useState(false);
 
   const leaveTypes = [
-    { id: 1, name: "Annuel" },
-    { id: 2, name: "Exceptionnel", subTypes: [
+    { id: 1, name: "Annuel", value : "ANNUAL"},
+    { id: 2, name: "Exceptionnel", value : "EXCEPTIONAL" ,subTypes: [
       {id: 1, name: "Mariage du salarié "},
       {id: 2, name: "Mariage d’un enfant du salarié "},
       {id: 3, name: "Naissance "},
@@ -44,6 +44,7 @@ export const LeaveRequest = () => {
     startDate: "",
     endDate: "",
     type: "",
+    typeDetails : "",
     comment: "",
   });
 
@@ -73,13 +74,13 @@ export const LeaveRequest = () => {
   const handleSubmit = async () => {
     const email = user?.email;
     try {
-      setRequestLoading(true);
+      //setRequestLoading(true);
       const payload = {
         ...requestDto,
         entity: selectedEntity,
         totalDays,
       };
-
+      console.log(requestDto);
       // Send the request to the server:
       await applyLeave(email, payload);
       // if success, display a snackbar:
@@ -232,14 +233,14 @@ export const LeaveRequest = () => {
               <label key={leave.id} style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "13px" }}>
                 <input
                   type="radio"
-                  name="mainType"
-                  value={leave.name}
+                  name="type"
+                  value={leave.value}
                   checked={selectedType === leave.name}
                   onChange={() => {
                     setSelectedType(leave.name);
                     setRequestDto((prev) => ({
                       ...prev,
-                      type: leave.name,
+                      type: leave.value,
                     }));
                   }}
                 />
@@ -249,8 +250,8 @@ export const LeaveRequest = () => {
                     <select
                       className="styled-select"
                       style={{ fontSize: "12px" }}
-                      name="type"
-                      value={requestDto.type}
+                      name="typeDetails"
+                      value={requestDto.typeDetails}
                       onChange={handleChange}
                     >
                       <option value="">-- Sélectionnez un type de congé --</option>

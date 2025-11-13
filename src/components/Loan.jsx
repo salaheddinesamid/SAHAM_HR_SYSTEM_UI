@@ -45,17 +45,6 @@ export const Loan = ()=>{
         return(
             <div className="row">
                 <h4>Demande de Prêt</h4>
-                <div className="row">
-                    <p style={{fontSize : "10px"}}>Selectionnez le type de Prêt :</p>
-                    {
-                        types.map((t)=>(
-                            <label>
-                                <input type="radio" name="type" value={requestDto.type} onChange={handleChange}/>
-                                {t.name}
-                            </label>
-                        ))
-                    }
-                </div>
                 <div className="row mt-3">
                     <div className="col">
                         <TextField
@@ -67,20 +56,12 @@ export const Loan = ()=>{
                             placeholder="Montant"/>
                     </div>
                     <div className="col">
-                        <TextField
-                            label="Modalités de remboursement "
-                            type="date"
-                            fullWidth
-                            InputLabelProps={{ shrink: true }}
-                            variant="outlined"
-                            placeholder="Montant"/>
-                        
+                        <textarea class="form-control" placeholder="Motif" id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>
                 </div>
                 <div className="row mt-2">
                     <div className="col">
-                        <label for="exampleFormControlTextarea1" class="form-label">Motif</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        
                     </div>
                     <div className="col">
 
@@ -122,18 +103,6 @@ export const Loan = ()=>{
         return(
             <div className="row">
                 <h4>Demande d'avance</h4>
-                <div className="row">
-                    <p style={{fontSize : "10px"}}>Selectionnez le type d'avance :</p>
-                    {
-                        types.map((t)=>(
-                            <label>
-                                <input type="radio" value={requestDto.type} name="type" onChange={handleChange}/>
-                                {t.name}
-                            </label>
-                        ))
-                    }
-                </div>
-
                 <div className="row mt-3">
                     <div className="col">
                         <TextField
@@ -145,20 +114,12 @@ export const Loan = ()=>{
                             placeholder="Montant"/>
                     </div>
                     <div className="col">
-                        <TextField
-                            label="Modalités de remboursement "
-                            type="date"
-                            fullWidth
-                            InputLabelProps={{ shrink: true }}
-                            variant="outlined"
-                            placeholder="Montant"/>
-                        
+                        <textarea class="form-control" placeholder="Motif" id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>
                 </div>
                 <div className="row mt-2">
                     <div className="col">
-                        <label for="exampleFormControlTextarea1" class="form-label">Motif</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        
                     </div>
                     <div className="col">
 
