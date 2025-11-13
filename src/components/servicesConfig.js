@@ -19,6 +19,7 @@ import { Home } from "./Home";
 import { LeaveRequest } from "./Leave";
 import { FaCalendarAlt, FaHome } from "react-icons/fa";
 import { Annuaire } from "./Directory";
+import { Expenses } from "./Expenses";
 
 export const servicesConfig = [
   { 
@@ -40,7 +41,7 @@ export const servicesConfig = [
       { id: 5, name: "Bulletins de paie", view: <></>, color: "#E3F2FD" },
       { id: 3, name: "Prêts", view: <Loan/>, icon: <Wallet />, color: "#E3F2FD" },
       { id: 4, name: "Guide RH", view: <></>, icon: <Info />, color: "#E3F2FD" },
-      { id: 7, name: "Mes dépenses", icon: <Wallet />, color: "#E3F2FD" },
+      { id: 7, name: "Mes dépenses", view: <Expenses/> , icon: <Wallet />, color: "#E3F2FD" },
     ],
   },
   {
