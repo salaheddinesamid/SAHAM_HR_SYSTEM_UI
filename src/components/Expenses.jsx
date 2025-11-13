@@ -1,8 +1,9 @@
-import { CircularProgress, Paper, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { CircularProgress, IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { useEffect, useState } from "react"
 import { ExpenseFormDialog } from "./dialogs/NewExpenseDialog";
 import { getAllExpenses } from "../services/ExpenseService";
 import { Download, DownloadCloudIcon } from "lucide-react";
+import { FileDownload } from "@mui/icons-material";
 
 
 export const Expenses = ()=>{
@@ -76,7 +77,9 @@ export const Expenses = ()=>{
                                     <TableCell>{e?.motif || "None"}</TableCell>
                                     <TableCell>{e?.totalAmount}</TableCell>
                                     <TableCell>
-                                        <button className="btn" onClick={()=>handleDownloadPDF(e)}><Download/></button>
+                                        <IconButton onClick={()=>handleDownloadPDF(e)}>
+                                            <FileDownload />
+                                        </IconButton>
                                     </TableCell>
                                     <TableCell></TableCell>
                                 </TableRow>
