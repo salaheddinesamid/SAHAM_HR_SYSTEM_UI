@@ -1,7 +1,7 @@
 import { ExpenseAPI } from "../apis/ExpenseAPI"
 
 // Create new expense
-export const newExpense = async(email, request)=>{
+export const newExpense = async(email,request)=>{
     const response = await ExpenseAPI.post("new",request,{
         params : {
             email : email
