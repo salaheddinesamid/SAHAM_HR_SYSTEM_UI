@@ -297,7 +297,7 @@ export const LeaveRequest = () => {
       <PendingLeaveRequests/>
     </Suspense>, allowedRoles:["HR"]},
     { id: 6, name: "Mes Equipes", view: <Suspense fallback={<CircularProgress/>}>
-      <MyTeam/>
+      <MyTeam manager={user}/>
     </Suspense>, allowedRoles:["MANAGER"]}
   ];
 
