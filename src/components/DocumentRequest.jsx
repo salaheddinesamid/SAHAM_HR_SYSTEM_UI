@@ -2,6 +2,7 @@ import { useState } from "react";
 import { UserInformationCard } from "./UserInformationCard";
 import { requestDocument } from "../services/DocumentService";
 import { DocumentRequestHistory } from "./DocumentRequestHistory";
+import { EmployeeDocumentRequestHistory } from "./EmployeeDocumentRequests";
 
 export const DocumentRequest = ()=>{
     const user = JSON.parse(localStorage.getItem("userDetails"));
@@ -110,7 +111,8 @@ export const DocumentRequest = ()=>{
     const services = [
         {id: 1, name: "Profil", view: <UserInformationCard exception={"Without solde"}/>},
         {id: 2, name: "Nouvelle Demande", view: <RequestForm user={user}/>},
-        {id: 3, name: "Historique des demandes", view:<DocumentRequestHistory user={user}/>}
+        {id: 3, name: "Historique des demandes", view:<DocumentRequestHistory user={user}/>},
+        {id: 4, name: "Les demandes des collaborateurs", view:<EmployeeDocumentRequestHistory/>},
     ]
     return(
         <div style={{ padding: "20px" }}>

@@ -19,3 +19,8 @@ export const getAllDocumentRequests = async(email)=>{
     })
     return res.data;
 }
+
+export const getAllPendingRequests = async()=>{
+    const response = await DocumentAPI.get("employees/get-all");
+    return response.data;
+}
