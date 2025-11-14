@@ -11,10 +11,11 @@ export const DocumentRequestHistory = ({user})=>{
     const [filteredRequests,setFilteredRequests] = useState([])
 
     const filters = [
-        {id: 1, name: "Approuvée", value:"APPROVED"},
-        {id: 2, name: "En attente", value:"IN_PROCESS"},
-        {id: 3, name: "Rejetée", value:"REJECTED"},
-        {id: 3, name: "Tous", value:"ALL"},
+        {id: 1, name: "Tous", value:"ALL"},
+        {id: 2, name: "Approuvée", value:"APPROVED"},
+        {id: 3, name: "En attente", value:"IN_PROCESS"},
+        {id: 4, name: "Rejetée", value:"REJECTED"},
+        
     ];
 
     const fetchRequests = async()=>{
@@ -78,9 +79,9 @@ export const DocumentRequestHistory = ({user})=>{
                                 <TableCell>{r.requestDate}</TableCell>
                                 <TableCell>{r.documents}</TableCell>
                                 <TableCell>{(() => {
-                        const { message, color } = StatusMapper(r.status);
-                        return <span className={`badge ${color}`}>{message}</span>;
-                        })()}</TableCell>
+                                    const { message, color } = StatusMapper(r.status);
+                                    return <span className={`badge ${color}`}>{message}</span>;
+                                })()}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
@@ -107,9 +108,9 @@ export const DocumentRequestHistory = ({user})=>{
         <div className="row">
             
             {loading && (
-                    <div style={{ textAlign: "center" }}>
-                      <CircularProgress />
-                    </div>
+                <div style={{ textAlign: "center" }}>
+                    <CircularProgress />
+                </div>
             )}
             {!loading && !error && requests.length === 0 && (
                 <p className="text-center text-muted mt-4">Aucune demande des documents trouvée.</p>
@@ -123,7 +124,7 @@ export const DocumentRequestHistory = ({user})=>{
                         <RequestsTable/>
                     </div>
                 </div>
-                )}
+            )}
         </div>
     )
 }

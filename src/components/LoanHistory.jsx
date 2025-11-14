@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { getAllEmployeeRequests } from "../services/LoanService";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 
 // This component returns and renders all employee's loan requests
 export const LoanHistory = ({user})=>{
@@ -30,8 +30,29 @@ export const LoanHistory = ({user})=>{
             {loading && (
                 <CircularProgress/>
             )}
+            {!loading && requests.length === 0 && (
+                <p className="text-center mt-3">Aucune demande de pret/avance trouvée.</p>
+            )}
+
             {!loading && requests.length !== 0 && (
-                <p>Aucune demande de pret/avance trouvée.</p>
+                <Table>
+                    <TableHead>
+                        <TableCell>Date</TableCell>
+                        <TableCell>Type de demande</TableCell>
+                        <TableCell>Montant</TableCell>
+                        <TableCell>Status</TableCell>
+                    </TableHead>
+                    <TableBody>
+                        {requests.map((r)=>(
+                            <TableRow>
+                                <TableCell>{r?.issueDate}</TableCell>
+                                <TableCell>{r?.type}</TableCell>
+                                <TableCell>{r?.amount}</TableCell>
+                                <TableCell>{r?.status}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
             )}
         </div>
     )

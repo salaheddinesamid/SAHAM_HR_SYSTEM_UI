@@ -90,7 +90,7 @@ export const Login = () => {
         {!loading ? (
             <div className="row">
                 <input
-          type="text"
+          type="email"
           placeholder="Adresse e-mail ou identifiant"
           name="email"
           value={loginDetails.email}
@@ -146,7 +146,7 @@ export const Login = () => {
         {/*<img src={logo} alt="logo" className="" />*/}
         <h1 className="welcome-text" style={{
             margin : "200px"
-        }}>Bienvenue sur votre espace MY HR SAHAM</h1>
+        }}>Bienvenue sur votre espace My HR SAHAM</h1>
       </div>
 
       {showForm && <LoginForm />}

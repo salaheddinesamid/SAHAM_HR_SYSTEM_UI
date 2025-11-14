@@ -52,7 +52,7 @@ export const servicesConfig = [
     color: "#FFF3E0", // Warm orange
     subServices: [
       { id: 1, name: "Les bons plans Saham", icon: <Gift />, color: "#FFF3E0" },
-      { id: 2, name: "Annuaire", icon: <Network />, color: "#FFF3E0" },
+      { id: 2, name: "Annuaire", icon: <Network />, color: "#FFF3E0", view:<Annuaire/> },
       { id: 3, name: "Guide Collaborateur", color: "#FFF3E0" },
       { id: 4, name: "Tribus", color: "#FFF3E0" },
       { id: 5, name: "Evénements SAHAM", color: "#FFF3E0" },

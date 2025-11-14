@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { UserInformationCard } from "./UserInformationCard"
 import { TextField } from "@mui/material";
+import { LoanHistory } from "./LoanHistory";
 
 
 export const Loan = ()=>{
@@ -11,6 +12,12 @@ export const Loan = ()=>{
     const handleSubmitRequest = (request)=>{
         try{
             console.log(request);
+            switch(request?.type){
+                case "NORMAL":
+                    // apply for normal loan
+                case "ADVANCE":
+                    // apply for advance:
+            }
         }catch(err){
 
         }finally{
@@ -18,16 +25,14 @@ export const Loan = ()=>{
         }
     }
 
+    // (These two forms needs to be re-factored)
+
     // This form handles (Pret-interne) loan requests
     const PretInternForm = ()=>{
         const [requestDto,setRequestDto] = useState({
-            type : "",
-            matriculation : user?.matriculation,
-            poste : user?.occupation,
-            entity : user?.entity,
-            motif : "",
-            paymentModel : "",
-            
+            type : "NORMAL",
+            amount : 0,
+            motif : ""
         })
 
         const handleChange = (e)=>{
@@ -37,11 +42,6 @@ export const Loan = ()=>{
                 [name] : value
             }))
         }
-
-        const types = [
-            {id: 1, name: "Prêt sans intérêt (société)"},
-            {id: 2, name: "Prêt au Logement"}
-        ]
         return(
             <div className="row">
                 <h4>Demande de Prêt</h4>
@@ -50,21 +50,15 @@ export const Loan = ()=>{
                         <TextField
                             label="Montant"
                             type="number"
+                            name="amount"
                             fullWidth
                             InputLabelProps={{ shrink: true }}
                             variant="outlined"
+                            onChange={handleChange}
                             placeholder="Montant"/>
                     </div>
                     <div className="col">
-                        <textarea class="form-control" placeholder="Motif" id="exampleFormControlTextarea1" rows="3"></textarea>
-                    </div>
-                </div>
-                <div className="row mt-2">
-                    <div className="col">
-                        
-                    </div>
-                    <div className="col">
-
+                        <textarea class="form-control" name="motif" onChange={handleChange} placeholder="Motif" id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>
                 </div>
                 <div className="row mt-3">
@@ -79,13 +73,9 @@ export const Loan = ()=>{
     // This form handles (Avance) loan requests
     const AvanceForm = ()=>{
         const [requestDto,setRequestDto] = useState({
-            type : "",
-            matriculation : user?.matriculation,
-            poste : user?.occupation,
-            entity : user?.entity,
-            motif : "",
-            paymentModel : "",
-            
+            type : "ADVANCE",
+            amount : 0,
+            motif : "" 
         });
 
         const handleChange = (e)=>{
@@ -95,11 +85,6 @@ export const Loan = ()=>{
                 [name] : value
             }))
         }
-
-        const types = [
-            {id: 1, name: "Avance sur salaire"},
-            {id: 2, name: "Autre avances"}
-        ]
         return(
             <div className="row">
                 <h4>Demande d'avance</h4>
@@ -108,21 +93,15 @@ export const Loan = ()=>{
                         <TextField
                             label="Montant"
                             type="number"
+                            name="amount"
                             fullWidth
                             InputLabelProps={{ shrink: true }}
                             variant="outlined"
+                            onChange={handleChange}
                             placeholder="Montant"/>
                     </div>
                     <div className="col">
-                        <textarea class="form-control" placeholder="Motif" id="exampleFormControlTextarea1" rows="3"></textarea>
-                    </div>
-                </div>
-                <div className="row mt-2">
-                    <div className="col">
-                        
-                    </div>
-                    <div className="col">
-
+                        <textarea class="form-control" name="motif" onChange={handleChange} placeholder="Motif" id="exampleFormControlTextarea1" rows="3"></textarea>
                     </div>
                 </div>
                 <div className="row mt-3">
@@ -164,7 +143,7 @@ export const Loan = ()=>{
     const services = [
         {id: 1, name: "Profil", view: <UserInformationCard exception={"Without solde"}/>},
         {id: 2, name: "Nouvelle Demande", view: <NewRequest/>},
-        {id: 3, name: "Historique des demandes", view:<></>}
+        {id: 3, name: "Historique des demandes", view:<LoanHistory/>}
     ]
     return(
         <div style={{ padding: "20px" }}>
