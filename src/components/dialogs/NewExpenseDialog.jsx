@@ -22,18 +22,15 @@ import { newExpense } from "../../services/ExpenseService";
 export const ExpenseFormDialog = ({ open, onClose, user }) => {
   const [expensesDetail, setExpenseDetail] = useState({
     date: "",
-    fullName: user?.fullName || "",
-    MA: "",
     motif: "",
-    totalExpenses: 0,
-    solde: 0,
-    details: [],
+    expenseItems: [],
+    issueDate : ""
   });
 
   const [detail, setDetail] = useState({
-    date: "",
+    expenseDate: "",
     designation: "",
-    montant: "",
+    amount: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -55,36 +52,36 @@ export const ExpenseFormDialog = ({ open, onClose, user }) => {
   };
 
   const handleAddItem = () => {
-    if (!detail.date || !detail.designation || !detail.montant) {
+    if (!detail.expenseDate || !detail.designation || !detail.amount) {
       alert("Veuillez remplir tous les champs du détail !");
       return;
     }
 
-    const newDetails = [...expensesDetail.details, detail];
+    const newDetails = [...expensesDetail.expenseItems, detail];
     const totalExpenses = newDetails.reduce(
-      (sum, item) => sum + parseFloat(item.montant || 0),
+      (sum, item) => sum + parseFloat(item.amount || 0),
       0
     );
 
     setExpenseDetail((prev) => ({
       ...prev,
-      details: newDetails,
+      expenseItems: newDetails,
       totalExpenses,
     }));
 
     // reset current detail
-    setDetail({ date: "", designation: "", montant: "" });
+    setDetail({ expenseDate: "", designation: "", amount: "" });
   };
 
   const handleRemoveItem = (index) => {
-    const newDetails = expensesDetail.details.filter((_, i) => i !== index);
+    const newDetails = expensesDetail.expenseItems.filter((_, i) => i !== index);
     const totalExpenses = newDetails.reduce(
-      (sum, item) => sum + parseFloat(item.montant || 0),
+      (sum, item) => sum + parseFloat(item.amount || 0),
       0
     );
     setExpenseDetail((prev) => ({
       ...prev,
-      details: newDetails,
+      expenseItems: newDetails,
       totalExpenses,
     }));
   };
@@ -93,7 +90,9 @@ export const ExpenseFormDialog = ({ open, onClose, user }) => {
     const email = user?.email;
     try {
       setLoading(true);
+      console.log(expensesDetail);
       const res = await newExpense(email,expensesDetail)
+      
       alert("Fiche de dépense enregistrée avec succès !");
       onClose();
     } catch (err) {
@@ -125,8 +124,8 @@ export const ExpenseFormDialog = ({ open, onClose, user }) => {
             <TextField
               label="Date"
               type="date"
-              name="date"
-              value={expensesDetail.date}
+              name="issueDate"
+              value={expensesDetail.issueDate}
               onChange={handleChange}
               InputLabelProps={{ shrink: true }}
               fullWidth
@@ -166,8 +165,8 @@ export const ExpenseFormDialog = ({ open, onClose, user }) => {
             <TextField
               label="Date"
               type="date"
-              name="date"
-              value={detail.date}
+              name="expenseDate"
+              value={detail.expenseDate}
               onChange={handleItemChange}
               InputLabelProps={{ shrink: true }}
               sx={{ flex: 1 }}
@@ -181,9 +180,9 @@ export const ExpenseFormDialog = ({ open, onClose, user }) => {
             />
             <TextField
               label="Montant (MAD)"
-              name="montant"
+              name="amount"
               type="number"
-              value={detail.montant}
+              value={detail.amount}
               onChange={handleItemChange}
               sx={{ flex: 1 }}
             />
@@ -192,7 +191,7 @@ export const ExpenseFormDialog = ({ open, onClose, user }) => {
             </IconButton>
           </div>
 
-          {expensesDetail.details.length > 0 && (
+          {expensesDetail.expenseItems?.length > 0 && (
             <Table sx={{ mt: 2 }}>
               <TableHead>
                 <TableRow>
@@ -203,11 +202,11 @@ export const ExpenseFormDialog = ({ open, onClose, user }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {expensesDetail.details.map((item, index) => (
+                {expensesDetail.expenseItems.map((item, index) => (
                   <TableRow key={index}>
-                    <TableCell>{item.date}</TableCell>
+                    <TableCell>{item.expenseDate}</TableCell>
                     <TableCell>{item.designation}</TableCell>
-                    <TableCell>{item.montant}</TableCell>
+                    <TableCell>{item.amount}</TableCell>
                     <TableCell align="center">
                       <IconButton
                         color="error"
@@ -224,13 +223,21 @@ export const ExpenseFormDialog = ({ open, onClose, user }) => {
 
           <Divider sx={{ my: 2 }} />
           <Typography align="right" variant="subtitle1" fontWeight={600}>
-            Total : {expensesDetail.totalExpenses.toFixed(2)} MAD
+            Total : {expensesDetail?.totalExpenses?.toFixed(2)} MAD
           </Typography>
         </div>
       </DialogContent>
 
       <DialogActions sx={{ justifyContent: "space-between", p: 2 }}>
-        <Button onClick={onClose} color="inherit" variant="outlined">
+        <Button onClick={()=>{
+          setExpenseDetail({
+             date: "",
+             motif: "",
+             expenseItems: [],
+             issueDate : ""
+          })
+          onClose()
+        }} color="inherit" variant="outlined">
           Annuler
         </Button>
         <Button

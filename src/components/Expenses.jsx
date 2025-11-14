@@ -4,6 +4,7 @@ import { ExpenseFormDialog } from "./dialogs/NewExpenseDialog";
 import { getAllExpenses } from "../services/ExpenseService";
 import { Download, DownloadCloudIcon } from "lucide-react";
 import { FileDownload } from "@mui/icons-material";
+import { ExpensePdfGenerator } from "../services/ExpensesPdfGenerator";
 
 
 export const Expenses = ()=>{
@@ -32,8 +33,8 @@ export const Expenses = ()=>{
         }
     };
 
-    const handleDownloadPDF = (expenseDetails)=>{
-
+    const handleDownloadPDF = async(expense)=>{
+        const res = ExpensePdfGenerator(expense);
     }
 
     useEffect(()=>{
@@ -89,7 +90,7 @@ export const Expenses = ()=>{
                     </Table>
                 </Paper>
             )}
-            <ExpenseFormDialog open={newExpenseDialogOpen} onClose={handleCloseNewExpenseDialog}/>
+            <ExpenseFormDialog open={newExpenseDialogOpen} onClose={handleCloseNewExpenseDialog} user={user}/>
         </div>
     )
 }
