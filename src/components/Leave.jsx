@@ -57,7 +57,7 @@ export const LeaveRequest = () => {
   const [requestLoading, setRequestLoading] = useState(false);
   const [selectedEntity, setSelectedEntity] = useState("");
   const [selectedFile,setSelectedFile] = useState(null);
-  
+
     const entities = [
       { id: 1, name: "SAHAM Horizon" },
       { id: 2, name: "SAHAM Finances" },
@@ -72,6 +72,11 @@ export const LeaveRequest = () => {
         [name]: value,
       }));
     };
+
+    const handleFileChange = (e)=>{
+      const file = e.target.files[0];
+      setSelectedFile(file);
+    }
 
     const DocumentUploader = ()=>{
 
@@ -96,7 +101,8 @@ export const LeaveRequest = () => {
             Upload CSV
           <VisuallyHiddenInput
           type="file"
-          accept=".csv"
+          accept=".pdf"
+          onChange={handleFileChange}
           />
         </Button>
       )
@@ -303,7 +309,7 @@ export const LeaveRequest = () => {
               </label>
               
             ))}
-            {requestDto?.typeDetails === "Maladie" ? <DocumentUploader/> : <></>}
+            {requestDto?.typeDetails === "SICKNESS" ? <DocumentUploader/> : <></>}
           </div>
         </div>
 

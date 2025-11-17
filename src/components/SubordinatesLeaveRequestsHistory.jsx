@@ -10,10 +10,14 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  IconButton,
 } from "@mui/material";
 import { useEffect, useState, useCallback } from "react";
 import { getSubordinatesLeaves, approveLeave, rejectLeave, approveSubordinatesLeave, rejectSubordinatesLeave } from "../services/LeaveService";
 import { Check, X } from "lucide-react";
+import { Download } from "@mui/icons-material";
+import { downloadFile } from "../services/FileStorageService";
+import { saveAs } from "file-saver";
 
 export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
   const [loading, setLoading] = useState(false);
@@ -141,6 +145,15 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
     setRejectDialogOpen(true);
   };
 
+  const handleDownloadDocument = async(path)=>{
+    try{
+      const res = await downloadFile(path); 
+      saveAs(res)
+    }catch(err){
+      console.log(err);
+    }
+  }
+
   const handleReject = async (requestId) => {
     try {
       //await rejectLeave(requestId);
@@ -177,6 +190,7 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
               <TableCell>Nombre de jours</TableCell>
               <TableCell>Status</TableCell>
               <TableCell>Commentaire</TableCell>
+              <TableCell>Documents</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -194,6 +208,9 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
                     <span className={`badge ${color}`}>{message}</span>
                   </TableCell>
                   <TableCell>{req.comment || "-"}</TableCell>
+                  <TableCell>{req.document !== null ? <IconButton >
+                    <Download onClick={()=>handleDownloadDocument(req.document)}/>
+                  </IconButton> : <p>No documents found</p>}</TableCell>
                   <TableCell>
                     {req.status === "IN_PROCESS" && (
                       <>
