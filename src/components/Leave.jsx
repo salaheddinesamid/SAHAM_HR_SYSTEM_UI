@@ -57,28 +57,7 @@ export const LeaveRequest = () => {
   const [requestLoading, setRequestLoading] = useState(false);
   const [selectedEntity, setSelectedEntity] = useState("");
   const [selectedFile,setSelectedFile] = useState(null);
-
-  const entities = [
-    { id: 1, name: "SAHAM Horizon" },
-    { id: 2, name: "SAHAM Finances" },
-    { id: 3, name: "SAHAM Foundation" },
-  ];
-
-  const dateFormatter = (date) => new Date(date).toISOString().split("T")[0];
-    const [requestDto, setRequestDto] = useState({
-      startDate: "",
-      endDate: "",
-      type: "",
-      typeDetails : "SICKNESS",
-      comment: ""
-    });
-    const [from, setFrom] = useState("");
-    const [to, setTo] = useState("");
-    const [totalDays, setTotalDays] = useState(0);
-    const [selectedType, setSelectedType] = useState("");
-    const [requestLoading, setRequestLoading] = useState(false);
-    const [selectedEntity, setSelectedEntity] = useState("");
-    
+  
     const entities = [
       { id: 1, name: "SAHAM Horizon" },
       { id: 2, name: "SAHAM Finances" },
