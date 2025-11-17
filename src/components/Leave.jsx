@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useEffect, useState } from "react";
-import { TextField, CircularProgress, Alert, Snackbar } from "@mui/material";
+import { TextField, CircularProgress, Alert, Snackbar, Button, styled } from "@mui/material";
 import { applyLeave } from "../services/LeaveService";
 
 /*
@@ -17,6 +17,7 @@ import { PendingLeaveRequests } from "./PendingLeaveRequests";
 import { MyTeam } from "./MyTeam";
 import "../styles/LeaveRequest.css"
 import { CheckIcon, TriangleAlert } from "lucide-react";
+import { CloudUpload } from "@mui/icons-material";
 
 export const LeaveRequest = () => {
   const user = JSON.parse(localStorage.getItem("userDetails")); 
@@ -35,44 +36,72 @@ export const LeaveRequest = () => {
       {id: 5, name: "Déménagement "},
       {id: 6, name: "Opération chirurgicale grave du conjoint ou d’un enfant "},
       {id: 7, name: "Décès du conjoint, d’un descendant ou d’un ascendant du salarié"},
-      {id: 8, name: "Décès d’un ascendant du conjoint, frère ou sœur du salarié ou de son conjoint"}
+      {id: 8, name: "Décès d’un ascendant du conjoint, frère ou sœur du salarié ou de son conjoint"},
+      {id : 9, name : "SICKNESS", value : "SICKNESS"}
     ]}
   ];
   
   const RequestForm = ({ user }) => {
-  const [requestDto, setRequestDto] = useState({
-    startDate: "",
-    endDate: "",
-    type: "",
-    typeDetails : "",
-    comment: "",
-  });
+    const [requestDto, setRequestDto] = useState({
+      startDate: "",
+      endDate: "",
+      type: "",
+      typeDetails : "SICKNESS",
+      comment: ""
+    });
+    const [from, setFrom] = useState("");
+    const [to, setTo] = useState("");
+    const [totalDays, setTotalDays] = useState(0);
+    const [selectedType, setSelectedType] = useState("");
+    const [requestLoading, setRequestLoading] = useState(false);
+    const [selectedEntity, setSelectedEntity] = useState("");
+    
+    const entities = [
+      { id: 1, name: "SAHAM Horizon" },
+      { id: 2, name: "SAHAM Finances" },
+      { id: 3, name: "SAHAM Foundation" },
+    ];
+    const dateFormatter = (date) => new Date(date).toISOString().split("T")[0];
 
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
-  const [totalDays, setTotalDays] = useState(0);
-  const [selectedType, setSelectedType] = useState("");
-  const [requestLoading, setRequestLoading] = useState(false);
-  const [selectedEntity, setSelectedEntity] = useState("");
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setRequestDto((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    };
 
-  const entities = [
-    { id: 1, name: "SAHAM Horizon" },
-    { id: 2, name: "SAHAM Finances" },
-    { id: 3, name: "SAHAM Foundation" },
-  ];
+    const DocumentUploader = ()=>{
 
-  const dateFormatter = (date) => new Date(date).toISOString().split("T")[0];
+      const VisuallyHiddenInput = styled("input")({
+        clip: "rect(0 0 0 0)",
+        clipPath: "inset(50%)",
+        height: 1,
+        overflow: "hidden",
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        whiteSpace: "nowrap",
+        width: 1
+      });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setRequestDto((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async () => {
-    const email = user?.email;
+      return(
+        <Button
+          component="label"
+          variant="contained"
+          startIcon={<CloudUpload />}
+          fullWidth>
+            Upload CSV
+          <VisuallyHiddenInput
+          type="file"
+          accept=".csv"
+          />
+        </Button>
+      )
+    }
+    
+    const handleSubmit = async () => {
+      const email = user?.email;
     try {
       //setRequestLoading(true);
       const payload = {
@@ -264,7 +293,9 @@ export const LeaveRequest = () => {
                   </div>
                 )}
               </label>
+              
             ))}
+            {requestDto?.typeDetails === "Maladie" ? <DocumentUploader/> : <></>}
           </div>
         </div>
 
