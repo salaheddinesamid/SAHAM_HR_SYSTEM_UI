@@ -54,6 +54,7 @@ export const LeaveRequest = () => {
   const [selectedType, setSelectedType] = useState("");
   const [requestLoading, setRequestLoading] = useState(false);
   const [selectedEntity, setSelectedEntity] = useState("");
+  const [selectedFile,setSelectedFile] = useState(null);
 
   const entities = [
     { id: 1, name: "SAHAM Horizon" },
@@ -74,15 +75,21 @@ export const LeaveRequest = () => {
   const handleSubmit = async () => {
     const email = user?.email;
     try {
+      const formData = new FormData();
       //setRequestLoading(true);
       const payload = {
         ...requestDto,
         entity: selectedEntity,
         totalDays,
       };
+
+      formData.append("requestDto", new Blob([JSON.stringify(payload)], { type: "application/json" }));
+
+      formData.append("file",selectedFile);
+      
       console.log(requestDto);
       // Send the request to the server:
-      await applyLeave(email, payload);
+      await applyLeave(email, formData);
       // if success, display a snackbar:
       setSubmitSuccess(true);
       // init the request dto:
