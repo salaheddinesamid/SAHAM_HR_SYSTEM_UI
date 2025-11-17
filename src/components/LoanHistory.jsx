@@ -31,7 +31,7 @@ export const LoanHistory = ({user})=>{
                 <CircularProgress/>
             )}
             {!loading && requests.length === 0 && (
-                <p className="text-center mt-3">Aucune demande de pret/avance trouvée.</p>
+                <p className="text-center mt-3">Aucune demande de Prêt/Avance trouvée.</p>
             )}
 
             {!loading && requests.length !== 0 && (
