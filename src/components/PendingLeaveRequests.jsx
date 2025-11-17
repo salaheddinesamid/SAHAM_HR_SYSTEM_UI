@@ -2,11 +2,24 @@ import { useEffect, useState } from "react"
 import { getAllRequestsForHr } from "../services/LeaveService";
 import { Button, CircularProgress, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { Check, X } from "lucide-react";
+import { LeaveApproval } from "./dialogs/LeaveApproval";
 
 // This component renders all the requests that are approved by Managers and waiting for HR approval
 export const PendingLeaveRequests = ()=>{
     const [loading,setLoading] = useState(false);
-    const [requests,setRequests] = useState([])
+    const [requests,setRequests] = useState([]);
+    const [selectedRequest,setSelectedRequested] = useState(null);
+    const [approvalDialogOpen,setApprovalDialogOpen] = useState(false);
+
+    const handleOpenApprovalDialog = (request)=>{
+      setSelectedRequested(request);
+      setApprovalDialogOpen(true);
+    }
+
+    const handleCloseApprovalDialog = ()=>{
+      setSelectedRequested(null);
+      setApprovalDialogOpen(false);
+    }
 
     const fetchAllRequests = async()=>{
         try{
@@ -87,6 +100,7 @@ export const PendingLeaveRequests = ()=>{
                           variant="contained"
                           color="success"
                           size="small"
+                          onClick={()=>handleOpenApprovalDialog(req)}
                           
                         >
                           <Check size={16} />
@@ -106,6 +120,7 @@ export const PendingLeaveRequests = ()=>{
               );
             })}
           </TableBody>
+          <LeaveApproval open={approvalDialogOpen} onClose={handleCloseApprovalDialog} request={selectedRequest} onSuccess={fetchAllRequests}/>
         </Table>
       )}
         </div>

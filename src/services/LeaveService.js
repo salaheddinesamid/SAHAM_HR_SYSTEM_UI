@@ -54,7 +54,7 @@ export const rejectSubordinatesLeave = async(requestId)=>{
 export const finalLeaveApproval = async(requestId)=>{
     const response = await LeaveAPI.put("/approve-request",null,{
         params : {
-            requestId : requestId
+            leaveRequestId : requestId
         }
     });
 
