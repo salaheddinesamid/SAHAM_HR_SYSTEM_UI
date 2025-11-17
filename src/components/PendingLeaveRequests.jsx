@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 import { getAllRequestsForHr } from "../services/LeaveService";
 import { Button, CircularProgress, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { Check, X } from "lucide-react";
+import { Check, Truck, X } from "lucide-react";
 import { LeaveApproval } from "./dialogs/LeaveApproval";
+import { LeaveRejectionDialog } from "./dialogs/LeaveRejectionDialog";
 
 // This component renders all the requests that are approved by Managers and waiting for HR approval
 export const PendingLeaveRequests = ()=>{
@@ -10,15 +11,30 @@ export const PendingLeaveRequests = ()=>{
     const [requests,setRequests] = useState([]);
     const [selectedRequest,setSelectedRequested] = useState(null);
     const [approvalDialogOpen,setApprovalDialogOpen] = useState(false);
+    const [rejectionDialogOpen,setRejectionDialogOpen] = useState(false);
 
+    //
     const handleOpenApprovalDialog = (request)=>{
       setSelectedRequested(request);
       setApprovalDialogOpen(true);
     }
 
+    //
     const handleCloseApprovalDialog = ()=>{
       setSelectedRequested(null);
       setApprovalDialogOpen(false);
+    }
+
+    //
+    const handleOpenRejectionDialog = (request)=>{
+      setSelectedRequested(request);
+      setRejectionDialogOpen(true);
+    }
+
+    //
+    const handleCloseRejectionDialog = ()=>{
+      setSelectedRequested(null);
+      setRejectionDialogOpen(false);
     }
 
     const fetchAllRequests = async()=>{
@@ -106,10 +122,11 @@ export const PendingLeaveRequests = ()=>{
                           <Check size={16} />
                         </Button>
                         <Button
-                          variant="contained"
+                          variant="contained" 
                           color="error"
                           size="small"
                           className="ms-1"
+                          onClick={()=>handleOpenRejectionDialog(req)}
                         >
                           <X size={16} />
                         </Button>
@@ -121,6 +138,7 @@ export const PendingLeaveRequests = ()=>{
             })}
           </TableBody>
           <LeaveApproval open={approvalDialogOpen} onClose={handleCloseApprovalDialog} request={selectedRequest} onSuccess={fetchAllRequests}/>
+          <LeaveRejectionDialog open={rejectionDialogOpen} onClose={handleCloseRejectionDialog} request={selectedRequest} onSuccess={fetchAllRequests}/>
         </Table>
       )}
         </div>

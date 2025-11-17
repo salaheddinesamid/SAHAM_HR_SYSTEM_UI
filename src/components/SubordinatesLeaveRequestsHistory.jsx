@@ -69,6 +69,7 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
             const res = await rejectSubordinatesLeave(id);
             if(res === 200){
                 fetchRequests();
+                onClose();
             }
         }catch(err){
             console.log(err);
@@ -139,6 +140,16 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
     setCurrentRequest(req);
     setApprovalDialogOpen(true);
   };
+
+  const handeCloseApprovalDialog = ()=>{
+    setCurrentRequest(null);
+    setApprovalDialogOpen(false);
+  }
+
+  const handleCloseRejectionDialog = ()=>{
+    setCurrentRequest(null);
+    setRejectDialogOpen(false);
+  }
 
   const handleOpenRejectionDialog = (req) => {
     setCurrentRequest(req);
@@ -243,12 +254,12 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
 
       <ApproveDialog
         open={approvalDialogOpen}
-        onClose={() => setApprovalDialogOpen(false)}
+        onClose={handeCloseApprovalDialog}
         request={currentRequest}
       />
       <RejectDialog 
       open={rejectDialogOpen}
-        onClose={() => handleOpenRejectionDialog(false)}
+        onClose={handleCloseRejectionDialog}
         request={currentRequest}/>
     </div>
   );
