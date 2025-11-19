@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const LoanAPI = axios.create({
-    baseURL : "",
+    baseURL : `${process.env.REACT_APP_SERVER_URL}/api/v1/loans`,
     headers : {},
     timeout : 10000
 })

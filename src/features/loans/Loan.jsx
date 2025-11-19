@@ -16,6 +16,7 @@ export const Loan = ()=>{
         try{
             setLoading(true);
             const res = await applyLoan(email,request);
+            console.log(request);
         }catch(err){
             console.log(err);
         }finally{
@@ -28,7 +29,7 @@ export const Loan = ()=>{
     // This form handles (Pret-interne) loan requests
     const PretInternForm = ()=>{
         const [requestDto,setRequestDto] = useState({
-            type : "NORMAL",
+            loanType : "NORMAL",
             amount : 0,
             motif : ""
         })
