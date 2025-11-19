@@ -1,46 +1,39 @@
-import { useState } from "react"
+import { useEffect, useState } from "react";
 import { getSubordinates } from "../services/EmployeeService";
 import { CircularProgress } from "@mui/material";
-import { SubordinateDetails } from "./SubordinateDetails";
+import WallCalendar from "./TimeLine";
 
-// This function renders information about manager's subordinates leaves
-export const MyTeam = ({manager})=>{
+export const MyTeam = ({ manager }) => {
+  const [subordinates, setSubordinates] = useState([]); // list of subordinates and their leaves
+  const [loading, setLoading] = useState(false);
 
-    const [subordinates,setSubordinates] = useState([]);
-    const [loading,setLoading] = useState(false);
-
-    const fetchTeam = async()=>{
-        const email = manager?.email;
-        try{
-            setLoading(true);
-            const res = await getSubordinates(email);
-            setSubordinates(res);
-        }catch(err){
-            console.error(err);
-        }finally{
-            setLoading(false);
-        }
+  // fetch manager's team
+  const fetchTeam = async () => {
+    if (!manager?.email) return;
+    try {
+      setLoading(true);
+      const res = await getSubordinates(manager.email);
+      setSubordinates(res);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    const TeamDetails = ()=>{
-        return(
-            <div className="container">
-                {subordinates && subordinates.map((s)=>(
-                    <SubordinateDetails details={s}/>
-                ))}
-            </div>
-        )
-    }
+  useEffect(() => {
+    fetchTeam();
+  }, [manager?.email]);
 
-    return(
-        <div className="row">
-            {loading && subordinates.length === 0 && (
-                <CircularProgress/>
-            )}
-            {!loading && subordinates.length !== 0 && (
-                <p className="text-center">No team members found</p>
-            )}
-            {}
-        </div>
-    )
-}
+  return (
+    <div className="row p-3">
+      {loading && subordinates.length === 0 && <CircularProgress />}
+
+      {!loading && subordinates.length === 0 && (
+        <p className="text-center">Aucun membre trouvé</p>
+      )}
+      
+      <WallCalendar manager={manager} subordinates={subordinates}/>
+    </div>
+  );
+};
