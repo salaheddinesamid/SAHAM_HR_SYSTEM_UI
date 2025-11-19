@@ -2,26 +2,24 @@ import { useState } from "react";
 import { TextField } from "@mui/material";
 import { LoanHistory } from "./LoanHistory";
 import { UserInformationCard } from "../leaves/UserInformationCard";
+import { applyLoan } from "../../services/LoanService";
 
 
 export const Loan = ()=>{
     const user = JSON.parse(localStorage.getItem("userDetails"));
     const [selectedService, setSelectedService] = useState(1);
+    const [loading,setLoading]= useState(false);
 
     // handle submit both requests (Pret/Avance)
-    const handleSubmitRequest = (request)=>{
+    const handleSubmitRequest = async(request)=>{
         try{
-            console.log(request);
-            switch(request?.type){
-                case "NORMAL":
-                    // apply for normal loan
-                case "ADVANCE":
-                    // apply for advance:
-            }
+            setLoading(true);
+            const res = await applyLoan(request);
+
         }catch(err){
-
+            console.log(err);
         }finally{
-
+            setLoading(false);
         }
     }
 
@@ -116,7 +114,9 @@ export const Loan = ()=>{
     // This component is responsible for rendering new loan request forms.
     const NewRequest = ()=>{
         const [selectedType,setSelectedType] = useState(1);
-        const types = [{id: 1, name: "Prêt Interne", view: <PretInternForm/>},{id: 2, name: "Avance", view: <AvanceForm/>}]
+        const types = [
+            {id: 1, name: "Prêt Interne", view: <PretInternForm/>},{id: 2, name: "Avance", view: <AvanceForm/>}
+        ]
         return(
             <div className="row mt-4">
                 <div className="row">
@@ -143,7 +143,7 @@ export const Loan = ()=>{
     const services = [
         {id: 1, name: "Profil", view: <UserInformationCard exception={"Without solde"}/>},
         {id: 2, name: "Nouvelle Demande", view: <NewRequest/>},
-        {id: 3, name: "Historique des demandes", view:<LoanHistory/>}
+        {id: 3, name: "Historique des demandes", view:<LoanHistory user={user}/>}
     ]
     return(
         <div style={{ padding: "20px" }}>
