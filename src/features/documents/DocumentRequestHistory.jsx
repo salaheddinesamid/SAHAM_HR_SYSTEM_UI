@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { getAllDocumentRequests } from "../services/DocumentService";
 import { Box, Button, CircularProgress, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { getAllDocumentRequests } from "../../services/DocumentService";
 
 export const DocumentRequestHistory = ({user})=>{
 

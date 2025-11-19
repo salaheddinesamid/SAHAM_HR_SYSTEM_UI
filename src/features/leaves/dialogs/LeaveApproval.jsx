@@ -1,5 +1,5 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
-import { finalLeaveApproval } from "../../services/LeaveService";
+import { finalLeaveApproval } from "../../../services/LeaveService";
 
 export const LeaveApproval = ({ open, onClose, request, onSuccess }) => {
     if (!request) return null;

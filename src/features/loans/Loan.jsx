@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { UserInformationCard } from "./UserInformationCard"
 import { TextField } from "@mui/material";
 import { LoanHistory } from "./LoanHistory";
+import { UserInformationCard } from "../leaves/UserInformationCard";
 
 
 export const Loan = ()=>{

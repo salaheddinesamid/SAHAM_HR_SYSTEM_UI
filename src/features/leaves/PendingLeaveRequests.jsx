@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getAllRequestsForHr } from "../services/LeaveService";
+import { getAllRequestsForHr } from "../../services/LeaveService";
 import { Button, CircularProgress, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { Check, Truck, X } from "lucide-react";
 import { LeaveApproval } from "./dialogs/LeaveApproval";

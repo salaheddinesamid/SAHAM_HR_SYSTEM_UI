@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import "../styles/UserInformationCard.css";
-import { getEmployee } from "../services/EmployeeService";
+import "./styles/UserInformationCard.css";
 
 export const UserInformationCard = ({exception}) => {
   const user = JSON.parse(localStorage.getItem("userDetails"));

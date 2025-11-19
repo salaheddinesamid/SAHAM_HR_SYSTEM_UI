@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { UserInformationCard } from "./UserInformationCard";
-import { requestDocument } from "../services/DocumentService";
+import { UserInformationCard } from "../leaves/UserInformationCard";
+import { requestDocument } from "../../services/DocumentService";
 import { DocumentRequestHistory } from "./DocumentRequestHistory";
 import { EmployeeDocumentRequestHistory } from "./EmployeeDocumentRequests";
 

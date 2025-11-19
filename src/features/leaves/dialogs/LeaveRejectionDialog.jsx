@@ -1,5 +1,5 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material"
-import { finalLeaveRejection } from "../../services/LeaveService";
+import { finalLeaveRejection } from "../../../services/LeaveService";
 import { useState } from "react";
 
 export const LeaveRejectionDialog = ({open,onClose,request,onSuccess})=>{

@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { AddCircle, Delete } from "@mui/icons-material";
-import { newExpense } from "../../services/ExpenseService";
+import { newExpense } from "../../../services/ExpenseService";
 
 export const ExpenseFormDialog = ({ open, onClose, user }) => {
   const [expensesDetail, setExpenseDetail] = useState({

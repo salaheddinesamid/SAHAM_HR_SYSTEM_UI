@@ -1,10 +1,9 @@
 import { CircularProgress, IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { useEffect, useState } from "react"
-import { ExpenseFormDialog } from "./dialogs/NewExpenseDialog";
-import { getAllExpenses } from "../services/ExpenseService";
-import { Download, DownloadCloudIcon } from "lucide-react";
+import { getAllExpenses } from "../../services/ExpenseService";
 import { FileDownload } from "@mui/icons-material";
-import { ExpensePdfGenerator } from "../services/ExpensesPdfGenerator";
+import { ExpensePdfGenerator } from "../../services/ExpensesPdfGenerator";
+import { ExpenseFormDialog } from "./dialogs/NewExpenseDialog";
 
 
 export const Expenses = ()=>{

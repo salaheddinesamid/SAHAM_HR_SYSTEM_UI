@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../styles/Dashboard.css";
 import logo from "../logo.png";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
-import { UserProfile } from "../components/UserProfile";
+import { UserProfile } from "../features/profile/UserProfile";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { servicesConfig } from "../components/servicesConfig";
 import { useService } from "../context/ViewNavigatorContext";

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getAllEmployeeRequests } from "../services/LoanService";
+import { getAllEmployeeRequests } from "../../services/LoanService";
 import { CircularProgress, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 
 // This component returns and renders all employee's loan requests

@@ -1,6 +1,5 @@
 import { 
   Activity, 
-  Briefcase, 
   ChartNoAxesCombined, 
   FileText, 
   Gift, 
@@ -13,14 +12,14 @@ import {
   UserStar, 
   Wallet 
 } from "lucide-react";
-import { Loan } from "./Loan";
-import { DocumentRequest } from "./DocumentRequest";
+import { DocumentRequest } from "../features/documents/DocumentRequest";
 import { Home } from "./Home";
-import { LeaveRequest } from "./Leave";
+import { LeaveRequest } from "../features/leaves/Leave";
 import { FaCalendarAlt, FaHome } from "react-icons/fa";
 import { Annuaire } from "./Directory";
-import { Expenses } from "./Expenses";
+import { Expenses } from "../features/expenses/Expenses";
 import { HRGuide } from "./HRGuide";
+import { Loan } from "../features/loans/Loan";
 
 export const servicesConfig = [
   { 

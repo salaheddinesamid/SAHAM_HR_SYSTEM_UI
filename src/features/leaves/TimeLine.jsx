@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./WallCalendar.css";
-import { getSubordinates } from "../services/EmployeeService";
+import "./styles/WallCalendar.css"
 // Generate days between two dates
 const generateDays = (start, end) => {
   const dates = [];

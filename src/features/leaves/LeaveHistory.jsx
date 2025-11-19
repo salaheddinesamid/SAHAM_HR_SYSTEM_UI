@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getEmployeeLeaves } from "../services/LeaveService";
+import { getEmployeeLeaves } from "../../services/LeaveService";
 import { CircularProgress } from "@mui/material";
 
 export const LeaveHistory = ({user}) => {

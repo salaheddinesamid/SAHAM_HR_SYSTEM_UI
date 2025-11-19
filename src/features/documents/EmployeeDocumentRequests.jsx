@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
-import { getAllPendingRequests } from "../services/DocumentService";
 import { Button, CircularProgress, Paper, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { DocumentRequestApprovalDialog } from "./dialogs/DocumentRequestApprovalDialog";
 import { Check } from "lucide-react";
+import { getAllPendingRequests } from "../../services/DocumentService";
 
 export const EmployeeDocumentRequestHistory = ()=>{
 

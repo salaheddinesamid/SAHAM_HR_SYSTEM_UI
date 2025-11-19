@@ -13,10 +13,10 @@ import {
   IconButton,
 } from "@mui/material";
 import { useEffect, useState, useCallback } from "react";
-import { getSubordinatesLeaves, approveLeave, rejectLeave, approveSubordinatesLeave, rejectSubordinatesLeave } from "../services/LeaveService";
+import { getSubordinatesLeaves, approveLeave, rejectLeave, approveSubordinatesLeave, rejectSubordinatesLeave } from "../../services/LeaveService";
 import { Check, X } from "lucide-react";
 import { Download } from "@mui/icons-material";
-import { downloadFile } from "../services/FileStorageService";
+import { downloadFile } from "../../services/FileStorageService";
 import { saveAs } from "file-saver";
 
 export const SubordinatesLeaveRequestsHistory = ({ manager }) => {

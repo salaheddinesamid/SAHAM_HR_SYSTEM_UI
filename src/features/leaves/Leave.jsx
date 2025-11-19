@@ -1,6 +1,6 @@
 import React, { lazy, Suspense, useEffect, useState } from "react";
 import { TextField, CircularProgress, Alert, Snackbar, Button, styled } from "@mui/material";
-import { applyLeave } from "../services/LeaveService";
+import { applyLeave } from "../../services/LeaveService";
 
 /*
 const SubordinatesLeaveRequestsHistory = lazy(() => import("./SubordinatesLeaveRequestsHistory"));
@@ -15,7 +15,7 @@ import { LeaveHistory } from "./LeaveHistory";
 import { SubordinatesLeaveRequestsHistory } from "./SubordinatesLeaveRequestsHistory";
 import { PendingLeaveRequests } from "./PendingLeaveRequests";
 import { MyTeam } from "./MyTeam";
-import "../styles/LeaveRequest.css"
+import "./styles/LeaveRequest.css"
 import { CheckIcon, TriangleAlert } from "lucide-react";
 import { CloudUpload } from "@mui/icons-material";
 
