@@ -43,6 +43,9 @@ export const EmployeeDocumentRequestHistory = ()=>{
             {loading && requests.length === 0 && (
                 <CircularProgress/>
             )}
+            {!loading && requests.length === 0 && (
+                 <p className="text-center text-muted mt-3">Aucune demande des documents trouvée.</p>
+            )}
             {!loading && requests.length !== 0 && (
                 <Table>
                     <TableHead>
@@ -70,7 +73,7 @@ export const EmployeeDocumentRequestHistory = ()=>{
                             </TableRow>
                         ))}
                     </TableBody>
-                    <DocumentRequestApprovalDialog open={requestApprovalDialogOpen} onClose={handleCloseApprovalDialog} request={selectedRequest}/>
+                    <DocumentRequestApprovalDialog open={requestApprovalDialogOpen} onClose={handleCloseApprovalDialog} request={selectedRequest} onSuccess={fetchAllRequests}/>
                 </Table>
             )}
         </div>

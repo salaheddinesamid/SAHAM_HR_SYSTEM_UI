@@ -24,3 +24,17 @@ export const getAllPendingRequests = async()=>{
     const response = await DocumentAPI.get("employees/get-all");
     return response.data;
 }
+
+export const approveDocumentRequest = async(id)=>{
+    const response = await DocumentAPI.put("approve-request",null,{
+        params : {
+            requestId : id
+        }
+    })
+    return response;
+}
+
+export const rejectDocumentRequest = async()=>{
+    const response = await DocumentAPI.put("reject-request");
+    return response;
+}
