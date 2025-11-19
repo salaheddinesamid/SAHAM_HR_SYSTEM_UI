@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TextField } from "@mui/material";
+import { CircularProgress, TextField } from "@mui/material";
 import { LoanHistory } from "./LoanHistory";
 import { UserInformationCard } from "../leaves/UserInformationCard";
 import { applyLoan } from "../../services/LoanService";
@@ -12,10 +12,10 @@ export const Loan = ()=>{
 
     // handle submit both requests (Pret/Avance)
     const handleSubmitRequest = async(request)=>{
+        const email = user?.email;
         try{
             setLoading(true);
-            const res = await applyLoan(request);
-
+            const res = await applyLoan(email,request);
         }catch(err){
             console.log(err);
         }finally{
@@ -42,28 +42,35 @@ export const Loan = ()=>{
         }
         return(
             <div className="row">
-                <h4>Demande de Prêt</h4>
-                <div className="row mt-3">
-                    <div className="col">
-                        <TextField
-                            label="Montant"
-                            type="number"
-                            name="amount"
-                            fullWidth
-                            InputLabelProps={{ shrink: true }}
-                            variant="outlined"
-                            onChange={handleChange}
-                            placeholder="Montant"/>
+                {loading && (
+                    <CircularProgress/>
+                )}
+                {!loading && (
+                    <div className="row">
+                        <h4>Demande de Prêt</h4>
+                        <div className="row mt-3">
+                            <div className="col">
+                                <TextField
+                                label="Montant"
+                                type="number"
+                                name="amount"
+                                fullWidth
+                                InputLabelProps={{ shrink: true }}
+                                variant="outlined"
+                                onChange={handleChange}
+                                placeholder="Montant"/>
+                            </div>
+                        <div className="col">
+                            <textarea class="form-control" name="motif" onChange={handleChange} placeholder="Motif" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
                     </div>
-                    <div className="col">
-                        <textarea class="form-control" name="motif" onChange={handleChange} placeholder="Motif" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <div className="row mt-3">
+                        <div className="col-xl-4">
+                            <button className="submit-btn" onClick={()=>handleSubmitRequest(requestDto)}>Soumettre</button>
+                        </div>
                     </div>
                 </div>
-                <div className="row mt-3">
-                    <div className="col-xl-4">
-                        <button className="submit-btn" onClick={()=>handleSubmitRequest(requestDto)}>Soumettre</button>
-                    </div>
-                </div>
+                )}
             </div>
         )
     }
@@ -85,28 +92,35 @@ export const Loan = ()=>{
         }
         return(
             <div className="row">
-                <h4>Demande d'avance</h4>
-                <div className="row mt-3">
-                    <div className="col">
-                        <TextField
-                            label="Montant"
-                            type="number"
-                            name="amount"
-                            fullWidth
-                            InputLabelProps={{ shrink: true }}
-                            variant="outlined"
-                            onChange={handleChange}
-                            placeholder="Montant"/>
+                {loading && (
+                    <CircularProgress/>
+                )}
+                {!loading && (
+                    <div className="row">
+                        <h4>Demande d'avance</h4>
+                        <div className="row mt-3">
+                            <div className="col">
+                                <TextField
+                                label="Montant"
+                                type="number"
+                                name="amount"
+                                fullWidth
+                                InputLabelProps={{ shrink: true }}
+                                variant="outlined"
+                                onChange={handleChange}
+                                placeholder="Montant"/>
+                            </div>
+                        <div className="col">
+                            <textarea class="form-control" name="motif" onChange={handleChange} placeholder="Motif" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
                     </div>
-                    <div className="col">
-                        <textarea class="form-control" name="motif" onChange={handleChange} placeholder="Motif" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <div className="row mt-3">
+                        <div className="col-xl-4">
+                            <button className="submit-btn" onClick={()=>handleSubmitRequest(requestDto)}>Soumettre</button>
+                        </div>
                     </div>
                 </div>
-                <div className="row mt-3">
-                    <div className="col-xl-4">
-                        <button className="submit-btn" onClick={()=>handleSubmitRequest(requestDto)}>Soumettre</button>
-                    </div>
-                </div>
+                )}
             </div>
         )
     }
@@ -115,7 +129,8 @@ export const Loan = ()=>{
     const NewRequest = ()=>{
         const [selectedType,setSelectedType] = useState(1);
         const types = [
-            {id: 1, name: "Prêt Interne", view: <PretInternForm/>},{id: 2, name: "Avance", view: <AvanceForm/>}
+            {id: 1, name: "Prêt Interne", view: <PretInternForm/>},
+            {id: 2, name: "Avance", view: <AvanceForm/>}
         ]
         return(
             <div className="row mt-4">
@@ -147,9 +162,9 @@ export const Loan = ()=>{
     ]
     return(
         <div style={{ padding: "20px" }}>
-              <div style={{ display: "flex", gap: "10px", margin: "0px 0px" }}>
+            <div style={{ display: "flex", gap: "10px", margin: "0px 0px" }}>
                 {services.map((service) => (
-                  <p
+                    <p
                     key={service.id}
                     style={{
                       cursor: "pointer",
@@ -160,13 +175,13 @@ export const Loan = ()=>{
                     {service.name}
                   </p>
                 ))}
-              </div>
-              <div>
+            </div>
+            <div>
                 {selectedService === 1 ? <></>: <UserInformationCard exception={"Without solde"}/>}
-              </div>
-              <div className="row">
+            </div>
+            <div className="row">
                 {services.map((s) => (s.id === selectedService ? s.view : ""))}
-              </div>
+            </div>
         </div>
     )
 }
