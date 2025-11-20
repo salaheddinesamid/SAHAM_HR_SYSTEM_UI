@@ -13,8 +13,10 @@ export const LoanRejectionDialog = ({open,onClose,request,onSuccess})=>{
         try{
             setLoading(true);
             const res = await rejectLoan(id);
-            onSuccess();
-            onClose();
+            if(res === 200){
+                onSuccess();
+                onClose();
+            }
         }catch(err){
             console.log(err);
         }finally{
