@@ -12,8 +12,8 @@ export const LoanApprovalDialog = ({open, onClose, request, onSuccess})=>{
         try{
             setLoading(true);
             const res = await approveLoan(id);
-            onClose();
             onSuccess();
+            onClose();
         }catch(err){
             console.log(err);
         }finally{
