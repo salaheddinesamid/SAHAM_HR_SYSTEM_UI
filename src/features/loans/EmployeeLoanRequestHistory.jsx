@@ -5,6 +5,7 @@ import { loanAmountMapper, loanTypeMapper } from "./utils/Mapper";
 import { Check, X } from "lucide-react";
 import { LoanApprovalDialog } from "./dialogs/LoanApprovaDialog";
 import { LocalDateTimeMapper } from "../../utils/LocalDateTimeMapper";
+import { LoanRejectionDialog } from "./dialogs/LoanRejectionDialog";
 
 export const EmployeeLoanRequests = ()=>{
 
@@ -12,6 +13,7 @@ export const EmployeeLoanRequests = ()=>{
     const [loading,setLoading] = useState(false);
     const [selectedRequest,setSelectedRequest] = useState(null);
     const [loanApprovalDialogOpen,setLoanApprovalDialogOpen] = useState(false);
+    const [loanRejectionDialogOpen,setLoanRejectionDialogOpen] = useState(false);
 
     // fetch pending loan requests
     const fetchEmployeeRequests = async()=>{
@@ -36,6 +38,18 @@ export const EmployeeLoanRequests = ()=>{
     const handleCloseApprovalDialog = ()=>{
         setSelectedRequest(null);
         setLoanApprovalDialogOpen(false);
+    }
+
+    // handle opening dialog for approval
+    const handleOpenRejectionDialog = (request)=>{
+        setSelectedRequest(request);
+        setLoanRejectionDialogOpen(true);
+    }
+
+    // handle close approval dialog
+    const handleCloseRejectionDialog = ()=>{
+        setSelectedRequest(null);
+        setLoanRejectionDialogOpen(false);
     }
 
     useEffect(()=>{
@@ -73,7 +87,7 @@ export const EmployeeLoanRequests = ()=>{
                                         <Button variant="contained" color="success" size="small" onClick={()=> handleOpenApprovalDialog(r)}>
                                             <Check size={16} />
                                         </Button>
-                                        <Button variant="contained" color="error" size="small" className="ms-1">
+                                        <Button variant="contained" color="error" size="small" className="ms-1" onClick={()=> handleOpenRejectionDialog(r)}>
                                             <X size={16} />
                                         </Button>
                                     </>
@@ -83,6 +97,7 @@ export const EmployeeLoanRequests = ()=>{
                         ))}
                     </TableBody>
                     <LoanApprovalDialog open={loanApprovalDialogOpen} onClose={handleCloseApprovalDialog} request={selectedRequest} onSuccess={fetchEmployeeRequests}/>
+                    <LoanRejectionDialog open={loanRejectionDialogOpen} onClose={handleCloseRejectionDialog} request={selectedRequest} onSuccess={fetchEmployeeRequests}/>
                 </Table>
             )}
         </div>

@@ -32,3 +32,12 @@ export const approveLoan = async(id)=>{
     });
     return res.status;
 }
+
+export const rejectLoan = async(id)=>{
+    const res = await LoanAPI.put("reject-request",null,{
+        params : {
+            requestId : id
+        }
+    })
+    return res.status;
+}
