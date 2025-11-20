@@ -3,6 +3,7 @@ import { CircularProgress, TextField } from "@mui/material";
 import { LoanHistory } from "./LoanHistory";
 import { UserInformationCard } from "../leaves/UserInformationCard";
 import { applyLoan } from "../../services/LoanService";
+import { EmployeeLoanRequests } from "./EmployeeLoanRequestHistory";
 
 
 export const Loan = ()=>{
@@ -159,7 +160,8 @@ export const Loan = ()=>{
     const services = [
         {id: 1, name: "Profil", view: <UserInformationCard exception={"Without solde"}/>},
         {id: 2, name: "Nouvelle Demande", view: <NewRequest/>},
-        {id: 3, name: "Historique des demandes", view:<LoanHistory user={user}/>}
+        {id: 3, name: "Historique des demandes", view:<LoanHistory user={user}/>},
+        {id: 4, name: "Les demandes en attente", view:<EmployeeLoanRequests/>}
     ]
     return(
         <div style={{ padding: "20px" }}>

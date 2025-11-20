@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { getAllEmployeeRequests } from "../../services/LoanService";
 import { CircularProgress, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { loanStatusMapper, loanTypeMapper } from "./utils/Mapper";
 
 // This component returns and renders all employee's loan requests
 export const LoanHistory = ({user})=>{
@@ -18,33 +19,6 @@ export const LoanHistory = ({user})=>{
             console.log(err);
         }finally{
             setLoading(false);
-        }
-    }
-
-    const loanStatusMapper = (status) => {
-    switch (status) {
-        case "APPROVED":
-            return { message: "Approuvée", color: "bg-success" };
-            
-        case "REJECTED":
-            return { message: "Rejetée", color: "bg-danger" };
-            
-        case "IN_PROCESS":
-            return { message: "En attente", color: "bg-warning text-dark" };
-            
-        case "CANCELLED":
-            return { message: "Annulée", color: "bg-secondary" };
-        default:
-            return { message: "Inconnue", color: "bg-light text-dark" };
-        }
-    };
-
-    const loanTypeMapper = (type)=>{
-        switch(type){
-            case "NORMAL":
-                return "Prêt"
-            case "ADVANCE":
-                return "Avance"
         }
     }
 
@@ -67,6 +41,7 @@ export const LoanHistory = ({user})=>{
                         <TableCell><b>Date de soumission</b></TableCell>
                         <TableCell><b>Type de demande</b></TableCell>
                         <TableCell><b>Montant (MAD)</b></TableCell>
+                        <TableCell><b>Motif</b></TableCell>
                         <TableCell><b>Status</b></TableCell>
                     </TableHead>
                     <TableBody>
@@ -75,6 +50,7 @@ export const LoanHistory = ({user})=>{
                                 <TableCell>{r?.issueDate}</TableCell>
                                 <TableCell>{loanTypeMapper(r?.type)}</TableCell>
                                 <TableCell>{r?.amount}</TableCell>
+                                <TableCell>{r?.motif }</TableCell>
                                 <TableCell>{(() => {
                         const { message, color } = loanStatusMapper(r.status);
                         return <span className={`badge ${color}`}>{message}</span>;
