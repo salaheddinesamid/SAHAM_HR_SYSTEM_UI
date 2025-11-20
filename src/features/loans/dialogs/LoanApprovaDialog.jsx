@@ -1,6 +1,7 @@
 import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material"
 import { useState } from "react"
 import { approveLoan } from "../../../services/LoanService";
+import { loanAmountMapper, loanTypeMapper } from "../utils/Mapper";
 
 export const LoanApprovalDialog = ({open, onClose, request, onSuccess})=>{
 
@@ -30,10 +31,8 @@ export const LoanApprovalDialog = ({open, onClose, request, onSuccess})=>{
             {!loading && (
                 
                 <DialogContent>
-                    Êtes-vous sûr de vouloir approuver la demande de{" "}
-                    <strong>{request?.requestedBy}</strong> du{" "}
-                    <strong>{request?.startDate}</strong> au{" "}
-                    <strong>{request?.endDate}</strong> ?
+                    Êtes-vous sûr de vouloir approuver la demande de {loanTypeMapper(request?.type)} {" "}
+                    de <b>{loanAmountMapper(request?.amount)} MAD</b> demandé par <strong>{request?.requestedBy}</strong> du{" "}
                 </DialogContent>
             )}
             <DialogActions>

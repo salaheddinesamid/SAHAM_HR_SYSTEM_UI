@@ -1,7 +1,7 @@
 import { Button, CircularProgress, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { useEffect, useState } from "react"
 import { getAllPendingRequests } from "../../services/LoanService";
-import { loanTypeMapper } from "./utils/Mapper";
+import { loanAmountMapper, loanTypeMapper } from "./utils/Mapper";
 import { Check, X } from "lucide-react";
 import { LoanApprovalDialog } from "./dialogs/LoanApprovaDialog";
 import { LocalDateTimeMapper } from "../../utils/LocalDateTimeMapper";
@@ -65,7 +65,7 @@ export const EmployeeLoanRequests = ()=>{
                                 <TableCell>{r?.requestedBy}</TableCell>
                                 <TableCell>{LocalDateTimeMapper(r?.issueDate)}</TableCell>
                                 <TableCell>{loanTypeMapper(r?.type)}</TableCell>
-                                <TableCell>{r?.amount}</TableCell>
+                                <TableCell>{loanAmountMapper(r?.amount)}</TableCell>
                                 <TableCell>{r?.motif}</TableCell>
                                 <TableCell>
                                     {r?.status === "IN_PROCESS" && (

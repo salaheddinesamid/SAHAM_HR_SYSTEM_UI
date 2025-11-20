@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { getAllEmployeeRequests } from "../../services/LoanService";
 import { CircularProgress, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { loanStatusMapper, loanTypeMapper } from "./utils/Mapper";
+import { loanAmountMapper, loanStatusMapper, loanTypeMapper } from "./utils/Mapper";
+import { LocalDateTimeMapper } from "../../utils/LocalDateTimeMapper";
 
 // This component returns and renders all employee's loan requests
 export const LoanHistory = ({user})=>{
@@ -47,9 +48,9 @@ export const LoanHistory = ({user})=>{
                     <TableBody>
                         {requests.map((r)=>(
                             <TableRow>
-                                <TableCell>{r?.issueDate}</TableCell>
+                                <TableCell>{LocalDateTimeMapper(r?.issueDate)}</TableCell>
                                 <TableCell>{loanTypeMapper(r?.type)}</TableCell>
-                                <TableCell>{r?.amount}</TableCell>
+                                <TableCell>{loanAmountMapper(r?.amount)}</TableCell>
                                 <TableCell>{r?.motif }</TableCell>
                                 <TableCell>{(() => {
                         const { message, color } = loanStatusMapper(r.status);
