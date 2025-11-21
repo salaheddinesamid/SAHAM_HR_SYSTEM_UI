@@ -1,5 +1,6 @@
 import LeaveAPI from "../apis/LeaveAPI"
 
+// handle new leave request
 export const applyLeave = async(email, requestDto)=>{
     return await LeaveAPI.post("/apply",requestDto,{
         params : {
@@ -8,17 +9,35 @@ export const applyLeave = async(email, requestDto)=>{
     });
 }
 
-export const getEmployeeLeaves = async(email)=>{
+// handle cancel leave request
+export const cancelLeaveRequest = async(id)=>{
+    return await LeaveAPI.delete("cancel-request",{
+        params : {
+            leaveRequestId : id
+        }
+    })
+}
 
+// handle cancel leave:
+export const cancelLeave = async(id)=>{
+    return await LeaveAPI.delete("cancel", {
+        params : {
+            leaveId : id
+        }
+    })
+}
+
+//
+export const getMyLeaveRequests = async(email)=>{
     const response = await LeaveAPI.get("get",{
         params : {
             email: email
         },
     });
-
     return response.data;
 }
 
+//
 export const getSubordinatesLeaves = async(email)=>{
     const response = await LeaveAPI.get("/subordinates/get_all_requests", {
         params : {

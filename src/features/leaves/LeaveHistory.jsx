@@ -1,11 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { getEmployeeLeaves } from "../../services/LeaveService";
-import { CircularProgress } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
+import { LeaveCancellationDialog } from "./dialogs/LeaveCancellationDialog";
 
 export const LeaveHistory = ({user}) => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [cancelDialogOpen,setCancelDialogOpen] = useState(false);
+  const [selectedRequest,setSelectedRequest] = useState(null);
+
+  const handleOpenCancelDialog = (r)=>{
+    setSelectedRequest(r);
+    setCancelDialogOpen(true);
+  }
+
+  const handleCloseCancelDialog = ()=>{
+    setSelectedRequest(null);
+    setCancelDialogOpen(false);
+  }
 
   const fetchData = async () => {
     const email = user?.email;
@@ -21,6 +34,7 @@ export const LeaveHistory = ({user}) => {
       setLoading(false);
     }
   };
+
     const statusMapper = (status) => {
     switch (status) {
         case "APPROVED":
@@ -32,7 +46,7 @@ export const LeaveHistory = ({user}) => {
         case "IN_PROCESS":
             return { message: "En attente", color: "bg-warning text-dark" };
             
-        case "CANCELLED":
+        case "CANCELED":
             return { message: "Annulée", color: "bg-secondary" };
         default:
             return { message: "Inconnue", color: "bg-light text-dark" };
@@ -71,6 +85,7 @@ export const LeaveHistory = ({user}) => {
               <th>Nombre de jours</th>
               <th>Status</th>
               <th>Commentaire</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -88,11 +103,24 @@ export const LeaveHistory = ({user}) => {
                         })()}
                     </td>
                 <td>{req.comment || "-"}</td>
+                <td>
+                  {req?.status === "IN_PROCESS" ? 
+                  <Button
+                  variant="contained"
+                  color="error"
+                  size="small"
+                  className="ms-1"
+                  onClick={()=> handleOpenCancelDialog(req)}
+                  >
+                    Annuler
+                  </Button> : <></>}
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       )}
+      <LeaveCancellationDialog open={cancelDialogOpen} onClose={handleCloseCancelDialog} request={selectedRequest} onSuccess={fetchData}/>
     </div>
   );
 };
