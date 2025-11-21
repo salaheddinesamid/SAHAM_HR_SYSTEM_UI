@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { getEmployeeLeaves } from "../../services/LeaveService";
+import { useEffect, useState } from "react";
+import { getMyLeaveRequests } from "../../services/LeaveService";
 import { Button, CircularProgress } from "@mui/material";
 import { LeaveCancellationDialog } from "./dialogs/LeaveCancellationDialog";
 
@@ -25,7 +25,7 @@ export const LeaveHistory = ({user}) => {
     try {
       setLoading(true);
       console.log("Fetching Data...");
-      const response = await getEmployeeLeaves(email);
+      const response = await getMyLeaveRequests(email);
       setRequests(response || []); // ensure safe access
     } catch (err) {
       console.error("Error fetching leaves:", err);

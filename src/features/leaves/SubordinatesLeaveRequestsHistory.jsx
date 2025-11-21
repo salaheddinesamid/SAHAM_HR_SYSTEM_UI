@@ -13,7 +13,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { useEffect, useState, useCallback } from "react";
-import { getSubordinatesLeaves, approveLeave, rejectLeave, approveSubordinatesLeave, rejectSubordinatesLeave } from "../../services/LeaveService";
+import { approveSubordinatesLeave, rejectSubordinatesLeave, getSubordinatesLeaveRequests } from "../../services/LeaveService";
 import { Check, X } from "lucide-react";
 import { Download } from "@mui/icons-material";
 import { downloadFile } from "../../services/FileStorageService";
@@ -33,7 +33,7 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
     try {
       setLoading(true);
       console.log("...Fetching data")
-      const data = await getSubordinatesLeaves(manager?.email);
+      const data = await getSubordinatesLeaveRequests(manager?.email);
       setRequests(data || []);
     } catch (err) {
       console.error("Failed to fetch subordinates' leave requests:", err);

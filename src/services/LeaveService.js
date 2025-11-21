@@ -27,9 +27,9 @@ export const cancelLeave = async(id)=>{
     })
 }
 
-//
+// Fetch all employee leave requests
 export const getMyLeaveRequests = async(email)=>{
-    const response = await LeaveAPI.get("get",{
+    const response = await LeaveAPI.get("/requests/get",{
         params : {
             email: email
         },
@@ -37,20 +37,22 @@ export const getMyLeaveRequests = async(email)=>{
     return response.data;
 }
 
-//
-export const getSubordinatesLeaves = async(email)=>{
-    const response = await LeaveAPI.get("/subordinates/get_all_requests", {
+// Fetch leave requests of manager's subordinates
+export const getSubordinatesLeaveRequests = async(email)=>{
+    const response = await LeaveAPI.get("/requests/subordinates/get_all", {
         params : {
             email : email
         }
     })
-
     return response.data;
+}
+export const getMyTeamLeaves = async(email)=>{
+    const response = await LeaveAPI.get("'")
 }
 
 // subordinates (Approval/Rejection)
 export const approveSubordinatesLeave = async(requestId)=>{
-    const response = await LeaveAPI.put("/subordinates/approve-request",null,{
+    const response = await LeaveAPI.put("/requests/subordinates/approve-request",null,{
         params : {
             leaveRequestId : requestId
         }
@@ -59,12 +61,11 @@ export const approveSubordinatesLeave = async(requestId)=>{
 }
 
 export const rejectSubordinatesLeave = async(requestId)=>{
-    const response = await LeaveAPI.put("/subordinates/reject-request",null,{
+    const response = await LeaveAPI.put("/requests/subordinates/reject-request",null,{
         params : {
             leaveRequestId : requestId
         }
     });
-
     return response.status;
 }
 
@@ -86,12 +87,11 @@ export const finalLeaveRejection = async(requestId)=>{
             requestId : requestId
         }
     });
-
     return response.status;
 }
 
 // Get leave requests In process and approved by Manager
 export const getAllRequestsForHr = async()=>{
-    const response = await LeaveAPI.get("hr/get_all_requests");
+    const response = await LeaveAPI.get("/requests/hr/get_all");
     return response.data;
 }
