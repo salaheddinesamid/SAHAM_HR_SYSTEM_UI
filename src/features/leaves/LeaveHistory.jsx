@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getMyLeaveRequests } from "../../services/LeaveService";
 import { Button, CircularProgress } from "@mui/material";
-import { LeaveCancellationDialog } from "./dialogs/LeaveCancellationDialog";
+import { LeaveRequestCancellationDialog } from "./dialogs/LeaveRequestCancellationDialog";
 
 export const LeaveHistory = ({user}) => {
   const [requests, setRequests] = useState([]);
@@ -120,7 +120,7 @@ export const LeaveHistory = ({user}) => {
           </tbody>
         </table>
       )}
-      <LeaveCancellationDialog open={cancelDialogOpen} onClose={handleCloseCancelDialog} request={selectedRequest} onSuccess={fetchData}/>
+      <LeaveRequestCancellationDialog open={cancelDialogOpen} onClose={handleCloseCancelDialog} request={selectedRequest} onSuccess={fetchData}/>
     </div>
   );
 };

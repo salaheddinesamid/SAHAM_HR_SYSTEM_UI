@@ -95,3 +95,13 @@ export const getAllRequestsForHr = async()=>{
     const response = await LeaveAPI.get("/requests/hr/get_all");
     return response.data;
 }
+
+// Get all employee leaves:
+export const getAllMyLeaves = async(email)=>{
+    const response = await LeaveAPI.get("/employee-leaves/get_all", {
+        params : {
+            email : email
+        }
+    });
+    return response.data;
+}

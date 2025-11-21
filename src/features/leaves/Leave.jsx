@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { TextField, CircularProgress, Alert, Snackbar, Button, styled } from "@mui/material";
 import { applyLeave } from "../../services/LeaveService";
 
@@ -18,6 +18,7 @@ import { MyTeam } from "./MyTeam";
 import "./styles/LeaveRequest.css"
 import { CheckIcon, TriangleAlert } from "lucide-react";
 import { CloudUpload } from "@mui/icons-material";
+import { MyLeaves } from "./MyLeaves";
 
 export const LeaveRequest = () => {
   const user = JSON.parse(localStorage.getItem("userDetails")); 
@@ -56,14 +57,15 @@ export const LeaveRequest = () => {
   const [selectedType, setSelectedType] = useState("");
   const [requestLoading, setRequestLoading] = useState(false);
   const [selectedEntity, setSelectedEntity] = useState("");
-  const [selectedFile,setSelectedFile] = useState(null);
-
-    const entities = [
+  const [selectedFile,setSelectedFile] = useState(null)
+  
+  const entities = [
       { id: 1, name: "SAHAM Horizon" },
       { id: 2, name: "SAHAM Finances" },
       { id: 3, name: "SAHAM Foundation" },
     ];
-    const dateFormatter = (date) => new Date(date).toISOString().split("T")[0];
+    
+  const dateFormatter = (date) => new Date(date).toISOString().split("T")[0];
 
     const handleChange = (e) => {
       const { name, value } = e.target;
@@ -98,7 +100,7 @@ export const LeaveRequest = () => {
           variant="contained"
           startIcon={<CloudUpload />}
           fullWidth>
-            Upload CSV
+            Veuillez uploader le certificat medical
           <VisuallyHiddenInput
           type="file"
           accept=".pdf"
@@ -334,6 +336,7 @@ export const LeaveRequest = () => {
       <UserInformationCard/>
       </Suspense> },
     { id: 2, name: "Nouvelle Demande", view: <RequestForm user={user}/> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},
+    { id: 8, name: "Mes congés", view: <MyLeaves user={user}/> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},
     { id: 3, name: "Historique des demandes", view: <Suspense fallback={<CircularProgress/>}>
       <LeaveHistory user={user}/>
     </Suspense> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},

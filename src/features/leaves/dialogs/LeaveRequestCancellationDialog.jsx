@@ -1,17 +1,17 @@
 import { Button, CircularProgress, Dialog, DialogActions, DialogContent } from "@mui/material"
 import { useState } from "react"
-import { cancelLeave, cancelLeaveRequest } from "../../../services/LeaveService";
+import { cancelLeaveRequest } from "../../../services/LeaveService";
 
-export const LeaveCancellationDialog = ({open, onClose,leave, onSuccess})=>{
+export const LeaveRequestCancellationDialog = ({open, onClose,request, onSuccess})=>{
 
     const [loading,setLoading] = useState(false);
     const [error,setError] = useState("");
 
     const handleConfirm = async()=>{
-        const id = leave?.id;
+        const id = request?.id;
         try{
             setLoading(true);
-            const res = await cancelLeave(id);
+            const res = await cancelLeaveRequest(id);
             if(res.status === 200){
                 onSuccess();
                 onClose();
@@ -29,10 +29,10 @@ export const LeaveCancellationDialog = ({open, onClose,leave, onSuccess})=>{
                 <CircularProgress/>
             )}
             <DialogContent>
-                Êtes-vous sûr de vouloir annuler votre congé{" "}
+                Êtes-vous sûr de vouloir annuler la demande de congé{" "}
                 du{" "}
-                <strong>{leave?.fromDate}</strong> au{" "}
-                <strong>{leave?.toDate}</strong> ?
+                <strong>{request?.startDate}</strong> au{" "}
+                <strong>{request?.endDate}</strong> ?
             </DialogContent>
             
             <DialogActions>

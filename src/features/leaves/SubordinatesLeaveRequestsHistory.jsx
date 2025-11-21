@@ -251,7 +251,6 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
           </TableBody>
         </Table>
       )}
-
       <ApproveDialog
         open={approvalDialogOpen}
         onClose={handeCloseApprovalDialog}
