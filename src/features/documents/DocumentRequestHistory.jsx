@@ -66,26 +66,27 @@ export const DocumentRequestHistory = ({user})=>{
     const RequestsTable = ()=>{
         return(
             <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Date de demande</TableCell>
-                            <TableCell>List des documents</TableCell>
-                            <TableCell>Status</TableCell>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Date de demande</TableCell>
+                        <TableCell>List des documents</TableCell>
+                        <TableCell>Status</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {filteredRequests.map((r)=>(
+                        <TableRow key={r.id}>
+                            <TableCell>{r.requestDate}</TableCell>
+                            <TableCell>{r.documents}</TableCell>
+                            <TableCell>{(() => {
+                                const { message, color } = StatusMapper(r.status);
+                                return <span className={`badge ${color}`}>{message}</span>;
+                            })()}</TableCell>
                         </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {filteredRequests.map((r)=>(
-                            <TableRow key={r.id}>
-                                <TableCell>{r.requestDate}</TableCell>
-                                <TableCell>{r.documents}</TableCell>
-                                <TableCell>{(() => {
-                                    const { message, color } = StatusMapper(r.status);
-                                    return <span className={`badge ${color}`}>{message}</span>;
-                                })()}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                    ))}
+                </TableBody>
+                
+            </Table>
         )
     }
 
