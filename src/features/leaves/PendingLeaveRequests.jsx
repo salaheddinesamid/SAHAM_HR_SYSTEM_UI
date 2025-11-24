@@ -12,7 +12,7 @@ import {
   TableRow,
   TextField,
   Toolbar,
-} from "@mui/material";
+} from "@mui/material"; 
 import { Check, Search, X } from "lucide-react";
 import { LeaveApproval } from "./dialogs/LeaveApproval";
 import { LeaveRejectionDialog } from "./dialogs/LeaveRejectionDialog";

@@ -341,7 +341,7 @@ export const LeaveRequest = () => {
       <LeaveHistory user={user}/>
     </Suspense> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},
     { id: 4, name: "Les demandes de mon équipe", view: <SubordinatesLeaveRequestsHistory manager={user}/> , allowedRoles:["MANAGER"]},
-    { id: 5, name: "Les demandes en attente", view: <Suspense fallback={<CircularProgress/>}>
+    { id: 5, name: "Les demandes des collaborateurs", view: <Suspense fallback={<CircularProgress/>}>
       <PendingLeaveRequests/>
     </Suspense>, allowedRoles:["HR"]},
     { id: 6, name: "Mes Equipes", view: <Suspense fallback={<CircularProgress/>}>
