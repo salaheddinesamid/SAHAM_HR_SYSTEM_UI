@@ -1,6 +1,5 @@
-import React, { Suspense, useEffect, useState } from "react";
-import { TextField, CircularProgress, Alert, Snackbar, Button, styled } from "@mui/material";
-import { applyLeave } from "../../services/LeaveService";
+import { Suspense, useState } from "react";
+import {CircularProgress} from "@mui/material";
 
 /*
 const SubordinatesLeaveRequestsHistory = lazy(() => import("./SubordinatesLeaveRequestsHistory"));
@@ -25,28 +24,6 @@ export const LeaveRequest = () => {
   const [selectedService, setSelectedService] = useState(1);
   const [error,setError] = useState("");
   const [submitSuccess,setSubmitSuccess] = useState(false);
-
-  
-
-  
-  
-  const RequestForm = ({ user }) => {
-  
-
-  
-  
-
-    
-
-    
-    
-    
-
-  // Update start/end and total days
-  
-
-  
-};
   const services = [
     { id: 1, name: "Profil", view: <Suspense fallback={<CircularProgress/>}>
       <UserInformationCard/>
