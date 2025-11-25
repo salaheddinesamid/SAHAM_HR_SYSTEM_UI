@@ -130,7 +130,7 @@ export const PendingLeaveRequests = () => {
           <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", alignItems: "center" }}>
             <TextField
             size="small"
-            placeholder="Search by employee's name"
+            placeholder="Recherche par nom de collaborateur"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             InputProps={{
