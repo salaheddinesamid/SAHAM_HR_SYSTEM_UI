@@ -1,6 +1,7 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import sahamLogo from "../logo_bg.png"; 
+import { expenseAmountMapper } from "../features/expenses/utils/ExpensesUtils";
 
 export const ExpensePdfGenerator = (expense) => {
   try {
@@ -24,10 +25,11 @@ export const ExpensePdfGenerator = (expense) => {
 
     // Separate the rest of the PDF generation
     const drawPDF = () => {
+      const title = `FICHE DE DÉPENSE ${expense?.location === "INSIDE_MOROCCO" ? "Au Maroc" : "A letranger"}`
       doc.setFontSize(18);
       doc.setTextColor(...primaryColor);
       doc.setFont("helvetica", "bold");
-      doc.text("FICHE DE DÉPENSE", 105, 25, { align: "center" });
+      doc.text(title, 105, 25, { align: "center" });
 
       // ===== General Info =====
       doc.setFontSize(11);
@@ -39,14 +41,15 @@ export const ExpensePdfGenerator = (expense) => {
       doc.text(`Motif: ${expense.motif || "—"}`, 15, 66);
 
       // ===== Expense Items Table =====
-      const expenseColumns = ["Date", "Désignation", "Montant (MAD)"];
+      const expenseColumns = ["Date", "Désignation", "Montant", "Facture"];
       const expenseRows = expense.expenseItems.map((item) => [
         item.date,
         item.designation,
-        item.amount.toLocaleString("fr-MA", {
+        expense.totalAmount.toLocaleString("fr-MA", {
           style: "currency",
-          currency: "MAD",
+          currency: expense.currency,
         }),
+        item.invoiced === true ? "Oui" : "Non"
       ]);
 
       autoTable(doc, {
@@ -74,14 +77,14 @@ export const ExpensePdfGenerator = (expense) => {
       doc.text(
         `Total: ${expense.totalAmount.toLocaleString("fr-MA", {
           style: "currency",
-          currency: "MAD",
+          currency: expense.currency,
         })}`,
         160,
         totalY
       );
 
       // ===== Signature Table =====
-      const signatureTableColumns = ["Visa Intéressé", "Visa Trésorerie", "Visa Direction"];
+      const signatureTableColumns = ["Visa Intéressé", "Visa Direction", "Visa Trésorerie"];
       const signatureRows = [["", "", ""]];
 
       autoTable(doc, {

@@ -21,8 +21,10 @@ import { newExpense } from "../../../services/ExpenseService";
 
 export const ExpenseFormDialog = ({ open, onClose, user }) => {
   const [expensesDetail, setExpenseDetail] = useState({
-    date: "",
     motif: "",
+    currency : "",
+    exchangeRate : 0,
+    location : '',
     expenseItems: [],
     issueDate : ""
   });
@@ -31,7 +33,36 @@ export const ExpenseFormDialog = ({ open, onClose, user }) => {
     expenseDate: "",
     designation: "",
     amount: "",
+    invoiced : false
   });
+
+  const [selectedLocation,setSelectedLocation] = useState("INSIDE_MOROCCO");
+  const [selectedCurrency,setSelectedCurrency] = useState("MAD");
+  const [exchangeRate,setExchangeRate] = useState(0);
+
+  const locations = [
+    {id : 1, label : 'Au Maroc', value : 'INSIDE_MOROCCO'},
+    {id : 2, label : 'A letranger', value : 'OUTSIDE_MOROCCO'}
+  ]
+
+  const currencies = [
+    { id: 1, label: 'Dirham Marocaine (MAD)' , value : 'EUR'},
+    { id: 2, label: 'Dollar Américain (USD)' , value : 'MAD'},
+    { id: 3, label: 'Euro (EUR)' },
+    { id: 4, label: 'Livre Sterling (GBP)' },
+    { id: 5, label: 'Franc Suisse (CHF)' },
+    { id: 6, label: 'Yen Japonais (JPY)' },
+    { id: 7, label: 'Dirham Emirati (AED)' },
+    { id: 8, label: 'Dollar Canadien (CAD)' },
+    { id: 9, label: 'Riyal Saoudien (SAR)' },
+    { id: 10, label: 'Dinar Koweïtien (KWD)' }
+  ];
+
+  const invoicedChoices = [
+    {id: 1, label : 'Oui', value : true},
+    {id : 2, label : 'Non', value : false}
+  ]
+
 
   const [loading, setLoading] = useState(false);
 
@@ -50,6 +81,18 @@ export const ExpenseFormDialog = ({ open, onClose, user }) => {
       [name]: value,
     }));
   };
+
+  // This function clears the request dto after submitting
+  const handleClearRequest = ()=>{
+    setExpenseDetail({
+      date: "",
+      motif: "",
+      location : "",
+      currency : "",
+      expenseItems: [],
+      issueDate : ""
+    });
+  }
 
   const handleAddItem = () => {
     if (!detail.expenseDate || !detail.designation || !detail.amount) {
@@ -94,6 +137,7 @@ export const ExpenseFormDialog = ({ open, onClose, user }) => {
       const res = await newExpense(email,expensesDetail)
       
       alert("Fiche de dépense enregistrée avec succès !");
+      handleClearRequest(); // clear the request before closing
       onClose();
     } catch (err) {
       console.error(err);
@@ -148,6 +192,62 @@ export const ExpenseFormDialog = ({ open, onClose, user }) => {
               fullWidth
             />
           </div>
+          <div
+            style={{
+              display: "flex",
+              gap: "16px",
+              flexWrap: "wrap",
+              marginBottom: "16px",
+            }}
+          >
+            <select
+            className="styled-select"
+            style={{ fontSize: "12px" }}
+            name="location"
+            onChange={(e)=>{
+              setSelectedLocation(e.target.value)
+              setExpenseDetail((prev)=>(
+                {...prev, location : e.target.value}
+              ))
+            }}
+            >
+              <option value="">-- Sélectionnez La place de Motif --</option>
+              {locations.map((location, i) => (
+                <option key={i} value={location.value}>
+                  {location.label}
+                </option>
+              ))}
+            </select>
+          </div>
+          {selectedLocation !== "" && selectedLocation === "OUTSIDE_MOROCCO" && (
+            <div>
+              <div>
+                <select
+                className="styled-select"
+                style={{ fontSize: "12px" }}
+                name="currency"
+                onChange={handleChange}
+                >
+                  <option value="">-- Sélectionnez Le devise --</option>
+                  {currencies.map((currency, i) => (
+                    <option key={i} value={currency.value}>
+                      {currency.label}
+                  </option>
+                ))}
+                </select>
+              </div>
+              <div>
+                <TextField
+                label={`Taux d'echange`}
+                name="exchangeRate"
+                type="number"
+                value={detail.amount}
+                onChange={handleItemChange}
+                sx={{ flex: 1 }}
+                />
+              </div>
+            </div>
+          )}
 
           <Divider sx={{ my: 2 }} />
           <Typography variant="subtitle1" fontWeight={600} gutterBottom>
@@ -179,13 +279,26 @@ export const ExpenseFormDialog = ({ open, onClose, user }) => {
               sx={{ flex: 2 }}
             />
             <TextField
-              label="Montant (MAD)"
+              label={`Montant (${selectedCurrency})`}
               name="amount"
               type="number"
               value={detail.amount}
               onChange={handleItemChange}
               sx={{ flex: 1 }}
             />
+            <select
+                className="styled-select"
+                style={{ fontSize: "12px" }}
+                name="invoiced"
+                onChange={handleItemChange}
+                >
+                  <option value="">Facture?</option>
+                  {invoicedChoices.map((choice, i) => (
+                    <option key={i} value={choice.value}>
+                      {choice.label}
+                  </option>
+                ))}
+                </select>
             <IconButton color="primary" onClick={handleAddItem}>
               <AddCircle />
             </IconButton>
@@ -233,9 +346,12 @@ export const ExpenseFormDialog = ({ open, onClose, user }) => {
           setExpenseDetail({
              date: "",
              motif: "",
+             location : "",
+             currency : "",
              expenseItems: [],
              issueDate : ""
-          })
+          });
+          setSelectedLocation("");
           onClose()
         }} color="inherit" variant="outlined">
           Annuler

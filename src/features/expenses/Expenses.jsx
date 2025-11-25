@@ -4,6 +4,8 @@ import { getAllExpenses } from "../../services/ExpenseService";
 import { FileDownload } from "@mui/icons-material";
 import { ExpensePdfGenerator } from "../../services/ExpensesPdfGenerator";
 import { ExpenseFormDialog } from "./dialogs/NewExpenseDialog";
+import { expenseAmountMapper } from "./utils/ExpensesUtils";
+import { LocalDateTimeMapper } from "../../utils/LocalDateTimeMapper";
 
 
 export const Expenses = ()=>{
@@ -64,7 +66,8 @@ export const Expenses = ()=>{
                         <TableRow>
                             <TableCell><b>Date de creation</b></TableCell>
                             <TableCell><b>Motif</b></TableCell>
-                            <TableCell><b>Total (DH)</b></TableCell>
+                            <TableCell><b>Total</b></TableCell>
+                            <TableCell><b>Devise</b></TableCell>
                             <TableCell><b>Telecharger PDF</b></TableCell>
                             <TableCell><b>Status</b></TableCell>
                         </TableRow>
@@ -73,9 +76,10 @@ export const Expenses = ()=>{
                         {
                             expenses.map((e)=>(
                                 <TableRow>
-                                    <TableCell>{e?.createdAt}</TableCell>
+                                    <TableCell>{LocalDateTimeMapper(e?.createdAt)}</TableCell>
                                     <TableCell>{e?.motif || "None"}</TableCell>
-                                    <TableCell>{e?.totalAmount}</TableCell>
+                                    <TableCell>{expenseAmountMapper(e?.totalAmount)}</TableCell>
+                                    <TableCell>{e?.currency}</TableCell>
                                     <TableCell>
                                         <IconButton onClick={()=>handleDownloadPDF(e)}>
                                             <FileDownload />
