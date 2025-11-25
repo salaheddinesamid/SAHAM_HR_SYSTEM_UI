@@ -3,8 +3,9 @@ import { Alert, Button, CircularProgress, Snackbar, styled, TextField } from "@m
 import { CheckIcon, TriangleAlert } from "lucide-react";
 import { useEffect, useState } from "react"
 import { dateFormatter } from "../utils/LeaveUtils";
+import { applyAbsence } from "../../../services/AbsenceService";
 
-export const AbsenceRequestForm = ()=>{
+export const AbsenceRequestForm = ({user})=>{
     const [requestDto,setRequestDto] = useState({
         type : "",
         startDate : "",
@@ -38,12 +39,24 @@ export const AbsenceRequestForm = ()=>{
     }
     
     const handleSubmit = async()=>{
+        const email = user?.email; // email
         try{
-
+            setLoading(true);
+            // object to consutruct key-value request body
+            const formData = new FormData();
+            // request payload
+            const payload = {
+              ...requestDto,
+              totalDays,
+            };
+            
+            formData.append("requestDto", new Blob([JSON.stringify(payload)], { type: "application/json" }));
+    
+            formData.append("file",selectedFile);
         }catch(err){
-
+            console.log(err);
         }finally{
-
+            setLoading(false);
         }
     }
 
@@ -110,7 +123,7 @@ export const AbsenceRequestForm = ()=>{
                     {error}
                 </Alert>
             </Snackbar>
-                {loading && (
+            {loading && (
                     <div
                     style={{
                         position: "absolute",
@@ -168,6 +181,9 @@ export const AbsenceRequestForm = ()=>{
                             ))}
                     </div>
                 </div>
+                 {selectedType === "Maladie" && (
+                    <DocumentUploader/>
+                )}
                 <TextField name="comment" label="Commentaire (optionnel)" multiline rows={3} fullWidth variant="outlined" onChange={handleChange}/>
                 <button className="submit-btn" onClick={handleSubmit} disabled={loading}>
                     Soumettre

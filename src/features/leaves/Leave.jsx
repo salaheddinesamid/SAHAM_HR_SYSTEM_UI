@@ -28,7 +28,7 @@ export const LeaveRequest = () => {
     { id: 1, name: "Profil", view: <Suspense fallback={<CircularProgress/>}>
       <UserInformationCard/>
       </Suspense> },
-    { id: 2, name: "Nouvelle Demande", view: <Request/> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},
+    { id: 2, name: "Nouvelle Demande", view: <Request user={user}/> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},
     { id: 8, name: "Mes congés", view: <MyLeaves user={user}/> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},
     { id: 3, name: "Historique des demandes", view: <Suspense fallback={<CircularProgress/>}>
       <LeaveHistory user={user}/>

@@ -2,12 +2,12 @@ import { useState } from "react"
 import { AbsenceRequestForm } from "./AbsenceRequestForm"
 import { LeaveRequestForm } from "./LeaveRequestForm"
 
-export const Request = ()=>{
+export const Request = ({user})=>{
 
     const [selectedType,setSelectedType] = useState(1);
     const requestTypes = [
-        {id : 1, name : "Congé", view : <LeaveRequestForm/>},
-        {id : 2, name : "Absence", view : <AbsenceRequestForm/>}
+        {id : 1, name : "Congé", view : <LeaveRequestForm user={user}/>},
+        {id : 2, name : "Absence", view : <AbsenceRequestForm user={user}/>}
     ]
     return(
         <div className="row mt-2">
