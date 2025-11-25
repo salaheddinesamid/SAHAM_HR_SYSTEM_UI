@@ -1,4 +1,3 @@
-
 export const LeaveTypesMapper = (status)=>{
     switch(status){
         case "ANNUAL":
@@ -7,3 +6,5 @@ export const LeaveTypesMapper = (status)=>{
             return "Congé Exceptionnel"
     }
 }
+
+export const dateFormatter = (date) => new Date(date).toISOString().split("T")[0];
