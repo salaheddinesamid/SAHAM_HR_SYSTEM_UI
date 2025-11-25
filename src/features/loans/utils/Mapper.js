@@ -9,7 +9,7 @@ export const loanStatusMapper = (status) => {
         case "IN_PROCESS":
             return { message: "En attente", color: "bg-warning text-dark" };
             
-        case "CANCELLED":
+        case "CANCELED":
             return { message: "Annulée", color: "bg-secondary" };
         default:
             return { message: "Inconnue", color: "bg-light text-dark" };

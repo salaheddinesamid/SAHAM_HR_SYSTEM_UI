@@ -40,7 +40,7 @@ export const MyLeaves = ({user})=>{
     return(
         <div className="container mt-3">
             {leaves.length === 0 ? (
-                <p className="text-center">Aucune congé trouvée.</p>
+                <p className="text-center">Aucun congé trouvée.</p>
     ) : (
         <Table className="table table-striped">
           <TableHead>

@@ -16,6 +16,7 @@ import {
 import { Check, Search, X } from "lucide-react";
 import { LeaveApproval } from "./dialogs/LeaveApproval";
 import { LeaveRejectionDialog } from "./dialogs/LeaveRejectionDialog";
+import { loanStatusMapper } from "../loans/utils/Mapper";
 
 // This component renders all the requests for HR
 export const PendingLeaveRequests = () => {
@@ -63,21 +64,6 @@ export const PendingLeaveRequests = () => {
       console.error(err);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const statusMapper = (status) => {
-    switch (status) {
-      case "APPROVED":
-        return { message: "Approuvée", color: "bg-success" };
-      case "REJECTED":
-        return { message: "Rejetée", color: "bg-danger" };
-      case "IN_PROCESS":
-        return { message: "En attente", color: "bg-warning text-dark" };
-      case "CANCELLED":
-        return { message: "Annulée", color: "bg-secondary" };
-      default:
-        return { message: "Inconnue", color: "bg-light text-dark" };
     }
   };
 
@@ -177,7 +163,7 @@ export const PendingLeaveRequests = () => {
             </TableHead>
             <TableBody>
               {filteredRequests.map((req) => {
-                const { message, color } = statusMapper(req.status);
+                const { message, color } = loanStatusMapper(req.status);
                 return (
                   <TableRow key={req.id}>
                     <TableCell>{req.requestedBy}</TableCell>
