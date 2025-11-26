@@ -3,8 +3,8 @@ import "../styles/Home.css";
 import { useService } from "../context/ViewNavigatorContext";
 
 export const Home = () => {
-
-    const {service, selectService} = useService();
+  
+  const {service, selectService} = useService();
   return (
     <div className="home-container">
       <div className="home-header">

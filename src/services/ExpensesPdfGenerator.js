@@ -25,7 +25,7 @@ export const ExpensePdfGenerator = (expense) => {
 
     // Separate the rest of the PDF generation
     const drawPDF = () => {
-      const title = `FICHE DE DÉPENSE ${expense?.location === "INSIDE_MOROCCO" ? "Au Maroc" : "A letranger"}`
+      const title = `FICHE DE DÉPENSE ${expense?.location === "INSIDE_MOROCCO" ? "(AU MAROC)" : "(À L'ÉTRANGER)"}`
       doc.setFontSize(18);
       doc.setTextColor(...primaryColor);
       doc.setFont("helvetica", "bold");
@@ -36,9 +36,11 @@ export const ExpensePdfGenerator = (expense) => {
       doc.setFont("helvetica", "normal");
       doc.setTextColor(...secondaryText);
       doc.text(`Nom et Prénom: ${expense.issueBy || "—"}`, 15, 45);
-      doc.text(`Date: ${expense.date || "—"}`, 15, 52);
+      doc.text(`Date de Motif: ${expense.date || "—"}`, 15, 52);
       doc.text(`Créé le: ${new Date(expense.createdAt).toLocaleString()}`, 15, 59);
-      doc.text(`Motif: ${expense.motif || "—"}`, 15, 66);
+      doc.text(`Devise: ${expense.currency}`, 15, 66);
+      doc.text(`Taux d'échange: ${expense.exchangeRate}`, 15, 73);
+      doc.text(`Motif: ${expense.motif || "—"}`, 15, 80);
 
       // ===== Expense Items Table =====
       const expenseColumns = ["Date", "Désignation", "Montant", "Facture"];
@@ -79,7 +81,7 @@ export const ExpensePdfGenerator = (expense) => {
           style: "currency",
           currency: expense.currency,
         })}`,
-        160,
+        150,
         totalY
       );
 

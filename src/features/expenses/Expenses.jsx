@@ -69,7 +69,6 @@ export const Expenses = ()=>{
                             <TableCell><b>Total</b></TableCell>
                             <TableCell><b>Devise</b></TableCell>
                             <TableCell><b>Telecharger PDF</b></TableCell>
-                            <TableCell><b>Status</b></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -85,7 +84,6 @@ export const Expenses = ()=>{
                                             <FileDownload />
                                         </IconButton>
                                     </TableCell>
-                                    <TableCell></TableCell>
                                 </TableRow>
                             ))
                         }
@@ -93,7 +91,7 @@ export const Expenses = ()=>{
                     </Table>
                 </Paper>
             )}
-            <ExpenseFormDialog open={newExpenseDialogOpen} onClose={handleCloseNewExpenseDialog} user={user}/>
+            <ExpenseFormDialog open={newExpenseDialogOpen} onClose={handleCloseNewExpenseDialog} user={user} onSuccess={fetchAllExpenses}/>
         </div>
     )
 }

@@ -19,12 +19,12 @@ import { useState } from "react";
 import { AddCircle, Delete } from "@mui/icons-material";
 import { newExpense } from "../../../services/ExpenseService";
 
-export const ExpenseFormDialog = ({ open, onClose, user }) => {
+export const ExpenseFormDialog = ({ open, onClose, user , onSuccess}) => {
   const [expensesDetail, setExpenseDetail] = useState({
     motif: "",
-    currency : "",
+    currency : "MAD",
     exchangeRate : 0,
-    location : '',
+    location : "INSIDE_MOROCCO",
     expenseItems: [],
     issueDate : ""
   });
@@ -46,13 +46,13 @@ export const ExpenseFormDialog = ({ open, onClose, user }) => {
   ]
 
   const currencies = [
-    { id: 1, label: 'Dirham Marocaine (MAD)' , value : 'EUR'},
-    { id: 2, label: 'Dollar Américain (USD)' , value : 'MAD'},
-    { id: 3, label: 'Euro (EUR)' },
-    { id: 4, label: 'Livre Sterling (GBP)' },
-    { id: 5, label: 'Franc Suisse (CHF)' },
-    { id: 6, label: 'Yen Japonais (JPY)' },
-    { id: 7, label: 'Dirham Emirati (AED)' },
+    { id: 1, label: 'Dirham Marocaine (MAD)' , value : 'MAD'},
+    { id: 2, label: 'Dollar Américain (USD)' , value : 'USD'},
+    { id: 3, label: 'Euro (EUR)' , value : 'EUR'},
+    { id: 4, label: 'Livre Sterling (GBP)' , value : 'GBP'},
+    { id: 5, label: 'Franc Suisse (CHF)' , value : 'CHF'},
+    { id: 6, label: 'Yen Japonais (JPY)' , value : 'JPY'},
+    { id: 7, label: 'Dirham Emirati (AED)' , value : 'AED'},
     { id: 8, label: 'Dollar Canadien (CAD)' },
     { id: 9, label: 'Riyal Saoudien (SAR)' },
     { id: 10, label: 'Dinar Koweïtien (KWD)' }
@@ -139,6 +139,7 @@ export const ExpenseFormDialog = ({ open, onClose, user }) => {
       alert("Fiche de dépense enregistrée avec succès !");
       handleClearRequest(); // clear the request before closing
       onClose();
+      onSuccess();
     } catch (err) {
       console.error(err);
       alert("Erreur lors de la soumission !");
@@ -241,8 +242,8 @@ export const ExpenseFormDialog = ({ open, onClose, user }) => {
                 label={`Taux d'echange`}
                 name="exchangeRate"
                 type="number"
-                value={detail.amount}
-                onChange={handleItemChange}
+                value={expensesDetail.exchangeRate}
+                onChange={handleChange}
                 sx={{ flex: 1 }}
                 />
               </div>
