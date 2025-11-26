@@ -14,7 +14,7 @@ export const loanStatusMapper = (status) => {
         default:
             return { message: "Inconnue", color: "bg-light text-dark" };
         }
-    };
+};
 
 export const loanTypeMapper = (type)=>{
     switch(type){

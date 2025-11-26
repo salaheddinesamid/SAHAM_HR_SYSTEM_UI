@@ -11,23 +11,38 @@ import {
   TableHead,
   TableRow,
   IconButton,
+  Toolbar,
+  Box,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
 import { useEffect, useState, useCallback } from "react";
 import { approveSubordinatesLeave, rejectSubordinatesLeave, getSubordinatesLeaveRequests } from "../../services/LeaveService";
 import { Check, X } from "lucide-react";
-import { Download } from "@mui/icons-material";
+import { Download, Search } from "@mui/icons-material";
 import { downloadFile } from "../../services/FileStorageService";
 import { saveAs } from "file-saver";
+import { leaveStatusMapper } from "./utils/LeaveUtils";
 
 export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
   const [loading, setLoading] = useState(false);
   const [requests, setRequests] = useState([]);
+  const [filteredRequests,setFilteredRequests] = useState([]);
+  const [searchQuery,setSearchQuery] = useState("");
+  const [currentStatusFilter,setCurrentStatusFilter] = useState("ALL");
   const [error, setError] = useState(null);
   const [currentRequest, setCurrentRequest] = useState(null);
   const [approvalDialogOpen, setApprovalDialogOpen] = useState(false);
   const [rejectDialogOpen,setRejectDialogOpen] = useState(false);
 
-  // ✅ Memoized fetch function (prevents unnecessary re-renders)
+  const filters = [
+    { id: 1, name: "ALL", label: "Tous" },
+    { id: 2, name: "APPROVED", label: "Approuvée" },
+    { id: 3, name: "REJECTED", label: "Rejetée" },
+    { id: 4, name: "IN_PROCESS", label: "En attente" },
+    { id: 5, name: "CANCELED", label: "Annulée" }, // FIX: Correct spelling
+  ];
+
   const fetchRequests = useCallback(async () => {
     if (!manager?.email) return;
     try {
@@ -35,6 +50,7 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
       console.log("...Fetching data")
       const data = await getSubordinatesLeaveRequests(manager?.email);
       setRequests(data || []);
+      setFilteredRequests(data || [])
     } catch (err) {
       console.error("Failed to fetch subordinates' leave requests:", err);
       setError("Une erreur s'est produite lors du chargement des demandes.");
@@ -43,19 +59,30 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
     }
   }, [manager?.email]);
 
+  const handleFilterChange = (filter) => {
+    setCurrentStatusFilter(filter);
+  };
+
   useEffect(() => {
     fetchRequests();
   }, []);
 
-  const statusMapper = (status) => {
-    const map = {
-      APPROVED: { message: "Approuvée", color: "bg-success" },
-      REJECTED: { message: "Rejetée", color: "bg-danger" },
-      IN_PROCESS: { message: "En attente", color: "bg-warning text-dark" },
-      CANCELLED: { message: "Annulée", color: "bg-secondary" },
-    };
-    return map[status] || { message: "Inconnue", color: "bg-light text-dark" };
-  };
+  // Filtering logic
+  useEffect(() => {
+    let filtered = [...requests];
+
+    if (currentStatusFilter !== "ALL") {
+      filtered = filtered.filter((r) => r.status === currentStatusFilter);
+    }
+
+    if (searchQuery.trim() !== "") {
+      filtered = filtered.filter((r) =>
+        r.requestedBy?.toLowerCase().includes(searchQuery)
+      );
+    }
+
+    setFilteredRequests(filtered);
+  }, [searchQuery, requests, currentStatusFilter])
 
   // Reject dialog:
   const RejectDialog = ({open,onClose,request})=>{
@@ -186,13 +213,57 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
     return <div className="alert alert-danger">{error}</div>;
   }
 
+  
+
   return (
     <div className="container mt-3">
       {requests.length === 0 ? (
         <p className="text-center">Aucune demande trouvée.</p>
       ) : (
-        <Table className="table table-striped">
-          <TableHead>
+        <div className="row">
+          <Toolbar
+          sx={{ display: "flex",
+            justifyContent: "space-between",
+            mb: 2,
+            flexWrap: "wrap",
+          }}
+          >
+            <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", alignItems: "center" }}>
+              <TextField
+              size="small"
+              placeholder="Recherche par nom de collaborateur"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              InputProps={{
+                startAdornment: (
+                <InputAdornment position="start">
+                  <Search size={16} />
+                </InputAdornment>
+                ),
+                      }}
+                      sx={{
+                        backgroundColor: "white",
+                        borderRadius: 2,
+                        width: { xs: "100%", sm: 280 },
+                      }}
+                    />
+                    <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+                      {filters.map((f) => (
+                        <Button
+                          key={f.id}
+                          variant={currentStatusFilter === f.name ? "contained" : "outlined"}
+                          size="small"
+                          onClick={() => handleFilterChange(f.name)}
+                          sx={{ borderRadius: 3, textTransform: "none", fontWeight: 500 }}
+                        >
+                          {f.label}
+                        </Button>
+                      ))}
+                      </Box>
+                    </Box>
+            </Toolbar>
+            <Table className="table table-striped">
+              <TableHead>
             <TableRow>
               <TableCell>Demandé par</TableCell>
               <TableCell>Type</TableCell>
@@ -206,8 +277,8 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {requests.map((req) => {
-              const { message, color } = statusMapper(req.status);
+            {filteredRequests.map((req) => {
+              const { message, color } = leaveStatusMapper(req.status);
               return (
                 <TableRow key={req.id}>
                   <TableCell>{req.requestedBy}</TableCell>
@@ -250,7 +321,9 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
             })}
           </TableBody>
         </Table>
+        </div>
       )}
+
       <ApproveDialog
         open={approvalDialogOpen}
         onClose={handeCloseApprovalDialog}
