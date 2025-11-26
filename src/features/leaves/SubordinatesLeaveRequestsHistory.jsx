@@ -132,9 +132,10 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
     if (!request) return null;
 
     const handleConfirm = async () => {
-        const id = request?.id;
+        const id = request?.id; // leave request ID
+        const email = manager?.email; // approved by 
       try {
-        await approveSubordinatesLeave(id);
+        await approveSubordinatesLeave(email, id);
         onClose();
         fetchRequests(); // Refresh list
       } catch (err) {

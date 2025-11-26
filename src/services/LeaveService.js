@@ -51,9 +51,10 @@ export const getMyTeamLeaves = async(email)=>{
 }
 
 // subordinates (Approval/Rejection)
-export const approveSubordinatesLeave = async(requestId)=>{
+export const approveSubordinatesLeave = async(email, requestId)=>{
     const response = await LeaveAPI.put("/requests/subordinates/approve-request",null,{
         params : {
+            approvedBy : email,
             leaveRequestId : requestId
         }
     });
@@ -72,7 +73,7 @@ export const rejectSubordinatesLeave = async(requestId)=>{
 // Final (Approval/Rejection)
 
 export const finalLeaveApproval = async(requestId)=>{
-    const response = await LeaveAPI.put("/approve-request",null,{
+    const response = await LeaveAPI.put("/requests/approve-request",null,{
         params : {
             leaveRequestId : requestId
         }
@@ -82,7 +83,7 @@ export const finalLeaveApproval = async(requestId)=>{
 }
 
 export const finalLeaveRejection = async(requestId)=>{
-    const response = await LeaveAPI.put("reject-request",null,{
+    const response = await LeaveAPI.put("/requests/reject-request",null,{
         params : {
             requestId : requestId
         }
