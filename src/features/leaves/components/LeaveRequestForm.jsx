@@ -38,6 +38,17 @@ export const LeaveRequestForm = ({user})=>{
         ]}
     ];
 
+    // cleam the request after success submission:
+    const cleanRequest = ()=>{
+        setRequestDto({
+            startDate: "",
+            endDate: "",
+            type: "",
+            typeDetails : "",
+            comment: "",
+        })
+    }
+
     const handleChange = (e)=>{
         const {name, value} = e.target;
         if(name === "startDate" || name === "endDate"){
@@ -74,6 +85,7 @@ export const LeaveRequestForm = ({user})=>{
               comment: "",
             })
             console.log("Submitting request:", payload);
+            cleanRequest();
             //alert("Demande envoyée avec succès !");
         } catch (err) {
             console.error(err);

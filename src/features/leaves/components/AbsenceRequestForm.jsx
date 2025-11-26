@@ -26,6 +26,17 @@ export const AbsenceRequestForm = ({user})=>{
         {id : 2, name : "Maladie", value : "SICKNESS"}
     ]
 
+    // clean the request after success submission
+    const cleanRequest = ()=>{
+        setRequestDto({
+            type : "",
+            startDate : "",
+            endDate : ""
+        })
+        setFromDate("");
+        setToDate("");
+        setMedicalCertificate(null);
+    }
     const handleChange = (e)=>{
         const {name, value} = e.target;
         setRequestDto((prev)=>(
@@ -53,6 +64,9 @@ export const AbsenceRequestForm = ({user})=>{
             }
             console.log(requestDto);
             const res = await applyAbsence(email, requestData);
+
+            // clean the request:
+            cleanRequest();
         }catch(err){
             console.log(err);
         }finally{
@@ -149,12 +163,12 @@ export const AbsenceRequestForm = ({user})=>{
                 )}
                 <div className="request-form" style={{ opacity: loading ? 0.5 : 1, pointerEvents: loading ? "none" : "auto",}}>
                     <div style={{ display: "flex", gap: "10px", margin: "10px 0" }}>
-                        <TextField label="Date de début" type="date" name="startDate" helperText="Ce champ est obligatoire" fullWidth InputLabelProps={{ shrink: true }} variant="outlined" onChange={(e) => setFromDate(e.target.value)}
+                        <TextField label="Date de début" type="date" name="startDate" helperText="Ce champ est obligatoire" value={fromDate} fullWidth InputLabelProps={{ shrink: true }} variant="outlined" onChange={(e) => setFromDate(e.target.value)}
                         FormHelperTextProps={{
                             sx: { color: 'red' } // make helper text red 
                         }}
                         />
-                        <TextField label="Date de fin" type="date" name = "endDate" helperText="Ce champ est obligatoire" fullWidth InputLabelProps={{ shrink: true }} variant="outlined" onChange={(e) => setToDate(e.target.value)}
+                        <TextField label="Date de fin" type="date" name = "endDate" helperText="Ce champ est obligatoire" value={toDate} fullWidth InputLabelProps={{ shrink: true }} variant="outlined" onChange={(e) => setToDate(e.target.value)}
                         FormHelperTextProps={{
                             sx: { color: 'red' } // make helper text red
                         }}
