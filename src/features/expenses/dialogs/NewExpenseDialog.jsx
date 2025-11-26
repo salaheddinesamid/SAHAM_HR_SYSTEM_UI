@@ -17,7 +17,6 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { AddCircle, Delete } from "@mui/icons-material";
-import { newExpense } from "../../../services/ExpenseService";
 
 export const ExpenseFormDialog = ({ open, onClose, user , onSuccess}) => {
   const [expensesDetail, setExpenseDetail] = useState({
@@ -33,7 +32,7 @@ export const ExpenseFormDialog = ({ open, onClose, user , onSuccess}) => {
     expenseDate: "",
     designation: "",
     amount: "",
-    invoiced : false
+    invoiced : null
   });
 
   const [selectedLocation,setSelectedLocation] = useState("INSIDE_MOROCCO");
@@ -134,7 +133,7 @@ export const ExpenseFormDialog = ({ open, onClose, user , onSuccess}) => {
     try {
       setLoading(true);
       console.log(expensesDetail);
-      const res = await newExpense(email,expensesDetail)
+      //const res = await newExpense(email,expensesDetail)
       
       alert("Fiche de dépense enregistrée avec succès !");
       handleClearRequest(); // clear the request before closing

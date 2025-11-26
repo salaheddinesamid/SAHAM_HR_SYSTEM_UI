@@ -13,7 +13,7 @@ export const AbsenceRequestForm = ({user})=>{
     })
     const [fromDate,setFromDate] = useState("");
     const [toDate,setToDate] = useState("");
-    const [selectedFile,setSelectedFile] = useState(null);
+    const [medicalCertificate,setMedicalCertificate] = useState(null);
     const [totalDays,setTotalDays] = useState(0);
     
     const [selectedType,setSelectedType] = useState(null);
@@ -35,7 +35,7 @@ export const AbsenceRequestForm = ({user})=>{
     }
     const handleFileChange = (e)=>{
       const file = e.target.files[0];
-      setSelectedFile(file);
+      setMedicalCertificate(file);
     }
     
     const handleSubmit = async()=>{
@@ -43,16 +43,16 @@ export const AbsenceRequestForm = ({user})=>{
         try{
             setLoading(true);
             // object to consutruct key-value request body
-            const formData = new FormData();
-            // request payload
-            const payload = {
-              ...requestDto,
-              totalDays,
-            };
+            const requestData = new FormData();
+            requestData.append("startDate", requestDto?.startDate);
+            requestData.append("endDate", requestDto?.endDate);
+            requestData.append("type", requestDto?.type);
             
-            formData.append("requestDto", new Blob([JSON.stringify(payload)], { type: "application/json" }));
-    
-            formData.append("file",selectedFile);
+            if (requestDto.type === "SICKNESS" && medicalCertificate) {
+                requestData.append("medicalCertificate", medicalCertificate);
+            }
+            console.log(requestDto);
+            const res = await applyAbsence(email, requestData);
         }catch(err){
             console.log(err);
         }finally{
@@ -74,7 +74,12 @@ export const AbsenceRequestForm = ({user})=>{
           });
     
           return(
-            <Button
+            <div className="row mb-3">
+                <div className="col-xl-4">
+                    <Button
+            style={{
+                marginBottom  : 30
+            }}
               component="label"
               variant="contained"
               startIcon={<CloudUpload />}
@@ -86,6 +91,8 @@ export const AbsenceRequestForm = ({user})=>{
               onChange={handleFileChange}
               />
             </Button>
+                </div>
+            </div>
           )
         }
 
@@ -142,12 +149,12 @@ export const AbsenceRequestForm = ({user})=>{
                 )}
                 <div className="request-form" style={{ opacity: loading ? 0.5 : 1, pointerEvents: loading ? "none" : "auto",}}>
                     <div style={{ display: "flex", gap: "10px", margin: "10px 0" }}>
-                        <TextField label="Date de début" type="date" name="startDate" helperText="Ce champ est obligatoire" fullWidth InputLabelProps={{ shrink: true }} variant="outlined" onChange={handleChange}
+                        <TextField label="Date de début" type="date" name="startDate" helperText="Ce champ est obligatoire" fullWidth InputLabelProps={{ shrink: true }} variant="outlined" onChange={(e) => setFromDate(e.target.value)}
                         FormHelperTextProps={{
                             sx: { color: 'red' } // make helper text red 
                         }}
                         />
-                        <TextField label="Date de fin" type="date" name = "endDate" helperText="Ce champ est obligatoire" fullWidth InputLabelProps={{ shrink: true }} variant="outlined" onChange={handleChange}
+                        <TextField label="Date de fin" type="date" name = "endDate" helperText="Ce champ est obligatoire" fullWidth InputLabelProps={{ shrink: true }} variant="outlined" onChange={(e) => setToDate(e.target.value)}
                         FormHelperTextProps={{
                             sx: { color: 'red' } // make helper text red
                         }}

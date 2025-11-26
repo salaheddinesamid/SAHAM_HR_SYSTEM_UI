@@ -25,4 +25,5 @@ export const leaveStatusMapper = (status) => {
         }
 };
 
+
 export const dateFormatter = (date) => new Date(date).toISOString().split("T")[0];
