@@ -1,7 +1,6 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import sahamLogo from "../logo_bg.png"; 
-import { expenseAmountMapper } from "../features/expenses/utils/ExpensesUtils";
 
 export const ExpensePdfGenerator = (expense) => {
   try {
