@@ -32,7 +32,7 @@ export const UserInformationCard = ({exception}) => {
                 <p>Date d'entrée : {user?.joinDate} </p>
             </div>
             <div className="col">
-                <p>Entitée : </p>
+                <p>Entité : </p>
             </div>
             <div className="col">
                 <p>Responsable : {user?.managerName}</p>
@@ -40,7 +40,7 @@ export const UserInformationCard = ({exception}) => {
         </div>
         <div className="row">
             <div className="col">
-                <p>Direction/Departement : </p>
+                <p>Departement : {user?.entity}</p>
             </div>
         </div>
         {

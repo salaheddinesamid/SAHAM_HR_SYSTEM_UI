@@ -44,8 +44,7 @@
 .exceptionnel { background-color: #ff6b6b; color: white; }
 .annuel { background-color: #845EC2; color: white; }
 .maladie { background-color: #FFC75F; color: black; }
-.ferie { background-color: #6C63FF; color: white; }
-.repos { background-color: #008B8B; color: white; }
+.remote { background-color: #6fc0ec; color: white; }
 
 /* Legend */
 .legend {

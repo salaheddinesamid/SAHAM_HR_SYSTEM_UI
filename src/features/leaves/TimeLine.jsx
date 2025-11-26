@@ -45,10 +45,10 @@ const WallCalendar = ({manager, subordinates}) => {
         <span> → </span>
         <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
 
-        <select>
+        <select className="form-select">
           <option>Filtrer par</option>
         </select>
-        <select>
+        <select className="form-select">
           <option>Type de congé</option>
         </select>
       </div>
@@ -90,8 +90,7 @@ const WallCalendar = ({manager, subordinates}) => {
         <span className="badge exceptionnel">Congé Exceptionnel</span>
         <span className="badge annuel">Congé Annuel</span>
         <span className="badge maladie">Maladie</span>
-        <span className="badge ferie">Jours Fériés</span>
-        <span className="badge repos">Jour de Repos</span>
+        <span className="badge remote">Télétravail</span>
       </div>
     </div>
   );
