@@ -99,7 +99,15 @@ export const LeaveHistory = ({user}) => {
                 <td>
                     {(() => {
                         const { message, color } = statusMapper(req.status);
-                        return <span className={`badge ${color}`}>{message}</span>;
+                        const isPendingManager = !req.isApprovedByManager; // if the request is not approved by manager yet
+                        const isPendingHr = !req.isApprovedByHR; // if the request is not approved by HR yet
+                        const showN1 = req?.status === "IN_PROCESS" && isPendingManager && isPendingHr;
+                        const showHR = req?.status === "IN_PROCESS" && !isPendingManager && isPendingHr;
+                        return (
+                        <span className={`badge ${color}`}>
+                          {`${message} ${showN1 ? "(N+1)" : showHR ? "(RH)" : ""}`}
+                          </span>
+                        );
                         })()}
                     </td>
                 <td>{req.comment || "-"}</td>

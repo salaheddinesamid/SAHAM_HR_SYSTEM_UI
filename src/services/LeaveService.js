@@ -61,9 +61,10 @@ export const approveSubordinatesLeave = async(email, requestId)=>{
     return response.status;
 }
 
-export const rejectSubordinatesLeave = async(requestId)=>{
+export const rejectSubordinatesLeave = async(requestId, managerEmail)=>{
     const response = await LeaveAPI.put("/requests/subordinates/reject-request",null,{
         params : {
+            rejectedBy : managerEmail,
             leaveRequestId : requestId
         }
     });

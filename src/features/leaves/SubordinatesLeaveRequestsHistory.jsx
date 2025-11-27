@@ -91,9 +91,10 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
     const handleConfirm = async()=>{
 
         const id = request?.id;
+        const managerEmail = manager?.email;
         try{
             setLoading(true);
-            const res = await rejectSubordinatesLeave(id);
+            const res = await rejectSubordinatesLeave(id,managerEmail );
             if(res === 200){
                 fetchRequests();
                 onClose();
