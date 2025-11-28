@@ -59,7 +59,9 @@ export const Login = () => {
         setLoginSuccessMessage("Redirection...")
 
         // post authentication:
-        postAuthentication(bearerToken,userDetails);
+        if(res){
+          postAuthentication(bearerToken,userDetails);
+        }
         console.log(res)
     }catch(err){
         console.log(err);
