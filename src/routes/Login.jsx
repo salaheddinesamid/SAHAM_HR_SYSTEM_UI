@@ -52,6 +52,7 @@ export const Login = () => {
         setLoading(true);
         // call the auth:
         const res = await authenticate(loginDetails);
+        console.log(res.data);
 
         const bearerToken = res?.data?.bearerToken;
         const userDetails = res?.data?.userDetails;
