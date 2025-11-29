@@ -91,20 +91,20 @@ export const AbsenceRequestForm = ({user})=>{
             <div className="row mb-3">
                 <div className="col-xl-4">
                     <Button
-            style={{
-                marginBottom  : 30
-            }}
-              component="label"
-              variant="contained"
-              startIcon={<CloudUpload />}
-              fullWidth>
-                Veuillez uploader le certificat medical
-              <VisuallyHiddenInput
-              type="file"
-              accept=".pdf"
-              onChange={handleFileChange}
-              />
-            </Button>
+                    style={{
+                        marginBottom  : 30
+                    }}
+                    component="label"
+                    variant="contained"
+                    startIcon={<CloudUpload />}
+                    fullWidth>
+                        Veuillez uploader le certificat medical
+                        <VisuallyHiddenInput
+                        type="file"
+                        accept=".pdf"
+                        onChange={handleFileChange}
+                    />
+                    </Button>
                 </div>
             </div>
           )

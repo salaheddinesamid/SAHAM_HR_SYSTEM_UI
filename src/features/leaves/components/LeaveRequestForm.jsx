@@ -48,17 +48,7 @@ export const LeaveRequestForm = ({user})=>{
             comment: "",
         })
     }
-
-    const handleChange = (e)=>{
-        const {name, value} = e.target;
-        if(name === "startDate" || name === "endDate"){
-            value = new Date(value);
-            setRequestDto((prev)=>(
-                {...prev, [name] : value}
-            ));
-            console.log(requestDto);
-        }
-    }
+    
     
     const handleSubmit = async () => {
         const email = user?.email;
@@ -225,8 +215,10 @@ export const LeaveRequestForm = ({user})=>{
                       className="styled-select"
                       style={{ fontSize: "12px" }}
                       name="typeDetails"
-                      value={requestDto.typeDetails}
-                      onChange={handleChange}
+                      value={requestDto?.typeDetails}
+                      onChange={(e)=> setRequestDto((prev)=>(
+                        {...prev, typeDetails : e.target.value}
+                      ))}
                     >
                       <option value="">-- Sélectionnez un type de congé --</option>
                       {leave.subTypes.map((sub, i) => (
@@ -249,7 +241,9 @@ export const LeaveRequestForm = ({user})=>{
           rows={3}
           fullWidth
           variant="outlined"
-          onChange={handleChange}
+          onChange={(e)=>setRequestDto((prev)=>(
+            {...prev, commen : e.target.value}
+          ))}
         />
         <button className="submit-btn" onClick={handleSubmit} disabled={requestLoading}>
           Soumettre
