@@ -35,6 +35,7 @@ export const AbsenceRequestForm = ({user})=>{
         })
         setFromDate("");
         setToDate("");
+        setTotalDays(0);
         setMedicalCertificate(null);
     }
     const handleChange = (e)=>{
@@ -64,9 +65,11 @@ export const AbsenceRequestForm = ({user})=>{
             }
             console.log(requestDto);
             const res = await applyAbsence(email, requestData);
-
-            // clean the request:
-            cleanRequest();
+            if(res === 200){
+                setSubmitSuccess(true);
+                cleanRequest();
+            }
+            
         }catch(err){
             console.log(err);
         }finally{

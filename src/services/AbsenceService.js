@@ -9,7 +9,7 @@ export const applyAbsence = async(email, requestDto)=>{
             email : email
         }
     });
-    return response;
+    return response.status;
 }
 
 // get all subordinates absence requests:
