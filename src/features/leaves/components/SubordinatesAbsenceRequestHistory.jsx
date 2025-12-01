@@ -19,9 +19,9 @@ import {
 import { useEffect, useState, useCallback } from "react";
 import { Check, X } from "lucide-react";
 import { Download, Search } from "@mui/icons-material";
-import { getAllSubordinatesAbsenceRequests } from "../../../services/AbsenceService";
+import { downloadAbsenceMedicaleCertificate, getAllSubordinatesAbsenceRequests } from "../../../services/AbsenceService";
 import { AbsenceTypesMapper, leaveStatusMapper } from "../utils/LeaveUtils";
-import { downloadFile } from "../../../services/FileStorageService";
+import { saveAs } from "file-saver";
 
 export const SubordinatesAbsenceRequestsHistory = ({ manager }) => {
   const [loading, setLoading] = useState(false);
@@ -188,8 +188,8 @@ export const SubordinatesAbsenceRequestsHistory = ({ manager }) => {
 
   const handleDownloadDocument = async(path)=>{
     try{
-      const res = await downloadFile(path); 
-      //saveAs(res)
+      const res = await downloadAbsenceMedicaleCertificate(path); 
+      saveAs(res)
     }catch(err){
       console.log(err);
     }
@@ -294,7 +294,7 @@ export const SubordinatesAbsenceRequestsHistory = ({ manager }) => {
                   </TableCell>
                   <TableCell>{req.comment || "-"}</TableCell>
                   <TableCell>{req.document !== null ? <IconButton >
-                    <Download onClick={()=>handleDownloadDocument(req.document)}/>
+                    <Download onClick={()=>handleDownloadDocument(req.documentPath)}/>
                   </IconButton> : <p>No documents found</p>}</TableCell>
                   <TableCell>
                     {req.status === "IN_PROCESS" && (
