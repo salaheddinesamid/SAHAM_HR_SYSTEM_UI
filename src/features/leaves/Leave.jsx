@@ -26,7 +26,7 @@ export const LeaveRequest = () => {
   const [submitSuccess,setSubmitSuccess] = useState(false);
   const services = [
     { id: 1, name: "Profil", view: <Suspense fallback={<CircularProgress/>}>
-      <UserInformationCard/>
+      <UserInformationCard email={user?.email}/>
       </Suspense> },
     { id: 2, name: "Nouvelle Demande", view: <Request user={user}/> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},
     { id: 8, name: "Mes congés", view: <MyLeaves user={user}/> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},
@@ -62,7 +62,7 @@ export const LeaveRequest = () => {
         ))}
       </div>
       <div>
-        {selectedService === 4 || selectedService === 1 || selectedService === 5 || selectedService === 6 ? <></>: <UserInformationCard />}
+        {selectedService === 4 || selectedService === 1 || selectedService === 5 || selectedService === 6 ? <></>: <UserInformationCard email={user?.email}/>}
       </div>
       <div className="row">
         {services.find((s) => s.id === selectedService)?.view}

@@ -1,6 +1,6 @@
 import { Button, CircularProgress, Dialog, DialogActions, DialogContent } from "@mui/material"
 import { useState } from "react"
-import { cancelLeave, cancelLeaveRequest } from "../../../services/LeaveService";
+import { cancelLeave} from "../../../services/LeaveService";
 
 export const LeaveCancellationDialog = ({open, onClose,leave, onSuccess})=>{
 
@@ -8,7 +8,7 @@ export const LeaveCancellationDialog = ({open, onClose,leave, onSuccess})=>{
     const [error,setError] = useState("");
 
     const handleConfirm = async()=>{
-        const id = leave?.id;
+        const id = leave?.leaveId;
         try{
             setLoading(true);
             const res = await cancelLeave(id);
