@@ -99,8 +99,8 @@ export const LeaveHistory = ({user}) => {
                 <td>
                     {(() => {
                         const { message, color } = statusMapper(req.status);
-                        const isPendingManager = !req.isApprovedByManager; // if the request is not approved by manager yet
-                        const isPendingHr = !req.isApprovedByHR; // if the request is not approved by HR yet
+                        const isPendingManager = !req.approvedByManager; // if the request is not approved by manager yet
+                        const isPendingHr = !req.approvedByHr; // if the request is not approved by HR yet
                         const showN1 = req?.status === "IN_PROCESS" && isPendingManager && isPendingHr;
                         const showHR = req?.status === "IN_PROCESS" && !isPendingManager && isPendingHr;
                         return (

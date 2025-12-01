@@ -11,7 +11,7 @@ const MyTeam = lazy(() => import("./MyTeam"));
 
 import { UserInformationCard } from "./UserInformationCard";
 import { LeaveHistory } from "./LeaveHistory";
-import { SubordinatesLeaveRequestsHistory } from "./SubordinatesLeaveRequestsHistory";
+import { SubordinateRequestsHistory, SubordinatesLeaveRequestsHistory } from "./SubordinatesRequestsHistory";
 import { PendingLeaveRequests } from "./PendingLeaveRequests";
 import { MyTeam } from "./MyTeam";
 import "./styles/LeaveRequest.css"
@@ -33,7 +33,7 @@ export const LeaveRequest = () => {
     { id: 3, name: "Historique des demandes", view: <Suspense fallback={<CircularProgress/>}>
       <LeaveHistory user={user}/>
     </Suspense> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},
-    { id: 4, name: "Les demandes de mon équipe", view: <SubordinatesLeaveRequestsHistory manager={user}/> , allowedRoles:["MANAGER"]},
+    { id: 4, name: "Les demandes de mon équipe", view: <SubordinateRequestsHistory manager={user}/> , allowedRoles:["MANAGER"]},
     { id: 5, name: "Les demandes des collaborateurs", view: <Suspense fallback={<CircularProgress/>}>
       <PendingLeaveRequests/>
     </Suspense>, allowedRoles:["HR"]},

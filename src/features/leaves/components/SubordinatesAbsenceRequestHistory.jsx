@@ -17,14 +17,13 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { useEffect, useState, useCallback } from "react";
-import { approveSubordinatesLeave, rejectSubordinatesLeave, getSubordinatesLeaveRequests } from "../../services/LeaveService";
 import { Check, X } from "lucide-react";
 import { Download, Search } from "@mui/icons-material";
-import { downloadFile } from "../../services/FileStorageService";
-import { saveAs } from "file-saver";
-import { leaveStatusMapper } from "./utils/LeaveUtils";
+import { getAllSubordinatesAbsenceRequests } from "../../../services/AbsenceService";
+import { AbsenceTypesMapper, leaveStatusMapper } from "../utils/LeaveUtils";
+import { downloadFile } from "../../../services/FileStorageService";
 
-export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
+export const SubordinatesAbsenceRequestsHistory = ({ manager }) => {
   const [loading, setLoading] = useState(false);
   const [requests, setRequests] = useState([]);
   const [filteredRequests,setFilteredRequests] = useState([]);
@@ -43,12 +42,13 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
     { id: 5, name: "CANCELED", label: "Annulée" }, // FIX: Correct spelling
   ];
 
+  // fetch abesence requests:
   const fetchRequests = useCallback(async () => {
     if (!manager?.email) return;
     try {
       setLoading(true);
       console.log("...Fetching data")
-      const data = await getSubordinatesLeaveRequests(manager?.email);
+      const data = await getAllSubordinatesAbsenceRequests(manager?.email);
       setRequests(data || []);
       setFilteredRequests(data || [])
     } catch (err) {
@@ -94,11 +94,12 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
         const managerEmail = manager?.email;
         try{
             setLoading(true);
-            const res = await rejectSubordinatesLeave(id,managerEmail );
+            //const res = await rejectSubordinatesLeave(id,managerEmail );
+            /*
             if(res === 200){
                 fetchRequests();
                 onClose();
-            }
+            }*/
         }catch(err){
             console.log(err);
         }finally{
@@ -136,7 +137,7 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
         const id = request?.id; // leave request ID
         const email = manager?.email; // approved by 
       try {
-        await approveSubordinatesLeave(email, id);
+        //await approveSubordinatesLeave(email, id);
         onClose();
         fetchRequests(); // Refresh list
       } catch (err) {
@@ -188,7 +189,7 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
   const handleDownloadDocument = async(path)=>{
     try{
       const res = await downloadFile(path); 
-      saveAs(res)
+      //saveAs(res)
     }catch(err){
       console.log(err);
     }
@@ -284,7 +285,7 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
               return (
                 <TableRow key={req.id}>
                   <TableCell>{req.requestedBy}</TableCell>
-                  <TableCell>{req.type}</TableCell>
+                  <TableCell>{AbsenceTypesMapper(req.type)}</TableCell>
                   <TableCell>{req.startDate}</TableCell>
                   <TableCell>{req.endDate}</TableCell>
                   <TableCell>{req.totalDays}</TableCell>

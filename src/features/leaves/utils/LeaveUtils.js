@@ -5,6 +5,16 @@ export const LeaveTypesMapper = (status)=>{
         case "EXCEPTIONAL":
             return "Congé Exceptionnel"
     }
+};
+
+
+export const AbsenceTypesMapper = (status)=>{
+    switch(status){
+        case "SICKNESS":
+            return "Absence Maladie"
+        case "REMOTE_WORK":
+            return "Télétravail"
+    }
 }
 
 export const leaveStatusMapper = (status) => {
