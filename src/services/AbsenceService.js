@@ -14,11 +14,17 @@ export const applyAbsence = async(email, requestDto)=>{
 
 // get all subordinates absence requests:
 export const getAllSubordinatesAbsenceRequests = async(email)=>{
-    const response = await AbsenceAPI.get("/subordinates-absences/get_all",{
+    const response = await AbsenceAPI.get("/requests/subordinates/get_all",{
         params : {
             email : email
         }
     });
+    return response.data;
+}
+
+// get all absence requests for HR:
+export const getAllAbsenceRequestsForHR = async()=>{
+    const response = await AbsenceAPI.get("/requests/hr/get_all");
     return response.data;
 }
 
