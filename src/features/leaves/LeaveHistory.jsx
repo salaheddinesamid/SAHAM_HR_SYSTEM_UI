@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getMyLeaveRequests } from "../../services/LeaveService";
 import { Button, CircularProgress } from "@mui/material";
 import { LeaveRequestCancellationDialog } from "./dialogs/LeaveRequestCancellationDialog";
+import { LeaveTypesMapper } from "./utils/LeaveUtils";
 
 export const LeaveHistory = ({user}) => {
   const [requests, setRequests] = useState([]);
@@ -34,23 +35,20 @@ export const LeaveHistory = ({user}) => {
       setLoading(false);
     }
   };
-
-    const statusMapper = (status) => {
+  
+  const statusMapper = (status) => {
     switch (status) {
-        case "APPROVED":
-            return { message: "Approuvée", color: "bg-success" };
-            
-        case "REJECTED":
-            return { message: "Rejetée", color: "bg-danger" };
-            
-        case "IN_PROCESS":
-            return { message: "En attente", color: "bg-warning text-dark" };
-            
-        case "CANCELED":
-            return { message: "Annulée", color: "bg-secondary" };
-        default:
-            return { message: "Inconnue", color: "bg-light text-dark" };
-        }
+      case "APPROVED":
+        return { message: "Approuvée", color: "bg-success" };
+      case "REJECTED":
+        return { message: "Rejetée", color: "bg-danger" };
+      case "IN_PROCESS":
+        return { message: "En attente", color: "bg-warning text-dark" };
+      case "CANCELED":
+        return { message: "Annulée", color: "bg-secondary" };
+      default:
+        return { message: "Inconnue", color: "bg-light text-dark" };
+      }
     };
 
 
@@ -78,7 +76,7 @@ export const LeaveHistory = ({user}) => {
         <table className="table table-striped">
           <thead>
             <tr>
-              <th>#</th>
+              <th>Ref N°</th>
               <th>Type</th>
               <th>Date de début</th>
               <th>Date de fin</th>
@@ -91,8 +89,8 @@ export const LeaveHistory = ({user}) => {
           <tbody>
             {requests.map((req, index) => (
               <tr key={req.id || index}>
-                <td>{index + 1}</td>
-                <td>{req.type}</td>
+                <td>{req?.refNumber || ""}</td>
+                <td>{LeaveTypesMapper(req.type)}</td>
                 <td>{req.startDate}</td>
                 <td>{req.endDate}</td>
                 <td>{req.totalDays}</td>
