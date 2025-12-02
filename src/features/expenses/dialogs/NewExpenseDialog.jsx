@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { AddCircle, Delete } from "@mui/icons-material";
+import { newExpense } from "../../../services/ExpenseService";
 
 export const ExpenseFormDialog = ({ open, onClose, user , onSuccess}) => {
   const [expensesDetail, setExpenseDetail] = useState({
@@ -133,7 +134,7 @@ export const ExpenseFormDialog = ({ open, onClose, user , onSuccess}) => {
     try {
       setLoading(true);
       console.log(expensesDetail);
-      //const res = await newExpense(email,expensesDetail)
+      const res = await newExpense(email,expensesDetail)
       
       alert("Fiche de dépense enregistrée avec succès !");
       handleClearRequest(); // clear the request before closing
@@ -279,7 +280,7 @@ export const ExpenseFormDialog = ({ open, onClose, user , onSuccess}) => {
               sx={{ flex: 2 }}
             />
             <TextField
-              label={`Montant (${selectedCurrency})`}
+              label={`Montant`}
               name="amount"
               type="number"
               value={detail.amount}
@@ -310,7 +311,7 @@ export const ExpenseFormDialog = ({ open, onClose, user , onSuccess}) => {
                 <TableRow>
                   <TableCell>Date</TableCell>
                   <TableCell>Désignation</TableCell>
-                  <TableCell>Montant (MAD)</TableCell>
+                  <TableCell>Montant</TableCell>
                   <TableCell align="center">Actions</TableCell>
                 </TableRow>
               </TableHead>
@@ -336,7 +337,7 @@ export const ExpenseFormDialog = ({ open, onClose, user , onSuccess}) => {
 
           <Divider sx={{ my: 2 }} />
           <Typography align="right" variant="subtitle1" fontWeight={600}>
-            Total : {expensesDetail?.totalExpenses?.toFixed(2)} MAD
+            Total : {expensesDetail?.totalExpenses?.toFixed(2)} {expensesDetail?.currency}
           </Typography>
         </div>
       </DialogContent>

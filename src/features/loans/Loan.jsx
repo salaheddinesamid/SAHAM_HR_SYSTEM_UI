@@ -158,7 +158,7 @@ export const Loan = ()=>{
 
     // This array contains services provided and rendered by Loan service
     const services = [
-        {id: 1, name: "Profil", view: <UserInformationCard exception={"Without solde"}/>},
+        {id: 1, name: "Profil", view: <UserInformationCard exception={"Without solde"} email={user?.email}/>},
         {id: 2, name: "Nouvelle Demande", view: <NewRequest/>},
         {id: 3, name: "Historique des demandes", view:<LoanHistory user={user}/>},
         {id: 4, name: "Les demandes en attente", view:<EmployeeLoanRequests/>}
@@ -180,7 +180,7 @@ export const Loan = ()=>{
                 ))}
             </div>
             <div>
-                {selectedService === 1 ? <></>: <UserInformationCard exception={"Without solde"}/>}
+                {selectedService === 1 ? <></>: <UserInformationCard exception={"Without solde"} email={user?.email}/>}
             </div>
             <div className="row">
                 {services.map((s) => (s.id === selectedService ? s.view : ""))}

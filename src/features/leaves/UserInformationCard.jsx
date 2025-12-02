@@ -52,7 +52,7 @@ export const UserInformationCard = ({exception,email}) => {
                 <p>Entité : {user?.entity}</p>
             </div>
             <div className="col">
-                <p>Responsable : {user?.managerName}</p>
+                <p>Responsable : {user?.managerName || "MME"}</p>
             </div>
         </div>
         <div className="row">

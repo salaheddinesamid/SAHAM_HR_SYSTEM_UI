@@ -1,17 +1,17 @@
 import { Button, CircularProgress, Dialog, DialogActions, DialogContent } from "@mui/material"
 import { useState } from "react"
-import { cancelLeave} from "../../../services/LeaveService";
+import { cancelLeave, cancelLeaveRequest} from "../../../services/LeaveService";
 
-export const LeaveCancellationDialog = ({open, onClose,leave, onSuccess})=>{
+export const LeaveCancellationDialog = ({open, onClose, request, onSuccess})=>{
 
     const [loading,setLoading] = useState(false);
     const [error,setError] = useState("");
 
     const handleConfirm = async()=>{
-        const id = leave?.leaveId;
+        const refNumber = request?.refNumber;
         try{
             setLoading(true);
-            const res = await cancelLeave(id);
+            const res = await cancelLeave(refNumber);
             if(res.status === 200){
                 onSuccess();
                 onClose();
@@ -25,24 +25,36 @@ export const LeaveCancellationDialog = ({open, onClose,leave, onSuccess})=>{
     }
     return(
         <Dialog open={open} onClose={onClose}>
-            {loading && (
-                <CircularProgress/>
-            )}
-            <DialogContent>
-                Êtes-vous sûr de vouloir annuler votre congé{" "}
-                du{" "}
-                <strong>{leave?.fromDate}</strong> au{" "}
-                <strong>{leave?.toDate}</strong> ?
-            </DialogContent>
-            
-            <DialogActions>
-                <Button variant="outlined" color="secondary" onClick={onClose}>
-                    Annuler
-                </Button>
-                <Button variant="contained" color="warning" onClick={handleConfirm}>
-                    Confirmer
-                </Button>
-            </DialogActions>
-        </Dialog>
+    {loading && (
+        <div style={{ display: "flex", justifyContent: "center", padding: "20px" }}>
+            <CircularProgress />
+        </div>
+    )}
+    
+    <DialogContent dividers>
+        <p style={{ fontSize: "16px", marginBottom: "10px" }}>
+            Vous êtes sur le point d’annuler le congé de l’employé. <b>{request?.requestedBy}</b>
+        </p>
+
+        <p style={{ fontSize: "16px" }}>
+            Période concernée :<br/>
+            <strong>Du {request?.startDate}</strong> au <strong>{request?.endDate}</strong>
+        </p>
+
+        <p style={{ fontSize: "16px", marginTop: "15px" }}>
+            Cette action entraînera automatiquement le <strong>remboursement du solde de congés</strong> correspondant.
+        </p>
+    </DialogContent>
+
+    <DialogActions>
+        <Button variant="outlined" color="secondary" onClick={onClose}>
+            Retour
+        </Button>
+        <Button variant="contained" color="warning" onClick={handleConfirm}>
+            Confirmer l’annulation
+        </Button>
+    </DialogActions>
+</Dialog>
+
     )
 }

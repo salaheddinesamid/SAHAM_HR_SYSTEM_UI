@@ -9,23 +9,23 @@ export const applyLeave = async(email, requestDto)=>{
     });
 }
 
-// handle cancel leave request
-export const cancelLeaveRequest = async(id)=>{
-    return await LeaveAPI.delete("cancel-request",{
+// handle cancel leave:
+export const cancelLeave = async(referenceNumber)=>{
+    return await LeaveAPI.delete("cancel", {
         params : {
-            leaveRequestId : id
+            refNumber : referenceNumber
         }
     })
 }
 
-// handle cancel leave:
-export const cancelLeave = async(id)=>{
-    return await LeaveAPI.delete("cancel", {
+export const cancelLeaveRequest = async(refNumber)=>{
+    return await LeaveAPI.put("cancel-request", null, {
         params : {
-            leaveId : id
+            refNumber : refNumber
         }
     })
 }
+
 
 // Fetch all employee leave requests
 export const getMyLeaveRequests = async(email)=>{
