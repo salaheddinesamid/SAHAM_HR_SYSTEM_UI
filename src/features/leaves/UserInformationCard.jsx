@@ -65,7 +65,7 @@ export const UserInformationCard = ({exception,email}) => {
                 </div>
                 
                 <div className="col">
-                    <p>Droit annuel : <b>{user?.balanceDetails?.initialBalance} Jour (s)</b></p>
+                    <p>Droit annuel : <b>{user?.balanceDetails?.initialBalance} Jours</b></p>
                 </div>
                 
                 <div className="col">

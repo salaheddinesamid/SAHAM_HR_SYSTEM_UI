@@ -8,10 +8,10 @@ export const LeaveRequestCancellationDialog = ({open, onClose,request, onSuccess
     const [error,setError] = useState("");
 
     const handleConfirm = async()=>{
-        const id = request?.id;
+        const referenceNumber = request?.refNumber;
         try{
             setLoading(true);
-            const res = await cancelLeaveRequest(id);
+            const res = await cancelLeaveRequest(referenceNumber);
             if(res.status === 200){
                 onSuccess();
                 onClose();

@@ -13,6 +13,8 @@ import {
   Wallet 
 } from "lucide-react";
 import { DocumentRequest } from "../features/documents/DocumentRequest";
+import AssessmentIcon from '@mui/icons-material/Assessment';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { Home } from "./Home";
 import { LeaveRequest } from "../features/leaves/Leave";
 import { FaCalendarAlt, FaHome } from "react-icons/fa";
@@ -87,8 +89,8 @@ export const servicesConfig = [
       { id: 3, name: "Intégration (accueil, orientation et formation initiale)", icon: <UserStar />, color: "#F3E5F5" },
       { id: 5, name: "Rémunération et avantages sociaux", icon: <GraduationCap />, color: "#F3E5F5" },
       { id: 6, name: "Formation et développement continu", icon: <GraduationCap />, color: "#F3E5F5" },
-      { id: 7, name: "Performance, feedback et évaluations", icon: <GraduationCap />, color: "#F3E5F5" },
-      { id: 8, name: "Départ à la retraite, fin de contrat ou démission", icon: <GraduationCap />, color: "#F3E5F5" },
+      { id: 7, name: "Performance, feedback et évaluations", icon: <AssessmentIcon />, color: "#F3E5F5" },
+      { id: 8, name: "Départ à la retraite, fin de contrat ou démission", icon: <ExitToAppIcon />, color: "#F3E5F5" },
     ],
   },
   {
