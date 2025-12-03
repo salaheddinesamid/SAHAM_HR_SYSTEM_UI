@@ -2,7 +2,7 @@ import { Alert, CircularProgress, Snackbar, TextField } from "@mui/material";
 import { CheckIcon, TriangleAlert } from "lucide-react";
 import { useEffect, useState } from "react"
 import { applyLeave } from "../../../services/LeaveService";
-import { dateFormatter } from "../utils/LeaveUtils";
+import { dateFormatter, totalLeaveDaysCalculator } from "../utils/LeaveUtils";
 
 export const LeaveRequestForm = ({user})=>{
     const [requestDto, setRequestDto] = useState({
@@ -89,8 +89,8 @@ export const LeaveRequestForm = ({user})=>{
         if (from && to) {
             const fromDate = new Date(from);
             const toDate = new Date(to);
-            const diffDays = Math.ceil((toDate - fromDate) / (1000 * 60 * 60 * 24)) + 1;
-            setTotalDays(diffDays > 0 ? diffDays : 0);
+            const totalDays = totalLeaveDaysCalculator(fromDate, toDate);
+            setTotalDays(totalDays > 0 ? totalDays : 0);
             setRequestDto((prev) => ({
                 ...prev,
                 startDate: dateFormatter(fromDate),
@@ -170,7 +170,7 @@ export const LeaveRequestForm = ({user})=>{
           }}
           />
           <TextField
-          label="Date de fin"
+          label="Date de retour"
           type="date"
           helperText="Ce champ est obligatoire"
           fullWidth

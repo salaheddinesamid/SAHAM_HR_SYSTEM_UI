@@ -2,7 +2,7 @@ import { CloudUpload } from "@mui/icons-material";
 import { Alert, Button, CircularProgress, Snackbar, styled, TextField } from "@mui/material";
 import { CheckIcon, TriangleAlert } from "lucide-react";
 import { useEffect, useState } from "react"
-import { dateFormatter } from "../utils/LeaveUtils";
+import { dateFormatter, totalLeaveDaysCalculator } from "../utils/LeaveUtils";
 import { applyAbsence } from "../../../services/AbsenceService";
 
 export const AbsenceRequestForm = ({user})=>{
@@ -117,8 +117,8 @@ export const AbsenceRequestForm = ({user})=>{
         if (fromDate && toDate) {
             const from = new Date(fromDate);
             const to = new Date(toDate);
-            const diffDays = Math.ceil((to - from) / (1000 * 60 * 60 * 24)) + 1;
-            setTotalDays(diffDays > 0 ? diffDays : 0);
+            const totalDays = totalLeaveDaysCalculator(from, to)
+            setTotalDays(totalDays > 0 ? totalDays : 0);
             setRequestDto((prev) => ({
                 ...prev,
                 startDate: dateFormatter(from),
