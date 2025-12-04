@@ -39,6 +39,16 @@ export const approveSubordinate = async(email, refNumber)=>{
     return response.status;
 }
 
+// Final Absence Approval by HR:
+export const approveAbsence = async(refNumber)=>{
+    const response = await AbsenceAPI.put("/requests/approve",null,{
+        params : {
+            refNumber : refNumber
+        }
+    });
+    return response.status;
+}
+
 export const downloadAbsenceMedicaleCertificate = async(path)=>{
     const response  =  await AbsenceAPI.get("/medical-certificates/download",{
         params : {

@@ -80,7 +80,7 @@ export const Loan = ()=>{
     // This form handles (Avance) loan requests
     const AvanceForm = ()=>{
         const [requestDto,setRequestDto] = useState({
-            type : "ADVANCE",
+            loanType : "ADVANCE",
             amount : 0,
             motif : "" 
         });

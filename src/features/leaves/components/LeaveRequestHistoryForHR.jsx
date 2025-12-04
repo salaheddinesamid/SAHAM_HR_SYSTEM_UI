@@ -18,6 +18,7 @@ import { LeaveRejectionDialog } from "../dialogs/LeaveRejectionDialog";
 import { loanStatusMapper } from "../../loans/utils/Mapper";
 import { getAllRequestsForHr } from "../../../services/LeaveService";
 import { LeaveCancellationDialog } from "../dialogs/LeaveCancellationDialog";
+import { leaveStatusMapper, LeaveTypesMapper } from "../utils/LeaveUtils";
 
 // This component renders all the requests for HR
 export const LeaveRequestHistoryForHR = () => {
@@ -175,10 +176,11 @@ export const LeaveRequestHistoryForHR = () => {
             <TableBody>
               {filteredRequests.map((req) => {
                 const { message, color } = loanStatusMapper(req.status);
+                const type = LeaveTypesMapper(req?.type)
                 return (
                   <TableRow key={req.id}>
                     <TableCell>{req.requestedBy}</TableCell>
-                    <TableCell>{req.type}</TableCell>
+                    <TableCell>{type}</TableCell>
                     <TableCell>{req.startDate}</TableCell>
                     <TableCell>{req.endDate}</TableCell>
                     <TableCell>{req.totalDays}</TableCell>

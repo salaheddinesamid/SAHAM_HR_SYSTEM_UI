@@ -19,7 +19,7 @@ import {
 import { useEffect, useState, useCallback } from "react";
 import { Check, X } from "lucide-react";
 import { Download, Search } from "@mui/icons-material";
-import { downloadAbsenceMedicaleCertificate, getAllAbsenceRequestsForHR, getAllSubordinatesAbsenceRequests } from "../../../services/AbsenceService";
+import { approveAbsence, approveSubordinate, downloadAbsenceMedicaleCertificate, getAllAbsenceRequestsForHR, getAllSubordinatesAbsenceRequests } from "../../../services/AbsenceService";
 import { AbsenceTypesMapper, leaveStatusMapper } from "../utils/LeaveUtils";
 import { saveAs } from "file-saver";
 
@@ -130,13 +130,14 @@ export const AbsenceRequestHistoryForHR = () => {
     if (!request) return null;
 
     const handleConfirm = async () => {
-      try {
-        //await approveSubordinatesLeave(email, id);
-        onClose();
-        fetchRequests(); // Refresh list
-      } catch (err) {
-        console.error("Approval failed:", err);
-      }
+        const refNumber = request?.referenceNumber; // Reference Number
+        try {
+            await approveAbsence(refNumber);
+            onClose();
+            fetchRequests(); // Refresh list
+        } catch (err) {
+            console.error("Approval failed:", err);
+        }
     };
 
     return (
