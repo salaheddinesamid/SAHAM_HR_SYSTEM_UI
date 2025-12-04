@@ -1,15 +1,18 @@
 import { useState } from "react";
-import { CircularProgress, TextField } from "@mui/material";
+import { Alert, CircularProgress, Snackbar, TextField } from "@mui/material";
 import { LoanHistory } from "./LoanHistory";
 import { UserInformationCard } from "../leaves/UserInformationCard";
 import { applyLoan } from "../../services/LoanService";
 import { EmployeeLoanRequests } from "./EmployeeLoanRequestHistory";
+import { CheckIcon, TriangleAlert } from "lucide-react";
 
 
 export const Loan = ()=>{
     const user = JSON.parse(localStorage.getItem("userDetails"));
     const [selectedService, setSelectedService] = useState(1);
     const [loading,setLoading]= useState(false);
+    const [success,setSuccess] = useState(false);
+    const [error,setError] = useState("");
 
     // handle submit both requests (Pret/Avance)
     const handleSubmitRequest = async(request)=>{
@@ -17,6 +20,7 @@ export const Loan = ()=>{
         try{
             setLoading(true);
             const res = await applyLoan(email,request);
+            setSuccess(true);
             console.log(request);
         }catch(err){
             console.log(err);
@@ -49,6 +53,34 @@ export const Loan = ()=>{
                 )}
                 {!loading && (
                     <div className="row">
+                        <Snackbar
+                                open={success}
+                                autoHideDuration={4000}
+                                onClose={() => setSuccess(false)}
+                                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                              >
+                                <Alert
+                                  severity="success" 
+                                  icon={<CheckIcon fontSize="inherit" />}
+                                  sx={{ width: '100%' }}
+                                >
+                                  Votre demande a été enregistrer avec success
+                                </Alert>
+                              </Snackbar>
+                              <Snackbar
+                                open={error !== ""}
+                                autoHideDuration={4000}
+                                onClose={() => setError("")}
+                                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                              >
+                                <Alert 
+                                  severity="error" 
+                                  icon={<TriangleAlert fontSize="inherit"/>}
+                                  sx={{ width: '100%' }}
+                                >
+                                  {error}
+                                </Alert>
+                              </Snackbar>
                         <h4>Demande de Prêt</h4>
                         <div className="row mt-3">
                             <div className="col">
