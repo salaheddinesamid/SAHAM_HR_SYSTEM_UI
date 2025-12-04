@@ -28,6 +28,17 @@ export const getAllAbsenceRequestsForHR = async()=>{
     return response.data;
 }
 
+// Approve subordinate absence request:
+export const approveSubordinate = async(email, refNumber)=>{
+    const response = await AbsenceAPI.put("/requests/subordinates/approve-request",null,{
+        params : {
+            approvedBy  : email,
+            refNumber : refNumber
+        }
+    });
+    return response.status;
+}
+
 export const downloadAbsenceMedicaleCertificate = async(path)=>{
     const response  =  await AbsenceAPI.get("/medical-certificates/download",{
         params : {
