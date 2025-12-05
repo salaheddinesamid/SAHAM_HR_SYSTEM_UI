@@ -4,6 +4,7 @@ import {
   FileText, 
   Gift, 
   GraduationCap, 
+  HandCoins, 
   Handshake, 
   HeartPulse, 
   Info, 
@@ -29,6 +30,7 @@ import RouteIcon from '@mui/icons-material/Route';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
+
 
 export const servicesConfig = [
   { 
@@ -74,7 +76,7 @@ export const servicesConfig = [
     subServices: [
       { id: 1, name: "Infos médicales & d’urgence", icon: <HeartPulse />, color: "#E8F5E9" },
       { id: 2, name: "Mes remboursements médicaux", icon: <AttachMoneyIcon />, color: "#E8F5E9" },
-      { id: 3, name: "Conventions & Tiers Payant", color: "#E8F5E9" },
+      { id: 3, name: "Conventions & Tiers Payant", icon: <HandCoins />, color: "#E8F5E9" },
       { id: 4, name: "Campagne de Vaccination", icon: <Syringe />, color: "#E8F5E9" },
     ],
   },
