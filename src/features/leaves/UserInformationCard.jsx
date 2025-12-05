@@ -61,11 +61,11 @@ export const UserInformationCard = ({exception,email}) => {
             exception !== "Without solde" ? 
             <div className="row mt-3">
                 <div className="col">
-                    <p>Solde {user?.balanceDetails?.year} : <b>{user?.balanceDetails?.daysLeft} Jour (s)</b></p>
+                    <p>Solde {user?.balanceDetails?.year} : <b>{user?.balanceDetails?.currentBalance} Jour (s)</b></p>
                 </div>
                 
                 <div className="col">
-                    <p>Droit annuel : <b>{user?.balanceDetails?.initialBalance} Jours</b></p>
+                    <p>Droit annuel : <b>{user?.balanceDetails?.annualBalance} Jours</b></p>
                 </div>
                 
                 <div className="col">
@@ -76,7 +76,7 @@ export const UserInformationCard = ({exception,email}) => {
                     <p>Pris : <b>{user?.balanceDetails?.usedBalance} Jour (s)</b></p>
                 </div>
                 <div className="col">
-                    <p>Reliquat : <b>{user?.balanceDetails?.leftBalance} Jour (s)</b></p>
+                    <p>Reliquat : <b>{user?.balanceDetails?.reminderBalance} Jour (s)</b></p>
                 </div>
             </div> : <></>
         }
