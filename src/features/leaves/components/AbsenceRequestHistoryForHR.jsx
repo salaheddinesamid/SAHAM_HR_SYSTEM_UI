@@ -22,6 +22,7 @@ import { Download, Search } from "@mui/icons-material";
 import { approveAbsence, approveSubordinate, downloadAbsenceMedicaleCertificate, getAllAbsenceRequestsForHR, getAllSubordinatesAbsenceRequests } from "../../../services/AbsenceService";
 import { AbsenceTypesMapper, leaveStatusMapper } from "../utils/LeaveUtils";
 import { saveAs } from "file-saver";
+import { LocalDateTimeMapper } from "../../../utils/LocalDateTimeMapper";
 
 export const AbsenceRequestHistoryForHR = () => {
   const [loading, setLoading] = useState(false);
@@ -281,8 +282,8 @@ export const AbsenceRequestHistoryForHR = () => {
                 <TableRow key={req.id}>
                   <TableCell>{req.requestedBy}</TableCell>
                   <TableCell>{AbsenceTypesMapper(req.type)}</TableCell>
-                  <TableCell>{req.startDate}</TableCell>
-                  <TableCell>{req.endDate}</TableCell>
+                  <TableCell>{LocalDateTimeMapper(req.startDate)}</TableCell>
+                  <TableCell>{LocalDateTimeMapper(req.endDate)}</TableCell>
                   <TableCell>{req.totalDays}</TableCell>
                   <TableCell>
                     <span className={`badge ${color}`}>{message}</span>

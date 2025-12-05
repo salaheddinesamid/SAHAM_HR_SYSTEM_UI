@@ -24,6 +24,7 @@ import { saveAs } from "file-saver";
 import { leaveStatusMapper, LeaveTypesMapper } from "../utils/LeaveUtils";
 import { downloadFile } from "../../../services/FileStorageService";
 import { approveSubordinatesLeave, getSubordinatesLeaveRequests, rejectSubordinatesLeave } from "../../../services/LeaveService";
+import { LocalDateTimeMapper } from "../../../utils/LocalDateTimeMapper";
 
 export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
   const [loading, setLoading] = useState(false);
@@ -285,8 +286,8 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
                             <TableRow key={req.id}>
                                 <TableCell>{req.requestedBy}</TableCell>
                                 <TableCell>{LeaveTypesMapper(req.type)}</TableCell>
-                                <TableCell>{req.startDate}</TableCell>
-                                <TableCell>{req.endDate}</TableCell>
+                                <TableCell>{LocalDateTimeMapper(req.startDate)}</TableCell>
+                                <TableCell>{LocalDateTimeMapper(req.endDate)}</TableCell>
                                 <TableCell>{req.totalDays}</TableCell>
                                 <TableCell>
                                 <span className={`badge ${color}`}>{message}</span>

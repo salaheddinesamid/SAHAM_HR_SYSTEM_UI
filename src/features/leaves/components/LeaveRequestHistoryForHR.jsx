@@ -19,6 +19,7 @@ import { loanStatusMapper } from "../../loans/utils/Mapper";
 import { getAllRequestsForHr } from "../../../services/LeaveService";
 import { LeaveCancellationDialog } from "../dialogs/LeaveCancellationDialog";
 import { leaveStatusMapper, LeaveTypesMapper } from "../utils/LeaveUtils";
+import { LocalDateTimeMapper } from "../../../utils/LocalDateTimeMapper";
 
 // This component renders all the requests for HR
 export const LeaveRequestHistoryForHR = () => {
@@ -181,8 +182,8 @@ export const LeaveRequestHistoryForHR = () => {
                   <TableRow key={req.id}>
                     <TableCell>{req.requestedBy}</TableCell>
                     <TableCell>{type}</TableCell>
-                    <TableCell>{req.startDate}</TableCell>
-                    <TableCell>{req.endDate}</TableCell>
+                    <TableCell>{LocalDateTimeMapper(req.startDate)}</TableCell>
+                    <TableCell>{LocalDateTimeMapper(req.endDate)}</TableCell>
                     <TableCell>{req.totalDays}</TableCell>
                     <TableCell>
                       <span className={`badge ${color}`}>{message}</span>

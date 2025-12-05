@@ -3,6 +3,7 @@ import { getMyLeaveRequests } from "../../services/LeaveService";
 import { Button, CircularProgress } from "@mui/material";
 import { LeaveTypesMapper } from "./utils/LeaveUtils";
 import { LeaveRequestCancellationDialog } from "./dialogs/LeaveRequestCancellationDialog";
+import { LocalDateTimeMapper } from "../../utils/LocalDateTimeMapper";
 
 export const LeaveHistory = ({user}) => {
   const [requests, setRequests] = useState([]);
@@ -98,8 +99,8 @@ export const LeaveHistory = ({user}) => {
               <tr key={req.id || index}>
                 <td>{req?.refNumber || ""}</td>
                 <td>{LeaveTypesMapper(req.type)}</td>
-                <td>{req.startDate}</td>
-                <td>{req.endDate}</td>
+                <td>{LocalDateTimeMapper(req.startDate)}</td>
+                <td>{LocalDateTimeMapper(req.endDate)}</td>
                 <td>{req.totalDays}</td>
                 <td>
                     {(() => {
