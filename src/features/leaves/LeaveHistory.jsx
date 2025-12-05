@@ -75,12 +75,6 @@ export const LeaveHistory = ({user}) => {
 
       {!loading && requests.length > 0 && (
         <>
-        <p style={{
-          fontSize : "8px"
-        }}><b>N.B 1</b> : Vous pouvez annuler votre demande de congé tant qu’elle est toujours en attente chez le manager.</p>
-        <p style={{
-          fontSize : "8px"
-        }}><b>N.B 2</b> : Une fois votre demande de congé validée, toute demande d’annulation doit être adressée à l’équipe RH.</p>
         <table className="table table-striped">
           <thead>
             <tr>

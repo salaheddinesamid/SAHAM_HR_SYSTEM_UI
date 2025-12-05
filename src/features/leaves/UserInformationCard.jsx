@@ -81,6 +81,17 @@ export const UserInformationCard = ({exception,email}) => {
             </div> : <></>
         }
       </div>
+      <div className="row">
+        <p><b>NB:</b> - Vous pouvez annuler votre demande de congé tant qu’elle est toujours en attente chez le manager.<p style={{
+          fontSize : "12px"
+        }}> </p></p>
+        
+        <p style={{
+          fontSize : "12px",
+          marginLeft : "26px",
+          marginTop : "-10px"
+        }}>- Une fois votre demande de congé validée, toute demande d’annulation doit être adressée à l’équipe RH.</p>
+      </div>
     </div>
   );
 };
