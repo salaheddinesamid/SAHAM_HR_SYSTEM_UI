@@ -1,7 +1,8 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 /**
  * 
- */
+*/
 export const LoanAPI = axios.create({
     baseURL : `${process.env.REACT_APP_SERVER_URL}/api/v1/loans`,
     headers : {},
@@ -9,20 +10,36 @@ export const LoanAPI = axios.create({
     withCredentials : true
 })
 
-LoanAPI.interceptors.response.use(
-    (response)=>response,
-    (error)=>{
+/**
+ * 
+ */
+LoanAPI.interceptors.request.use(
+    (config) => {
+        const token = Cookies.get("accessToken"); // or your auth storage
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => Promise.reject(error)
+);
 
-        switch(error.status){
-            case 403:
-                return Promise.reject({message : ""});
-            case 404:
-                return Promise.reject({message : "Employee not found, please make sure the credentials are valid"});
+// Response interceptor for error handling
+LoanAPI.interceptors.response.use(
+    (response) => response, // Pass through successful responses
+    (error) => {
+        if (error.code === "ECONNABORTED") {
+            // Timeout
+            return Promise.reject({ message: "Request timed out. Please try again." });
+        } else if (!error.response) {
+            // Network error
+            return Promise.reject({ message: "Network Error. Please check your connection." });
+        } else {
+            // Server responded with an error
+            // Return server error message or default to generic
+            const message =
+                error.response.data?.message || `Error ${error.response.status}: ${error.response.statusText}`;
+            return Promise.reject({ message });
         }
-        if(!error.response){
-            console.error("Network Error",error);
-            return Promise.reject({message : "Network Error, Please try again"});
-        }
-        
     }
-)
+);

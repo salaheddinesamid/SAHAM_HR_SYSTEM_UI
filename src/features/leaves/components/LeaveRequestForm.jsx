@@ -55,6 +55,7 @@ export const LeaveRequestForm = ({user})=>{
     const handleSubmit = async () => {
         const email = user?.email;
         try {
+            setRequestLoading(true);
             const formData = new FormData();
             const payload = {
               ...requestDto,
@@ -81,7 +82,7 @@ export const LeaveRequestForm = ({user})=>{
             //alert("Demande envoyée avec succès !");
         } catch (err) {
             console.error(err);
-            alert("Erreur lors de la soumission de la demande !");
+            setError(err.message);
         } finally {
             setRequestLoading(false);
         }
