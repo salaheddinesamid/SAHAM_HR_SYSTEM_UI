@@ -23,10 +23,8 @@ import { approveSubordinate, downloadAbsenceMedicaleCertificate, getAllSubordina
 import { AbsenceTypesMapper, leaveStatusMapper } from "../utils/LeaveUtils";
 import { saveAs } from "file-saver";
 import { LocalDateTimeMapper } from "../../../utils/LocalDateTimeMapper";
-import Cookies from "js-cookie";
 
 export const SubordinatesAbsenceRequestsHistory = ({ manager }) => {
-    const token = Cookies.get("accessToken");
     const [loading, setLoading] = useState(false);
     const [requests, setRequests] = useState([]);
     const [filteredRequests,setFilteredRequests] = useState([]);

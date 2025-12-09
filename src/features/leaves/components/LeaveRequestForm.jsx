@@ -3,10 +3,8 @@ import { CheckIcon, TriangleAlert } from "lucide-react";
 import { useEffect, useState } from "react"
 import { applyLeave } from "../../../services/LeaveService";
 import { dateFormatter, totalLeaveDaysCalculator } from "../utils/LeaveUtils";
-import Cookies from "js-cookie";
 
 export const LeaveRequestForm = ({user})=>{
-    const token = Cookies.get("accessToken");
     const [requestDto, setRequestDto] = useState({
         startDate: "",
         endDate: "",
@@ -67,7 +65,7 @@ export const LeaveRequestForm = ({user})=>{
     
             formData.append("file",selectedFile);
             console.log(requestDto);
-            await applyLeave(token, email, formData);
+            await applyLeave(email, formData);
             // if success, display a snackbar:
             setSubmitSuccess(true);
             // init the request dto:

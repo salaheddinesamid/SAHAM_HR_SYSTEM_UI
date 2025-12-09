@@ -1,35 +1,33 @@
 import { useEffect, useState } from "react";
 import "./styles/UserInformationCard.css";
 import { getEmployee } from "../../services/EmployeeService";
-import Cookies from "js-cookie"
 
 export const UserInformationCard = ({exception,email}) => {
-    const token = Cookies.get("accessToken");
     const [user,setUser] = useState(null);
     const [error,setError] = useState("");
     const [loading,setLoading] = useState(false);
-
-  const fetchUser = async()=>{
-    try{
-        setLoading(true);
-        const res = await getEmployee(token,email);
-        console.log(res)
-        setUser(res);
-    }catch(err){
-        console.log(err);
-        setError(err.message)
-    }finally{
-        setLoading(false);
+    
+    const fetchUser = async()=>{
+        try{
+            setLoading(true);
+            const res = await getEmployee(email);
+            console.log(res)
+            setUser(res);
+        }catch(err){
+            console.log(err);
+            setError(err.message)
+        }finally{
+            setLoading(false);
+        }
     }
-  }
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
-  if (loading) {
-    return <p>Loading user info...</p>;
-  }
+    
+    useEffect(() => {
+        fetchUser();
+    }, []);
+    
+    if (loading) {
+        return <p>Loading user info...</p>;
+    }
 
   const EmployeeBalance = ({balanceDetails})=>{
     return(

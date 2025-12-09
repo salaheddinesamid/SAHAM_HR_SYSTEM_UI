@@ -28,40 +28,40 @@ import { LocalDateTimeMapper } from "../../../utils/LocalDateTimeMapper";
 import Cookies from "js-cookie";
 
 export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
-    const token = Cookies.get("accessToken");
-  const [loading, setLoading] = useState(false);
-  const [requests, setRequests] = useState([]);
-  const [filteredRequests,setFilteredRequests] = useState([]);
-  const [searchQuery,setSearchQuery] = useState("");
-  const [currentStatusFilter,setCurrentStatusFilter] = useState("ALL");
-  const [error, setError] = useState(null);
-  const [currentRequest, setCurrentRequest] = useState(null);
-  const [approvalDialogOpen, setApprovalDialogOpen] = useState(false);
-  const [rejectDialogOpen,setRejectDialogOpen] = useState(false);
-
-  const filters = [
-    { id: 1, name: "ALL", label: "Tous" },
-    { id: 2, name: "APPROVED", label: "Approuvée" },
-    { id: 3, name: "REJECTED", label: "Rejetée" },
-    { id: 4, name: "IN_PROCESS", label: "En attente" },
-    { id: 5, name: "CANCELED", label: "Annulée" }, // FIX: Correct spelling
-  ];
-
-  const fetchRequests = useCallback(async () => {
-    if (!manager?.email) return;
-    try {
-      setLoading(true);
-      console.log("...Fetching data")
-      const data = await getSubordinatesLeaveRequests(token, manager?.email);
-      setRequests(data || []);
-      setFilteredRequests(data || [])
-    } catch (err) {
-      console.error("Failed to fetch subordinates' leave requests:", err);
-      setError("Une erreur s'est produite lors du chargement des demandes.");
-    } finally {
-      setLoading(false);
-    }
-  }, [manager?.email]);
+    const [loading, setLoading] = useState(false);
+    const [requests, setRequests] = useState([]);
+    const [filteredRequests,setFilteredRequests] = useState([]);
+    const [searchQuery,setSearchQuery] = useState("");
+    const [currentStatusFilter,setCurrentStatusFilter] = useState("ALL");
+    const [error, setError] = useState(null);
+    const [currentRequest, setCurrentRequest] = useState(null);
+    const [approvalDialogOpen, setApprovalDialogOpen] = useState(false);
+    const [rejectDialogOpen,setRejectDialogOpen] = useState(false);
+    
+    
+    const filters = [
+        { id: 1, name: "ALL", label: "Tous" },
+        { id: 2, name: "APPROVED", label: "Approuvée" },
+        { id: 3, name: "REJECTED", label: "Rejetée" },
+        { id: 4, name: "IN_PROCESS", label: "En attente" },
+        { id: 5, name: "CANCELED", label: "Annulée" }, // FIX: Correct spelling
+    ];
+    
+    const fetchRequests = useCallback(async () => {
+        if (!manager?.email) return;
+        try {
+            setLoading(true);
+            console.log("...Fetching data")
+            const data = await getSubordinatesLeaveRequests(manager?.email);
+            setRequests(data || []);
+            setFilteredRequests(data || [])
+        } catch (err) {
+            console.error("Failed to fetch subordinates' leave requests:", err);
+            setError("Une erreur s'est produite lors du chargement des demandes.");
+        } finally {
+            setLoading(false);
+        }
+    }, [manager?.email]);
 
   const handleFilterChange = (filter) => {
     setCurrentStatusFilter(filter);

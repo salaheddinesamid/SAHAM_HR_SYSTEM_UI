@@ -6,14 +6,10 @@ import { AbsenceAPI } from "../apis/AbsenceAPI"
  * @param {*} token
  * @returns 
  */
-export const applyAbsence = async(token, email, requestDto)=>{
+export const applyAbsence = async(requestDto)=>{
     const response = await AbsenceAPI.post("new", requestDto, {
         headers : {
             "Content-Type" : "multipart/form-data",
-            Authorization : `Bearer ${token}`
-        },
-        params : {
-            email : email
         }
     });
     return response.status;
@@ -23,13 +19,10 @@ export const applyAbsence = async(token, email, requestDto)=>{
  * @param {*} email 
  * @returns 
  */
-export const getAllSubordinatesAbsenceRequests = async(token, email)=>{
+export const getAllSubordinatesAbsenceRequests = async(email)=>{
     const response = await AbsenceAPI.get("/requests/subordinates/get_all",{
         params : {
             email : email
-        },
-        headers : {
-            Authorization : `Bearer ${token}`
         }
     });
     return response.data;
@@ -39,12 +32,8 @@ export const getAllSubordinatesAbsenceRequests = async(token, email)=>{
  * @param {*} token
  * @returns 
  */
-export const getAllAbsenceRequestsForHR = async(token)=>{
-    const response = await AbsenceAPI.get("/requests/hr/get_all",{
-        headers : {
-            Authorization : `Bearer ${token}`
-        }
-    });
+export const getAllAbsenceRequestsForHR = async()=>{
+    const response = await AbsenceAPI.get("/requests/hr/get_all");
     return response.data;
 }
 
@@ -54,14 +43,11 @@ export const getAllAbsenceRequestsForHR = async(token)=>{
  * @param {*} refNumber 
  * @returns 
  */
-export const approveSubordinate = async(token, email, refNumber)=>{
+export const approveSubordinate = async(email, refNumber)=>{
     const response = await AbsenceAPI.put("/requests/subordinates/approve-request",null,{
         params : {
             approvedBy  : email,
             refNumber : refNumber
-        },
-        headers : {
-            Authorization : `Bearer ${token}`
         }
     });
     return response.status;
@@ -87,13 +73,10 @@ export const rejectAbsence = async(token, refNumber)=>{
  * @param {*} refNumber 
  * @returns 
  */
-export const approveAbsence = async(token, refNumber)=>{
+export const approveAbsence = async(refNumber)=>{
     const response = await AbsenceAPI.put("/requests/approve",null,{
         params : {
             refNumber : refNumber
-        },
-        headers : {
-            Authorization : `Bearer ${token}`
         }
     });
     return response.status;

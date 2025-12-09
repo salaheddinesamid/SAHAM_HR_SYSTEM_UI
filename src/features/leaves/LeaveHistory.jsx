@@ -4,10 +4,8 @@ import { Button, CircularProgress } from "@mui/material";
 import { LeaveTypesMapper } from "./utils/LeaveUtils";
 import { LeaveRequestCancellationDialog } from "./dialogs/LeaveRequestCancellationDialog";
 import { LocalDateTimeMapper } from "../../utils/LocalDateTimeMapper";
-import Cookies from "js-cookie";
 
 export const LeaveHistory = ({user}) => {
-  const token = Cookies.get("accessToken");
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -29,7 +27,7 @@ export const LeaveHistory = ({user}) => {
     try {
       setLoading(true);
       console.log("Fetching Data...");
-      const response = await getMyLeaveRequests(token, email);
+      const response = await getMyLeaveRequests(email);
       setRequests(response || []); // ensure safe access
     } catch (err) {
       console.error("Error fetching leaves:", err);

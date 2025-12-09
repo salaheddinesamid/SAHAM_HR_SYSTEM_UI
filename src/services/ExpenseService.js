@@ -22,16 +22,12 @@ export const newExpense = async(email,request)=>{
  * @param {*} email 
  * @returns 
  */
-export const getAllExpenses = async(token,email)=>{
+export const getAllExpenses = async(email)=>{
 
     const response = await ExpenseAPI.get("get-all",{
         params : {
             email : email
-        },
-        headers : {
-            Authorization : `Bearer ${token}`
         }
     })
-
     return response.data;
 }

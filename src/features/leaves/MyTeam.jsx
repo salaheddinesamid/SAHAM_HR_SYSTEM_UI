@@ -2,10 +2,8 @@ import { useEffect, useState } from "react";
 import { getSubordinates } from "../../services/EmployeeService";
 import { CircularProgress } from "@mui/material";
 import WallCalendar from "./TimeLine";
-import Cookies from "js-cookie";
 
 export const MyTeam = ({ manager }) => {
-  const token = Cookies.get("accessToken");
   const [subordinates, setSubordinates] = useState([]); // list of subordinates and their leaves
   const [loading, setLoading] = useState(false);
 
@@ -14,7 +12,7 @@ export const MyTeam = ({ manager }) => {
     if (!manager?.email) return;
     try {
       setLoading(true);
-      const res = await getSubordinates(token, manager.email);
+      const res = await getSubordinates(manager.email);
       setSubordinates(res);
     } catch (err) {
       console.error(err);

@@ -2,11 +2,9 @@ import { useEffect, useState } from "react"
 import { getAllMyLeaves } from "../../services/LeaveService";
 import { CircularProgress, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { LeaveTypesMapper } from "./utils/LeaveUtils";
-import Cookies from "js-cookie";
 
 
 export const MyLeaves = ({user})=>{
-    const token = Cookies.get("accessToken");
     const [leaves,setLeaves] = useState([]);
     const [loading,setLoading] = useState(false)
 
@@ -14,7 +12,7 @@ export const MyLeaves = ({user})=>{
         const email = user?.email;
         try{
             setLoading(true);
-            const res = await getAllMyLeaves(token, email);
+            const res = await getAllMyLeaves(email);
             setLeaves(res);
         }catch(err){
             console.log(err);
@@ -27,7 +25,7 @@ export const MyLeaves = ({user})=>{
         fetchLeaves();
     },[]);
 
-    
+
     return(
         <div className="container mt-3">
             {loading && leaves.length === 0 && (

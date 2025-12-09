@@ -20,11 +20,9 @@ import { getAllRequestsForHr } from "../../../services/LeaveService";
 import { LeaveCancellationDialog } from "../dialogs/LeaveCancellationDialog";
 import { leaveStatusMapper, LeaveTypesMapper } from "../utils/LeaveUtils";
 import { LocalDateTimeMapper } from "../../../utils/LocalDateTimeMapper";
-import Cookies from "js-cookie";
 
 // This component renders all the requests for HR
 export const LeaveRequestHistoryForHR = () => {
-    const token = Cookies.get("accessToken");
     const [loading, setLoading] = useState(false);
     const [requests, setRequests] = useState([]);
     const [filteredRequests, setFilteredRequests] = useState([]);
@@ -73,7 +71,7 @@ export const LeaveRequestHistoryForHR = () => {
   const fetchAllRequests = async () => {
     try {
       setLoading(true);
-      const res = await getAllRequestsForHr(token);
+      const res = await getAllRequestsForHr();
       setRequests(res);
     } catch (err) {
       console.error(err);

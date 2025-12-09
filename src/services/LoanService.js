@@ -20,13 +20,10 @@ export const applyLoan = async(email,requestDto)=>{
  * @param {string} token
  * @returns 
  */
-export const getAllEmployeeRequests = async(token, email)=>{
+export const getAllEmployeeRequests = async(email)=>{
     const response = await LoanAPI.get("/employee/requests/get-all",{
         params : {
             email : email
-        },
-        headers : {
-            Authorization : `Bearer ${token}`
         }
     });
     return response.data;

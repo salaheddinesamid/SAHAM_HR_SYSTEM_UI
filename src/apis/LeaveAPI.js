@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 /**
  * 
  */
-export const LeaveAPI = axios.create({
+const LeaveAPI = axios.create({
     baseURL: `${process.env.REACT_APP_SERVER_URL}/api/v1/leaves`,
     headers: {},
     withCredentials : true,
@@ -40,3 +40,5 @@ LeaveAPI.interceptors.response.use(
         }
     }
 );
+
+export default LeaveAPI;

@@ -2,7 +2,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 /**
  * 
- */export const EmployeeApi = axios.create({
+ */
+const EmployeeApi = axios.create({
     baseURL : `${process.env.REACT_APP_SERVER_URL}/api/v1/employees`,
     headers : {},
     timeout : 10000,
@@ -40,4 +41,5 @@ EmployeeApi.interceptors.response.use(
         }
     }
 );
+export default EmployeeApi;
 
