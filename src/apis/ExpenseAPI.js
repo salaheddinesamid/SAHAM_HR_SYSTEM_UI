@@ -1,9 +1,12 @@
 import axios from "axios";
-
+/**
+ * 
+ */
 export const ExpenseAPI = axios.create({
     baseURL : `${process.env.REACT_APP_SERVER_URL}/api/v1/expenses`,
     headers : {},
-    timeout : 10000
+    timeout : 10000,
+    withCredentials : true
 });
 
 

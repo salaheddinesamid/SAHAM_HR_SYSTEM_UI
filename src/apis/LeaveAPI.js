@@ -1,5 +1,7 @@
 import axios from "axios";
-
+/**
+ * 
+ */
 const LeaveAPI = axios.create({
     baseURL: `${process.env.REACT_APP_SERVER_URL}/api/v1/leaves`,
     headers: {},

@@ -1,39 +1,72 @@
 import { DocumentAPI } from "../apis/DocumentAPI"
 
-// POST NEW DOCUMENT REQUEST:
-export const requestDocument = async(email, request)=>{
+/**
+ * 
+ * @param {*} email 
+ * @param {*} request 
+ * @returns 200 OK if the request succeed.
+ */
+export const requestDocument = async(token, email, request)=>{
     const response = await DocumentAPI.post("request",request,{
         params : {
             email : email
+        },
+        headers : {
+            Authorization : `Bearer ${token}`
         }
     })
+    return response.status;
 }
-
-// GET ALL DOCUMENT REQUESTED BY AN EMPLOYEE:
-export const getAllDocumentRequests = async(email)=>{
-
+/**
+ * 
+ * @param {*} email 
+ * @returns a list of all document requests made by an employee
+ */
+export const getAllDocumentRequests = async(token, email)=>{
     const res = await DocumentAPI.get("/get_requests",{
         params : {
             email: email
+        },
+        headers : {
+            Authorization : `Bearer ${token}`
         }
     })
     return res.data;
 }
-
-export const getAllPendingRequests = async()=>{
-    const response = await DocumentAPI.get("employees/get-all");
+/**
+ * @param {*} token
+ * @returns a list of all documents requests in process.
+ */
+export const getAllPendingRequests = async(token)=>{
+    const response = await DocumentAPI.get("employees/get-all",{
+        headers : {
+            Authorization : `Bearer ${token}`
+        }
+    });
     return response.data;
 }
 
-export const approveDocumentRequest = async(id)=>{
+/**
+ * 
+ * @param {*} id 
+ * @returns 200 OK if the request succeed.
+ */
+export const approveDocumentRequest = async(token, id)=>{
     const response = await DocumentAPI.put("approve-request",null,{
         params : {
             requestId : id
+        },
+        headers : {
+            Authorization : `Bearer ${token}`
         }
     })
-    return response;
+    return response.status;
 }
 
+/**
+ * 
+ * @returns 
+ */
 export const rejectDocumentRequest = async()=>{
     const response = await DocumentAPI.put("reject-request");
     return response;

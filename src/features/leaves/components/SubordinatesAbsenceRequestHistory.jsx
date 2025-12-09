@@ -23,25 +23,27 @@ import { approveSubordinate, downloadAbsenceMedicaleCertificate, getAllSubordina
 import { AbsenceTypesMapper, leaveStatusMapper } from "../utils/LeaveUtils";
 import { saveAs } from "file-saver";
 import { LocalDateTimeMapper } from "../../../utils/LocalDateTimeMapper";
+import Cookies from "js-cookie";
 
 export const SubordinatesAbsenceRequestsHistory = ({ manager }) => {
-  const [loading, setLoading] = useState(false);
-  const [requests, setRequests] = useState([]);
-  const [filteredRequests,setFilteredRequests] = useState([]);
-  const [searchQuery,setSearchQuery] = useState("");
-  const [currentStatusFilter,setCurrentStatusFilter] = useState("ALL");
-  const [error, setError] = useState(null);
-  const [currentRequest, setCurrentRequest] = useState(null);
-  const [approvalDialogOpen, setApprovalDialogOpen] = useState(false);
-  const [rejectDialogOpen,setRejectDialogOpen] = useState(false);
-
-  const filters = [
-    { id: 1, name: "ALL", label: "Tous" },
-    { id: 2, name: "APPROVED", label: "Approuvée" },
-    { id: 3, name: "REJECTED", label: "Rejetée" },
-    { id: 4, name: "IN_PROCESS", label: "En attente" },
-    { id: 5, name: "CANCELED", label: "Annulée" }, // FIX: Correct spelling
-  ];
+    const token = Cookies.get("accessToken");
+    const [loading, setLoading] = useState(false);
+    const [requests, setRequests] = useState([]);
+    const [filteredRequests,setFilteredRequests] = useState([]);
+    const [searchQuery,setSearchQuery] = useState("");
+    const [currentStatusFilter,setCurrentStatusFilter] = useState("ALL");
+    const [error, setError] = useState(null);
+    const [currentRequest, setCurrentRequest] = useState(null);
+    const [approvalDialogOpen, setApprovalDialogOpen] = useState(false);
+    const [rejectDialogOpen,setRejectDialogOpen] = useState(false);
+    
+    const filters = [
+        { id: 1, name: "ALL", label: "Tous" },
+        { id: 2, name: "APPROVED", label: "Approuvée" },
+        { id: 3, name: "REJECTED", label: "Rejetée" },
+        { id: 4, name: "IN_PROCESS", label: "En attente" },
+        { id: 5, name: "CANCELED", label: "Annulée" }, // FIX: Correct spelling
+    ];
 
   // fetch abesence requests:
   const fetchRequests = useCallback(async () => {

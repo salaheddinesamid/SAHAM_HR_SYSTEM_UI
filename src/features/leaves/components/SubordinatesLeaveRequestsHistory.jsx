@@ -25,8 +25,10 @@ import { leaveStatusMapper, LeaveTypesMapper } from "../utils/LeaveUtils";
 import { downloadFile } from "../../../services/FileStorageService";
 import { approveSubordinatesLeave, getSubordinatesLeaveRequests, rejectSubordinatesLeave } from "../../../services/LeaveService";
 import { LocalDateTimeMapper } from "../../../utils/LocalDateTimeMapper";
+import Cookies from "js-cookie";
 
 export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
+    const token = Cookies.get("accessToken");
   const [loading, setLoading] = useState(false);
   const [requests, setRequests] = useState([]);
   const [filteredRequests,setFilteredRequests] = useState([]);
@@ -50,7 +52,7 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
     try {
       setLoading(true);
       console.log("...Fetching data")
-      const data = await getSubordinatesLeaveRequests(manager?.email);
+      const data = await getSubordinatesLeaveRequests(token, manager?.email);
       setRequests(data || []);
       setFilteredRequests(data || [])
     } catch (err) {

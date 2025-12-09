@@ -1,9 +1,12 @@
 import axios from "axios";
-
+/**
+ * 
+ */
 const EmployeeApi = axios.create({
     baseURL : `${process.env.REACT_APP_SERVER_URL}/api/v1/employees`,
     headers : {},
-    timeout : 10000
+    timeout : 10000,
+    withCredentials : true
 })
 
 EmployeeApi.interceptors.response.use(

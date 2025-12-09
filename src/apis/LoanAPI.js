@@ -1,9 +1,12 @@
 import axios from "axios";
-
+/**
+ * 
+ */
 export const LoanAPI = axios.create({
     baseURL : `${process.env.REACT_APP_SERVER_URL}/api/v1/loans`,
     headers : {},
-    timeout : 10000
+    timeout : 10000,
+    withCredentials : true
 })
 
 LoanAPI.interceptors.response.use(

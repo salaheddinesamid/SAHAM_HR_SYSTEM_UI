@@ -20,18 +20,20 @@ import { getAllRequestsForHr } from "../../../services/LeaveService";
 import { LeaveCancellationDialog } from "../dialogs/LeaveCancellationDialog";
 import { leaveStatusMapper, LeaveTypesMapper } from "../utils/LeaveUtils";
 import { LocalDateTimeMapper } from "../../../utils/LocalDateTimeMapper";
+import Cookies from "js-cookie";
 
 // This component renders all the requests for HR
 export const LeaveRequestHistoryForHR = () => {
-  const [loading, setLoading] = useState(false);
-  const [requests, setRequests] = useState([]);
-  const [filteredRequests, setFilteredRequests] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [currentFilter, setCurrentFilter] = useState("ALL");
-  const [selectedRequest, setSelectedRequest] = useState(null);
-  const [approvalDialogOpen, setApprovalDialogOpen] = useState(false);
-  const [rejectionDialogOpen, setRejectionDialogOpen] = useState(false);
-  const [cancelDialogOpen,setCancelDialogOpen] = useState(false);
+    const token = Cookies.get("accessToken");
+    const [loading, setLoading] = useState(false);
+    const [requests, setRequests] = useState([]);
+    const [filteredRequests, setFilteredRequests] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [currentFilter, setCurrentFilter] = useState("ALL");
+    const [selectedRequest, setSelectedRequest] = useState(null);
+    const [approvalDialogOpen, setApprovalDialogOpen] = useState(false);
+    const [rejectionDialogOpen, setRejectionDialogOpen] = useState(false);
+    const [cancelDialogOpen,setCancelDialogOpen] = useState(false);
 
   // Open dialogs
   const handleOpenApprovalDialog = (request) => {
@@ -71,7 +73,7 @@ export const LeaveRequestHistoryForHR = () => {
   const fetchAllRequests = async () => {
     try {
       setLoading(true);
-      const res = await getAllRequestsForHr();
+      const res = await getAllRequestsForHr(token);
       setRequests(res);
     } catch (err) {
       console.error(err);

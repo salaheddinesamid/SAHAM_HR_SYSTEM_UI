@@ -1,108 +1,197 @@
 import LeaveAPI from "../apis/LeaveAPI"
 
-// handle new leave request
-export const applyLeave = async(email, requestDto)=>{
+/**
+ * Apply new leave request.
+ * @param {*} token 
+ * @param {*} email 
+ * @param {*} requestDto 
+ * @returns 200 OK if the request succeed.
+ */
+export const applyLeave = async(token, email, requestDto)=>{
     return await LeaveAPI.post("/apply",requestDto,{
         params : {
             email: email
+        },
+        headers : {
+            Authorization : `Bearer ${token}`
         }
     });
 }
 
-// handle cancel leave:
-export const cancelLeave = async(referenceNumber)=>{
+/**
+ * Cancel leave by the HR.
+ * @param {*} token 
+ * @param {*} referenceNumber 
+ * @returns 
+ */
+export const cancelLeave = async(token, referenceNumber)=>{
     return await LeaveAPI.delete("cancel", {
         params : {
             refNumber : referenceNumber
+        },
+        headers : {
+            Authorization : `Bearer ${token}`
         }
     })
 }
-
-export const cancelLeaveRequest = async(refNumber)=>{
+/**
+ * Cancel leave request by the manager.
+ * @param {*} token 
+ * @param {*} refNumber 
+ * @returns 
+ */
+export const cancelLeaveRequest = async(token, refNumber)=>{
     return await LeaveAPI.put("cancel-request", null, {
         params : {
             refNumber : refNumber
+        },
+        headers : {
+            Authorization : `Bearer ${token}`
         }
     })
 }
-
-
-// Fetch all employee leave requests
-export const getMyLeaveRequests = async(email)=>{
+/**
+ * 
+ * @param {*} token 
+ * @param {*} email 
+ * @returns 
+ */
+export const getMyLeaveRequests = async(token, email)=>{
     const response = await LeaveAPI.get("/requests/get",{
         params : {
             email: email
         },
+        headers : {
+            Authorization : `Bearer ${token}`
+        }
     });
     return response.data;
 }
 
-// Fetch leave requests of manager's subordinates
-export const getSubordinatesLeaveRequests = async(email)=>{
+/**
+ * 
+ * @param {*} token 
+ * @param {*} email 
+ * @returns 
+ */
+export const getSubordinatesLeaveRequests = async(token, email)=>{
     const response = await LeaveAPI.get("/requests/subordinates/get_all", {
         params : {
             email : email
+        },
+        headers : {
+            Authorization : `Bearer ${token}`
         }
     })
     return response.data;
 }
-export const getMyTeamLeaves = async(email)=>{
+export const getMyTeamLeaves = async(token, email)=>{
     const response = await LeaveAPI.get("'")
 }
 
-// subordinates (Approval/Rejection)
-export const approveSubordinatesLeave = async(email, requestId)=>{
+/**
+ * 
+ * @param {*} token 
+ * @param {*} email 
+ * @param {*} requestId 
+ * @returns 
+ */
+export const approveSubordinatesLeave = async(token, email, requestId)=>{
     const response = await LeaveAPI.put("/requests/subordinates/approve-request",null,{
         params : {
             approvedBy : email,
             leaveRequestId : requestId
+        },
+        headers : {
+            Authorization : `Bearer ${token}`
         }
     });
     return response.status;
 }
 
-export const rejectSubordinatesLeave = async(requestId, managerEmail)=>{
+/**
+ * 
+ * @param {*} token 
+ * @param {*} requestId 
+ * @param {*} managerEmail 
+ * @returns 
+ */
+export const rejectSubordinatesLeave = async(token, requestId, managerEmail)=>{
     const response = await LeaveAPI.put("/requests/subordinates/reject-request",null,{
         params : {
             rejectedBy : managerEmail,
             leaveRequestId : requestId
+        },
+        headers : {
+            Authorization : `Bearer ${token}`
         }
     });
     return response.status;
 }
 
-// Final (Approval/Rejection)
-
-export const finalLeaveApproval = async(requestId)=>{
+/**
+ * 
+ * @param {*} token 
+ * @param {*} requestId 
+ * @returns 
+ */
+export const finalLeaveApproval = async(token, requestId)=>{
     const response = await LeaveAPI.put("/requests/approve-request",null,{
         params : {
             leaveRequestId : requestId
+        },
+        headers : {
+            Authorization : `Bearer ${token}`
         }
     });
 
     return response.status;
 }
-
-export const finalLeaveRejection = async(requestId)=>{
+/**
+ * 
+ * @param {*} token 
+ * @param {*} requestId 
+ * @returns 
+ */
+export const finalLeaveRejection = async(token, requestId)=>{
     const response = await LeaveAPI.put("/requests/reject-request",null,{
         params : {
             requestId : requestId
+        },
+        headers : {
+            Authorization : `Bearer ${token}`
         }
     });
     return response.status;
 }
 
-// Get leave requests In process and approved by Manager
-export const getAllRequestsForHr = async()=>{
-    const response = await LeaveAPI.get("/requests/hr/get_all");
+/**
+ * 
+ * @param {*} token 
+ * @returns 
+ */
+export const getAllRequestsForHr = async(token)=>{
+    const response = await LeaveAPI.get("/requests/hr/get_all",{
+        headers : {
+            Authorization : `Bearer ${token}`
+        }
+    });
     return response.data;
 }
 
-// Get all employee leaves:
-export const getAllMyLeaves = async(email)=>{
+/**
+ * 
+ * @param {*} token 
+ * @param {*} email 
+ * @returns 
+ */
+export const getAllMyLeaves = async(token, email)=>{
     const response = await LeaveAPI.get("/employee-leaves/get_all", {
         params : {
             email : email
+        },
+        headers : {
+            Authorization : `Bearer ${token}`
         }
     });
     return response.data;

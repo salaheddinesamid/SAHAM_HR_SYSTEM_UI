@@ -1,6 +1,11 @@
 import { ExpenseAPI } from "../apis/ExpenseAPI"
 
-// Create new expense
+/**
+ * 
+ * @param {*} email 
+ * @param {*} request 
+ * @returns 
+ */
 export const newExpense = async(email,request)=>{
     const response = await ExpenseAPI.post("new",request,{
         params : {
@@ -11,12 +16,20 @@ export const newExpense = async(email,request)=>{
     return response.status;
 }
 
-// Get all employee depenses by email
-export const getAllExpenses = async(email)=>{
+/**
+ * 
+ * @param {*} token 
+ * @param {*} email 
+ * @returns 
+ */
+export const getAllExpenses = async(token,email)=>{
 
     const response = await ExpenseAPI.get("get-all",{
         params : {
             email : email
+        },
+        headers : {
+            Authorization : `Bearer ${token}`
         }
     })
 
