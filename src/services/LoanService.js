@@ -36,7 +36,7 @@ export const getAllEmployeeRequests = async(token, email)=>{
  * @returns 
  */
 export const getAllPendingRequests  = async()=>{
-    const res = await LoanAPI.get("get-all-requests");
+    const res = await LoanAPI.get("/requests/hr/get-all");
     return res.data;
 }
 /**
