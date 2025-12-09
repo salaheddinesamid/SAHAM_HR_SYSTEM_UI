@@ -10,7 +10,6 @@ export const MyLeaves = ({user})=>{
     const [leaves,setLeaves] = useState([]);
     const [loading,setLoading] = useState(false)
 
-
     const fetchLeaves = async()=>{
         const email = user?.email;
         try{
@@ -26,7 +25,9 @@ export const MyLeaves = ({user})=>{
 
     useEffect(()=>{
         fetchLeaves();
-    },[])
+    },[]);
+
+    
     return(
         <div className="container mt-3">
             {loading && leaves.length === 0 && (
@@ -35,7 +36,6 @@ export const MyLeaves = ({user})=>{
             {!loading && leaves.length === 0 && (
                 <p className="text-center">Aucun congé trouvée.</p>
             )}
-            
             <Table className="table table-striped">
                 <TableHead>
                     <TableRow>
