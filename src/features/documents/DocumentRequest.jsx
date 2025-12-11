@@ -3,19 +3,15 @@ import { UserInformationCard } from "../leaves/UserInformationCard";
 import { requestDocument } from "../../services/DocumentService";
 import { DocumentRequestHistory } from "./DocumentRequestHistory";
 import { EmployeeDocumentRequestHistory } from "./EmployeeDocumentRequests";
+import { Alert, CircularProgress, Snackbar } from "@mui/material";
+import { CheckIcon, TriangleAlert } from "lucide-react";
 
 export const DocumentRequest = ()=>{
     const user = JSON.parse(localStorage.getItem("userDetails"));
     const [selectedService, setSelectedService] = useState(1);
     const [requestLoading, setRequestLoading] = useState(false);
-    const [selectedType,setSelectedType] = useState("");
-
-    const entities = [
-        { id: 1, name: "SAHAM Horizon" },
-        { id: 2, name: "SAHAM Finances" },
-        { id: 3, name: "SAHAM Foundation" },
-    ];
-
+    const [submitSuccess,setSubmitSuccess] = useState(false);
+    const [error,setError] = useState("");
 
     const documentTypes = [
         {id: 1, name: "Attestation de travail"},
@@ -25,6 +21,11 @@ export const DocumentRequest = ()=>{
         {id: 5, name: "", component: <input type="text" placeholder="Autre"/>}
     ]
 
+    /**
+     * 
+     * @param {*} param0 
+     * @returns 
+     */
     const RequestForm = ({user})=>{
         const [requestDto,setRequestDto] = useState({
             documents : [],
@@ -32,7 +33,6 @@ export const DocumentRequest = ()=>{
         })
         const handleChange = (e)=>{
             const {name, value} = e.target;
-            
             setRequestDto((prev)=>(
                 {...prev, [name] : value}
             ))
@@ -57,10 +57,10 @@ export const DocumentRequest = ()=>{
                 setRequestLoading(true);
                 console.log(requestDto);
                 const res = await requestDocument(email,requestDto);
-                console.log(res)
-                alert("Demande envoyée avec succès !");
+                setSubmitSuccess(true);
             }catch(err){
                 console.error(err);
+                setError(err.message);
             }finally{
                 setRequestLoading(false);
             }
@@ -69,6 +69,47 @@ export const DocumentRequest = ()=>{
         }
         return(
             <div>
+                <Snackbar
+                open={submitSuccess}
+                autoHideDuration={4000}
+                onClose={() => setSubmitSuccess(false)}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+                    <Alert 
+                    severity="success" 
+                    icon={<CheckIcon fontSize="inherit" />}
+                    sx={{ width: '100%' }}>
+                          Votre demande a été enregistrer avec success
+                        </Alert>
+                </Snackbar>
+                <Snackbar
+                open={error !== ""}
+                autoHideDuration={4000}
+                onClose={() => setError("")}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+                    <Alert 
+                    severity="error" 
+                    icon={<TriangleAlert fontSize="inherit"/>}
+                    sx={{ width: '100%' }}>
+                        {error}
+                    </Alert>
+                </Snackbar>
+                {requestLoading && (
+                    <div
+                    style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        backgroundColor: "rgba(255,255,255,0.7)",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        zIndex: 10,
+                    }}>
+                        <CircularProgress size={60} color="primary" />
+                    </div>
+                )}
                 <div className="row mt-4">
                     <div className="col">
                         <p><b>Sélectionnez le type de document : </b></p>
@@ -82,20 +123,6 @@ export const DocumentRequest = ()=>{
                             ))
                         }
                     </div>
-                    <div className="col">
-                        <select className="styled-select" style={{
-                            fontSize : "12px"
-                        }} onChange={(e)=>handleChange(e)} value={requestDto.entity} name="entity">
-                            <option style={{
-                                fontSize : "10px"
-                            }}>-- Sélectionnez une entité --</option>
-                            {entities.map((e) => (
-                                <option key={e.id}>{e.name}</option>
-                            ))}
-                        </select>
-                    </div>
-
-                    
                 </div>
                 <div className="row">
                     <div className="col-xl-12">
