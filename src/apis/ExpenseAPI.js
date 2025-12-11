@@ -1,5 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import handleExpiredJWT from "../utils/JwtExpirationHandler";
 /**
  * 
  */
@@ -33,7 +34,10 @@ ExpenseAPI.interceptors.response.use(
         } else if (!error.response) {
             // Network error
             return Promise.reject({ message: "Network Error. Please check your connection." });
-        } else {
+        }else if (error.response.data.errorCode === "JWT_EXPIRED"){
+            handleExpiredJWT();
+        }  
+        else {
             // Server responded with an error
             // Return server error message or default to generic
             const message =
