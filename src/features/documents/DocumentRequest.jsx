@@ -31,15 +31,11 @@ export const DocumentRequest = ()=>{
             documents : [],
             entity : ""
         })
-        const handleChange = (e)=>{
-            const {name, value} = e.target;
-            setRequestDto((prev)=>(
-                {...prev, [name] : value}
-            ))
-
-        }
+        /**
+         * 
+         * @param {*} document 
+         */
         const handleDocumentToggle = (document)=>{
-             
             setRequestDto((prev)=>{
                 const isSelected = prev.documents.includes(document);
 
