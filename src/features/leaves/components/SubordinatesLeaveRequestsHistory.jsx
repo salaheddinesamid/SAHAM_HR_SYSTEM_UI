@@ -25,7 +25,6 @@ import { leaveStatusMapper, LeaveTypesMapper } from "../utils/LeaveUtils";
 import { downloadFile } from "../../../services/FileStorageService";
 import { approveSubordinatesLeave, getSubordinatesLeaveRequests, rejectSubordinatesLeave } from "../../../services/LeaveService";
 import { LocalDateTimeMapper } from "../../../utils/LocalDateTimeMapper";
-import Cookies from "js-cookie";
 
 export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
     const [loading, setLoading] = useState(false);
@@ -81,7 +80,7 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
 
     if (searchQuery.trim() !== "") {
       filtered = filtered.filter((r) =>
-        r.requestedBy?.toLowerCase().includes(searchQuery)
+        r.refNumber?.includes(searchQuery)
       );
     }
 
@@ -236,7 +235,7 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
                 <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", alignItems: "center" }}>
                     <TextField
                     size="small"
-                    placeholder="Recherche par nom de collaborateur"
+                    placeholder="Recherche par N° de Reference"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     InputProps={{

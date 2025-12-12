@@ -102,7 +102,7 @@ export const LeaveRequestHistoryForHR = () => {
 
     if (searchQuery.trim() !== "") {
       filtered = filtered.filter((r) =>
-        r.requestedBy?.toLowerCase().includes(searchQuery)
+        r.refNumber?.toLowerCase().includes(searchQuery)
       );
     }
 
@@ -129,7 +129,7 @@ export const LeaveRequestHistoryForHR = () => {
           <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", alignItems: "center" }}>
             <TextField
             size="small"
-            placeholder="Recherche par nom de collaborateur"
+            placeholder="Recherche par N° de Reference"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             InputProps={{
@@ -161,7 +161,7 @@ export const LeaveRequestHistoryForHR = () => {
           </Box>
         </Toolbar>
 
-          <Table className="table table-striped" style={{ marginTop: 20 }}>
+          <Table className="table table-striped">
             <TableHead>
               <TableRow>
                 <TableCell>Demandé par</TableCell>

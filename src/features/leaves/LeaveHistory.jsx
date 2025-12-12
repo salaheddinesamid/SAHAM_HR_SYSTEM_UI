@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
 import { getMyLeaveRequests } from "../../services/LeaveService";
-import { Button, CircularProgress } from "@mui/material";
+import { Box, Button, CircularProgress, InputAdornment, TextField, Toolbar } from "@mui/material";
 import { LeaveTypesMapper } from "./utils/LeaveUtils";
 import { LeaveRequestCancellationDialog } from "./dialogs/LeaveRequestCancellationDialog";
 import { LocalDateTimeMapper } from "../../utils/LocalDateTimeMapper";
+import { Search } from "lucide-react";
 
 export const LeaveHistory = ({user}) => {
   const [requests, setRequests] = useState([]);
+  const [filteredRequests,setFilteredRequest] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [currentFilter,setCurrentFilter] = useState("ALL");
+  const [searchQuery,setSearchQuery] = useState("");
   const [cancelDialogOpen,setCancelDialogOpen] = useState(false);
   const [selectedRequest,setSelectedRequest] = useState(null);
 
@@ -22,6 +26,10 @@ export const LeaveHistory = ({user}) => {
     setCancelDialogOpen(false);
   }
 
+  const handleFilterChange = (filter) => {
+    setCurrentFilter(filter);
+  };
+
   const fetchData = async () => {
     const email = user?.email;
     try {
@@ -29,6 +37,7 @@ export const LeaveHistory = ({user}) => {
       console.log("Fetching Data...");
       const response = await getMyLeaveRequests(email);
       setRequests(response || []); // ensure safe access
+      setFilteredRequest(response);
     } catch (err) {
       console.error("Error fetching leaves:", err);
       setError("Failed to load leave history");
@@ -51,11 +60,29 @@ export const LeaveHistory = ({user}) => {
         return { message: "Inconnue", color: "bg-light text-dark" };
       }
     };
-
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+    const filters = [
+      { id: 1, name: "ALL", label: "Tous" },
+      { id: 2, name: "APPROVED", label: "Approuvée" },
+      { id: 3, name: "REJECTED", label: "Rejetée" },
+      { id: 4, name: "IN_PROCESS", label: "En attente" },
+      { id: 5, name: "CANCELLED", label: "Annulée" }, // FIX: Correct spelling
+    ];
+    
+    useEffect(() => {
+      fetchData();
+    }, []);
+    
+    useEffect(()=>{
+      let filtered = [...requests];
+      
+      if(currentFilter != "ALL"){
+        filtered = filtered.filter((r)=> r.status === currentFilter);
+      }
+      if(searchQuery.trim() !== ""){
+        filtered = filtered.filter((r)=> r.refNumber?.includes(searchQuery));
+      }
+      setFilteredRequest(filtered);
+    },[searchQuery, requests, currentFilter])
 
   return (
     <div className="leave-history-container p-4">
@@ -75,6 +102,46 @@ export const LeaveHistory = ({user}) => {
 
       {!loading && requests.length > 0 && (
         <>
+        <Toolbar
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          mb: 2,
+          flexWrap: "wrap",
+        }}>
+          <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", alignItems: "center" }}>
+            <TextField
+            size="small"
+            placeholder="Recherche par N° de Reference"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            InputProps={{
+              startAdornment: (
+              <InputAdornment position="start">
+                <Search size={16} />
+              </InputAdornment>
+              ),
+            }}
+            sx={{
+              backgroundColor: "white",
+              borderRadius: 2,
+              width: { xs: "100%", sm: 280 },
+            }}/>
+            <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+              {filters.map((f) => (
+                <Button
+                key={f.id}
+                variant={currentFilter === f.name ? "contained" : "outlined"}
+                size="small"
+                onClick={() => handleFilterChange(f.name)}
+                sx={{ borderRadius: 3, textTransform: "none", fontWeight: 500 }}
+                >
+                  {f.label}
+                </Button>
+              ))}
+            </Box>
+          </Box>
+        </Toolbar>
         <table className="table table-striped">
           <thead>
             <tr>
@@ -89,7 +156,7 @@ export const LeaveHistory = ({user}) => {
             </tr>
           </thead>
           <tbody>
-            {requests.map((req, index) => (
+            {filteredRequests?.map((req, index) => (
               <tr key={req.id || index}>
                 <td>{req?.refNumber || ""}</td>
                 <td>{LeaveTypesMapper(req.type)}</td>

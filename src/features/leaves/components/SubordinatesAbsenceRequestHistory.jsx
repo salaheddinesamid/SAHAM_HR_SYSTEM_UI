@@ -78,7 +78,7 @@ export const SubordinatesAbsenceRequestsHistory = ({ manager }) => {
 
     if (searchQuery.trim() !== "") {
       filtered = filtered.filter((r) =>
-        r.requestedBy?.toLowerCase().includes(searchQuery)
+        r.referenceNumber?.includes(searchQuery)
       );
     }
 
@@ -235,7 +235,7 @@ export const SubordinatesAbsenceRequestsHistory = ({ manager }) => {
             <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", alignItems: "center" }}>
               <TextField
               size="small"
-              placeholder="Recherche par nom de collaborateur"
+              placeholder="Recherche par N° de Reference"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               InputProps={{

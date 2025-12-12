@@ -78,7 +78,7 @@ export const AbsenceRequestHistoryForHR = () => {
 
     if (searchQuery.trim() !== "") {
       filtered = filtered.filter((r) =>
-        r.requestedBy?.toLowerCase().includes(searchQuery)
+        r.refNumber?.includes(searchQuery)
       );
     }
 
@@ -231,7 +231,7 @@ export const AbsenceRequestHistoryForHR = () => {
             <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", alignItems: "center" }}>
               <TextField
               size="small"
-              placeholder="Recherche par nom de collaborateur"
+              placeholder="Recherche par N° de Reference"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               InputProps={{
@@ -264,19 +264,19 @@ export const AbsenceRequestHistoryForHR = () => {
             </Toolbar>
             <Table className="table table-striped">
               <TableHead>
-            <TableRow>
-              <TableCell>Demandé par</TableCell>
-              <TableCell>Type</TableCell>
-              <TableCell>Date de début</TableCell>
-              <TableCell>Date de fin</TableCell>
-              <TableCell>Nombre de jours</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Commentaire</TableCell>
-              <TableCell>Documents</TableCell>
-              <TableCell>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
+                <TableRow>
+                    <TableCell>Demandé par</TableCell>
+                    <TableCell>Type</TableCell>
+                    <TableCell>Date de début</TableCell>
+                    <TableCell>Date de fin</TableCell>
+                    <TableCell>Nombre de jours</TableCell>
+                    <TableCell>Status</TableCell>
+                    <TableCell>Commentaire</TableCell>
+                    <TableCell>Documents</TableCell>
+                    <TableCell>Actions</TableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
             {filteredRequests.map((req) => {
               const { message, color } = leaveStatusMapper(req.status);
               return (

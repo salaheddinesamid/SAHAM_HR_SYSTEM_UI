@@ -55,7 +55,6 @@ export const getMyLeaveRequests = async(email)=>{
     });
     return response.data;
 }
-
 /**
  * 
  * @param {*} token 
@@ -73,7 +72,6 @@ export const getSubordinatesLeaveRequests = async(email)=>{
 export const getMyTeamLeaves = async(token, email)=>{
     const response = await LeaveAPI.get("'")
 }
-
 /**
  * 
  * @param {*} token 
@@ -90,7 +88,6 @@ export const approveSubordinatesLeave = async(email, requestId)=>{
     });
     return response.status;
 }
-
 /**
  * 
  * @param {*} token 
@@ -107,7 +104,6 @@ export const rejectSubordinatesLeave = async(requestId, managerEmail)=>{
     });
     return response.status;
 }
-
 /**
  * 
  * @param {*} token 
