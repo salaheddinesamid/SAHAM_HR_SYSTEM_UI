@@ -15,6 +15,7 @@ import {
   Box,
   TextField,
   InputAdornment,
+  TablePagination,
 } from "@mui/material";
 import { useEffect, useState, useCallback } from "react";
 import { Check, X } from "lucide-react";
@@ -36,6 +37,17 @@ export const AbsenceRequestHistoryForHR = () => {
     const [currentRequest, setCurrentRequest] = useState(null);
     const [approvalDialogOpen, setApprovalDialogOpen] = useState(false);
     const [rejectDialogOpen,setRejectDialogOpen] = useState(false);
+
+    // Table pagination:
+    const [currentPageNumber, setCurrentPageNumber] = useState(0);
+    const [pageSize, setPageSize] = useState(10);
+    const [totalElements, setTotalElements] = useState(0);
+
+    // haldle change rows per page
+    const changeRowsPerPage = (e) => {
+        setPageSize(parseInt(e.target.value, 10));
+        setCurrentPageNumber(0);
+    };
     
     const filters = [
         { id: 1, name: "ALL", label: "Tous" },
@@ -49,9 +61,10 @@ export const AbsenceRequestHistoryForHR = () => {
         try {
             setLoading(true);
             console.log("...Fetching data")
-            const data = await getAllAbsenceRequestsForHR(token);
-            setRequests(data || []);
-            setFilteredRequests(data || [])
+            const data = await getAllAbsenceRequestsForHR();
+            setRequests(data?.content || []);
+            setFilteredRequests(data?.content || []);
+            setTotalElements(data?.totalElements);
         } catch (err) {
             console.error("Failed to fetch subordinates' leave requests:", err);
             setError("Une erreur s'est produite lors du chargement des demandes.");
@@ -59,52 +72,53 @@ export const AbsenceRequestHistoryForHR = () => {
             setLoading(false);
         }
     }, []);
-
-  const handleFilterChange = (filter) => {
-    setCurrentStatusFilter(filter);
-  };
-
-  useEffect(() => {
-    fetchRequests();
-  }, []);
-
-  // Filtering logic
-  useEffect(() => {
-    let filtered = [...requests];
-
-    if (currentStatusFilter !== "ALL") {
-      filtered = filtered.filter((r) => r.status === currentStatusFilter);
-    }
-
-    if (searchQuery.trim() !== "") {
-      filtered = filtered.filter((r) =>
-        r.refNumber?.includes(searchQuery)
-      );
-    }
-
-    setFilteredRequests(filtered);
-  }, [searchQuery, requests, currentStatusFilter])
-
-  // Reject dialog:
-  const RejectDialog = ({open,onClose,request})=>{
-    if(!request) return null;
-
-    const handleConfirm = async()=>{
-        try{
-            setLoading(true);
+    
+    const handleFilterChange = (filter) => {
+        setCurrentStatusFilter(filter);
+    };
+    
+    useEffect(() => {
+        fetchRequests();
+    }, []);
+    
+    // Filtering logic
+    useEffect(() => {
+        let filtered = [...requests];
+        
+        if (currentStatusFilter !== "ALL") {
+            filtered = filtered.filter((r) => r.status === currentStatusFilter);
+        }
+        
+        if (searchQuery.trim() !== "") {
+            filtered = filtered.filter((r) =>
+                r.refNumber?.includes(searchQuery)
+        );}
+        
+        setFilteredRequests(filtered);
+    
+    }, [searchQuery, requests, currentStatusFilter])
+    
+    // Reject dialog:
+    // 
+    const RejectDialog = ({open,onClose,request})=>{
+        if(!request) return null;
+        
+        const handleConfirm = async()=>{
+            try{
+                setLoading(true);
             //const res = await rejectSubordinatesLeave(id,managerEmail );
             /*
             if(res === 200){
                 fetchRequests();
                 onClose();
             }*/
-        }catch(err){
+           }catch(err){
             console.log(err);
         }finally{
             setLoading(false);
         }
     }
-
+    
     return(
         <Dialog open={open} onClose={onClose}>
             <DialogTitle>Rejeter la demande</DialogTitle>
@@ -126,8 +140,6 @@ export const AbsenceRequestHistoryForHR = () => {
         </Dialog>
     )
   }
-
-  // Separate dialog component
   const ApproveDialog = ({ open, onClose, request }) => {
     if (!request) return null;
 
@@ -162,7 +174,7 @@ export const AbsenceRequestHistoryForHR = () => {
       </Dialog>
     );
   };
-
+  
   const handleOpenApprovalDialog = (req) => {
     setCurrentRequest(req);
     setApprovalDialogOpen(true);
@@ -200,7 +212,7 @@ export const AbsenceRequestHistoryForHR = () => {
       console.error("Rejection failed:", err);
     }
   };
-
+  
   if (loading) {
     return (
       <div className="d-flex justify-content-center align-items-center">
@@ -320,6 +332,15 @@ export const AbsenceRequestHistoryForHR = () => {
               );
             })}
           </TableBody>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={totalElements} // when using backend pagination
+            rowsPerPage={pageSize}
+            page={currentPageNumber}
+            onPageChange={(e, newPage) => setCurrentPageNumber(newPage)}
+            onRowsPerPageChange={changeRowsPerPage}
+            />
         </Table>
         </div>
       )}

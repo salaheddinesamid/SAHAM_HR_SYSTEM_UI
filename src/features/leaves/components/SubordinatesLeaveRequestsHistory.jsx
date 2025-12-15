@@ -25,6 +25,7 @@ import { leaveStatusMapper, LeaveTypesMapper } from "../utils/LeaveUtils";
 import { downloadFile } from "../../../services/FileStorageService";
 import { approveSubordinatesLeave, getSubordinatesLeaveRequests, rejectSubordinatesLeave } from "../../../services/LeaveService";
 import { LocalDateTimeMapper } from "../../../utils/LocalDateTimeMapper";
+import { EmployeesLeaveRequestsTable } from "./EmployeesLeaveRequestsTable";
 
 export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
     const [loading, setLoading] = useState(false);
@@ -36,6 +37,11 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
     const [currentRequest, setCurrentRequest] = useState(null);
     const [approvalDialogOpen, setApprovalDialogOpen] = useState(false);
     const [rejectDialogOpen,setRejectDialogOpen] = useState(false);
+    // Table pagination:
+    const [currentPageNumber, setCurrentPageNumber] = useState(0);
+    const [pageSize, setPageSize] = useState(10);
+    const [totalElements, setTotalElements] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
     
     
     const filters = [
@@ -52,8 +58,10 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
             setLoading(true);
             console.log("...Fetching data")
             const data = await getSubordinatesLeaveRequests(manager?.email);
-            setRequests(data || []);
-            setFilteredRequests(data || [])
+            setRequests(data?.content || []);
+            setFilteredRequests(data?.content || []);
+            setTotalElements(data?.totalElements);
+            setPageSize(data?.size)
         } catch (err) {
             console.error("Failed to fetch subordinates' leave requests:", err);
             setError("Une erreur s'est produite lors du chargement des demandes.");
@@ -266,64 +274,14 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
                       </Box>
                     </Box>
                 </Toolbar>
-                <Table className="table table-striped">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Demandé par</TableCell>
-                            <TableCell>Type</TableCell>
-                            <TableCell>Date de début</TableCell>
-                            <TableCell>Date de fin</TableCell>
-                            <TableCell>Nombre de jours</TableCell>
-                            <TableCell>Status</TableCell>
-                            <TableCell>Commentaire</TableCell>
-                            <TableCell>Documents</TableCell>
-                            <TableCell>Actions</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {filteredRequests.map((req) => {
-                            const { message, color } = leaveStatusMapper(req.status);
-                            return (
-                            <TableRow key={req.id}>
-                                <TableCell>{req.requestedBy}</TableCell>
-                                <TableCell>{LeaveTypesMapper(req.type)}</TableCell>
-                                <TableCell>{LocalDateTimeMapper(req.startDate)}</TableCell>
-                                <TableCell>{LocalDateTimeMapper(req.endDate)}</TableCell>
-                                <TableCell>{req.totalDays}</TableCell>
-                                <TableCell>
-                                <span className={`badge ${color}`}>{message}</span>
-                                </TableCell>
-                                <TableCell>{req.comment || "-"}</TableCell>
-                                <TableCell>{req.document !== null ? <IconButton >
-                                    <Download onClick={()=>handleDownloadDocument(req.document)}/>
-
-                                    </IconButton> : <p>No documents found</p>}</TableCell>
-                                    <TableCell>
-                                        {req.status === "IN_PROCESS" && (
-                                            <>
-                                            <Button
-                                            variant="contained"
-                                            color="success"
-                                            size="small"
-                                            onClick={() => handleOpenApprovalDialog(req)}>
-                                                <Check size={16} />
-                                            </Button>
-                                            <Button
-                                            variant="contained"
-                                            color="error"
-                                            size="small"
-                                            className="ms-1"
-                                            onClick={() => handleOpenRejectionDialog(req)}
-                                            >
-                                                <X size={16} />
-                                            </Button>
-                                            </>
-                                        )}
-                                    </TableCell>
-                                </TableRow>
-                            );})}
-                    </TableBody>
-                </Table>
+                <EmployeesLeaveRequestsTable 
+                requests={filteredRequests} 
+                currentPage={currentPageNumber}
+                currentSize={pageSize}
+                totalElements={totalElements}
+                handleOpenApprovalDialog={handleOpenApprovalDialog}
+                handleOpenRejectionDialog={handleOpenRejectionDialog}
+                />
             </div>
         )}
         <ApproveDialog
@@ -333,8 +291,8 @@ export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
       />
       <RejectDialog 
       open={rejectDialogOpen}
-        onClose={handleCloseRejectionDialog}
-        request={currentRequest}/>
+      onClose={handleCloseRejectionDialog}
+      request={currentRequest}/>
     </div>
   );
 };

@@ -8,6 +8,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
+  TablePagination,
   TableRow,
   TextField,
   Toolbar,
@@ -32,6 +33,11 @@ export const LeaveRequestHistoryForHR = () => {
     const [approvalDialogOpen, setApprovalDialogOpen] = useState(false);
     const [rejectionDialogOpen, setRejectionDialogOpen] = useState(false);
     const [cancelDialogOpen,setCancelDialogOpen] = useState(false);
+
+    // Table pagination:
+    const [totalElements, setTotalElements] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [pageSize, setPageSize] = useState(10);
 
   // Open dialogs
   const handleOpenApprovalDialog = (request) => {
@@ -68,11 +74,19 @@ export const LeaveRequestHistoryForHR = () => {
     setCurrentFilter(filter);
   };
 
+  // haldle change rows per page
+  const changeRowsPerPage = (e) => {
+    setPageSize(parseInt(e.target.value, 10));
+    setCurrentPage(0);
+  };
+
   const fetchAllRequests = async () => {
     try {
       setLoading(true);
-      const res = await getAllRequestsForHr();
-      setRequests(res);
+      const res = await getAllRequestsForHr(currentPage, pageSize);
+      setRequests(res?.content);
+      setTotalElements(res?.totalElements);
+      setPageSize(res?.size);
     } catch (err) {
       console.error(err);
     } finally {
@@ -90,7 +104,7 @@ export const LeaveRequestHistoryForHR = () => {
 
   useEffect(() => {
     fetchAllRequests();
-  }, []);
+  }, [currentPage, pageSize]);
 
   // Filtering logic
   useEffect(() => {
@@ -229,6 +243,15 @@ export const LeaveRequestHistoryForHR = () => {
                 );
               })}
             </TableBody>
+            <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={totalElements} // when using backend pagination
+            rowsPerPage={pageSize}
+            page={currentPage}
+            onPageChange={(e, newPage) => setCurrentPage(newPage)}
+            onRowsPerPageChange={changeRowsPerPage}
+            />
           </Table>
 
           <LeaveApproval

@@ -47,10 +47,12 @@ export const cancelLeaveRequest = async(refNumber)=>{
  * @param {*} email 
  * @returns 
  */
-export const getMyLeaveRequests = async(email)=>{
+export const getMyLeaveRequests = async(email, pageNumber, pageSize)=>{
     const response = await LeaveAPI.get("/requests/get",{
         params : {
-            email: email
+            email: email,
+            pageNumber : pageNumber,
+            pageSize : pageSize
         }
     });
     return response.data;
@@ -139,8 +141,13 @@ export const finalLeaveRejection = async(requestId)=>{
  * @param {*} token 
  * @returns 
  */
-export const getAllRequestsForHr = async()=>{
-    const response = await LeaveAPI.get("/requests/hr/get_all");
+export const getAllRequestsForHr = async(page, size)=>{
+    const response = await LeaveAPI.get("/requests/hr/get_all", {
+        params : {
+            pageNumber : page,
+            pageSize : size
+        }
+    });
     return response.data;
 }
 

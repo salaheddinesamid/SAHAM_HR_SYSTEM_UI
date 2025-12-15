@@ -19,10 +19,12 @@ export const applyAbsence = async(requestDto)=>{
  * @param {*} email 
  * @returns 
  */
-export const getAllSubordinatesAbsenceRequests = async(email)=>{
+export const getAllSubordinatesAbsenceRequests = async(email, pageNumber, pageSize)=>{
     const response = await AbsenceAPI.get("/requests/subordinates/get_all",{
         params : {
-            email : email
+            email : email,
+            pageNumber: pageNumber,
+            pageSize : pageSize
         }
     });
     return response.data;
@@ -32,8 +34,13 @@ export const getAllSubordinatesAbsenceRequests = async(email)=>{
  * @param {*} token
  * @returns 
  */
-export const getAllAbsenceRequestsForHR = async()=>{
-    const response = await AbsenceAPI.get("/requests/hr/get_all");
+export const getAllAbsenceRequestsForHR = async(pageNumber, pageSize)=>{
+    const response = await AbsenceAPI.get("/requests/hr/get_all",{
+        params : {
+            pageNumber : pageNumber,
+            pageSize : pageSize
+        }
+    });
     return response.data;
 }
 
