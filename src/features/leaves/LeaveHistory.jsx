@@ -17,7 +17,6 @@ export const LeaveHistory = ({ user }) => {
   const [currentPageNumber, setCurrentPageNumber] = useState(0);
   const [pageSize, setPageSize] = useState(5);
   // total pages and elements from the server side
-  const [totalPageNumber, setTotalPageNumber] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
 
   const [cancelDialogOpen, setCancelDialogOpen] = useState(false);

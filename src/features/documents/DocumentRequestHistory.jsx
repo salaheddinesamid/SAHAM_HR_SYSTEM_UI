@@ -24,8 +24,8 @@ export const DocumentRequestHistory = ({user})=>{
             setLoading(true);
             console.log("Fetching....")
             const response = await getAllDocumentRequests(email);
-            setRequests(response);
-            setFilteredRequests(response);
+            setRequests(response?.content);
+            setFilteredRequests(response?.content);
         }
         catch(err){
             console.log(err);
