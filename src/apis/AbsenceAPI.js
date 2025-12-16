@@ -6,9 +6,6 @@ import handleExpiredJWT from "../utils/JwtExpirationHandler";
  */
 export const AbsenceAPI = axios.create({
     baseURL: `${process.env.REACT_APP_SERVER_URL}/api/v1/absences`,
-    headers: {
-        "Content-Type": "application/json",
-    },
     timeout: 10000, // 10 seconds
     withCredentials: true,
 });
@@ -19,6 +16,9 @@ AbsenceAPI.interceptors.request.use(
         const token = Cookies.get("accessToken"); // or your auth storage
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
+        }
+        if (config.data instanceof FormData) {
+            config.headers["Content-Type"] = "multipart/form-data";
         }
         return config;
     },

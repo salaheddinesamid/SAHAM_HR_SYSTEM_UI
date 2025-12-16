@@ -19,10 +19,12 @@ export const requestDocument = async(email, request)=>{
  * @param {*} email 
  * @returns a list of all document requests made by an employee
  */
-export const getAllDocumentRequests = async(email)=>{
-    const res = await DocumentAPI.get("/get_requests",{
+export const getAllDocumentRequests = async(email, pageNumber, pageSize)=>{
+    const res = await DocumentAPI.get("/requests/employee/get_all",{
         params : {
-            email: email
+            email: email,
+            pageNumber : pageNumber,
+            pageSize : pageSize
         }
     })
     return res.data;
@@ -31,8 +33,13 @@ export const getAllDocumentRequests = async(email)=>{
  * @param {*} token
  * @returns a list of all documents requests in process.
  */
-export const getAllPendingRequests = async()=>{
-    const response = await DocumentAPI.get("employees/get-all");
+export const getAllPendingRequests = async(pageNumber, pageSize)=>{
+    const response = await DocumentAPI.get("/requests/hr/get_all", {
+        params : {
+            pageNumber : pageNumber,
+            pageSize : pageSize
+        }
+    });
     return response.data;
 }
 

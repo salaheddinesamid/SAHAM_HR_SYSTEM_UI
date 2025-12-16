@@ -9,7 +9,6 @@ export const LeaveRequestHistoryTable = ({
   currentPage,
   setCurrentPage,
   currentSize,
-  totalPages,
   totalElements,
   handleChangeRowsPerPage,
 }) => {

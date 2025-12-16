@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
-import { Button, CircularProgress, Paper, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { Button, CircularProgress, Paper, Table, TableBody, TableCell, TableHead, TablePagination, TableRow } from "@mui/material";
 import { DocumentRequestApprovalDialog } from "./dialogs/DocumentRequestApprovalDialog";
 import { Check } from "lucide-react";
 import { getAllPendingRequests } from "../../services/DocumentService";
+import { LocalDateTimeMapper } from "../../utils/LocalDateTimeMapper";
 
 export const EmployeeDocumentRequestHistory = ()=>{
 
@@ -10,6 +11,11 @@ export const EmployeeDocumentRequestHistory = ()=>{
     const [requests,setRequests] = useState([]);
     const [requestApprovalDialogOpen,setRequestApprovalDialogOpen] = useState(false);
     const [selectedRequest,setSelectedRequest] = useState(requests[1]);
+
+    // Table pagination
+    const [currentPageNumber, setCurrentPageNumber] = useState(0);
+    const [pageSize, setPageSize] = useState(1);
+    const [totalElements, setTotalElements] = useState(0);
 
     const handleOpenApprovalDialog = (request)=>{
         setSelectedRequest(request);
@@ -20,13 +26,23 @@ export const EmployeeDocumentRequestHistory = ()=>{
         setSelectedRequest(null);
         setRequestApprovalDialogOpen(false);
     }
-    
 
-    const fetchAllRequests = async()=>{
+    const handleChangeRowsPerPage = (event)=>{
+        setPageSize(parseInt(event.target.value, 10));
+        setCurrentPageNumber(0);
+    }
+
+    /**
+     * 
+     * @param {*} page 
+     * @param {*} size 
+     */
+    const fetchAllRequests = async(page, size)=>{
         try{
             setLoading(true);
-            const res = await getAllPendingRequests();
-            setRequests(res);
+            const res = await getAllPendingRequests(currentPageNumber, pageSize);
+            setRequests(res?.content);
+            setTotalElements(res?.totalElements);
         }catch(err){
             console.log(err);
         }finally{
@@ -35,8 +51,8 @@ export const EmployeeDocumentRequestHistory = ()=>{
     };
 
     useEffect(()=>{
-        fetchAllRequests();
-    },[])
+        fetchAllRequests(currentPageNumber, pageSize);
+    },[currentPageNumber, pageSize])
 
     return(
         <div className="row">
@@ -49,15 +65,15 @@ export const EmployeeDocumentRequestHistory = ()=>{
             {!loading && requests.length !== 0 && (
                 <Table>
                     <TableHead>
-                        <TableCell><b>Date</b></TableCell>
-                        <TableCell><b>Nom et Prenom</b></TableCell>
+                        <TableCell><b>Date de demande</b></TableCell>
+                        <TableCell><b>Demandé par</b></TableCell>
                         <TableCell><b>Les documents demandee</b></TableCell>
                         <TableCell><b>Actions</b></TableCell>
                     </TableHead>
                     <TableBody>
                         {requests.map((r)=>(
                             <TableRow key={r.id}>
-                                <TableCell>{r.requestDate}</TableCell>
+                                <TableCell>{LocalDateTimeMapper(r?.requestDate)}</TableCell>
                                 <TableCell>{r.requestedBy}</TableCell>
                                 <TableCell>{r.documents}</TableCell>
                                 <TableCell>
@@ -73,8 +89,20 @@ export const EmployeeDocumentRequestHistory = ()=>{
                             </TableRow>
                         ))}
                     </TableBody>
-                    <DocumentRequestApprovalDialog open={requestApprovalDialogOpen} onClose={handleCloseApprovalDialog} request={selectedRequest} onSuccess={fetchAllRequests}/>
+                    <DocumentRequestApprovalDialog 
+                    open={requestApprovalDialogOpen} 
+                    onClose={handleCloseApprovalDialog} 
+                    request={selectedRequest} onSuccess={fetchAllRequests}/>
+                    <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component="div"
+                    count={totalElements} // when using backend pagination
+                    rowsPerPage={pageSize}
+                    page={currentPageNumber}
+                    onPageChange={(e, newPage) => setCurrentPageNumber(newPage)}
+                    onRowsPerPageChange={handleChangeRowsPerPage}/>
                 </Table>
+                
             )}
         </div>
         

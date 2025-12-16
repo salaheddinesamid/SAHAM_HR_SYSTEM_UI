@@ -66,7 +66,7 @@ export const AbsenceRequestForm = ({user})=>{
                 requestData.append("medicalCertificate", medicalCertificate);
             }
             console.log(requestDto);
-            const res = await applyAbsence(token, email, requestData);
+            const res = await applyAbsence(email, requestData);
             if(res === 200){
                 setSubmitSuccess(true);
                 cleanRequest();

@@ -5,27 +5,17 @@ import {
   DialogContent,
   DialogTitle,
   Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  IconButton,
   Toolbar,
   Box,
   TextField,
-  InputAdornment,
-  Typography,
+  InputAdornment
 } from "@mui/material";
 import { useEffect, useState, useCallback } from "react";
-import { Check, X } from "lucide-react";
-import { Download, Search } from "@mui/icons-material";
 import { saveAs } from "file-saver";
-import { leaveStatusMapper, LeaveTypesMapper } from "../utils/LeaveUtils";
 import { downloadFile } from "../../../services/FileStorageService";
 import { approveSubordinatesLeave, getSubordinatesLeaveRequests, rejectSubordinatesLeave } from "../../../services/LeaveService";
-import { LocalDateTimeMapper } from "../../../utils/LocalDateTimeMapper";
 import { EmployeesLeaveRequestsTable } from "./EmployeesLeaveRequestsTable";
+import { Search } from "lucide-react";
 
 export const SubordinatesLeaveRequestsHistory = ({ manager }) => {
     const [loading, setLoading] = useState(false);
