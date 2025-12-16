@@ -28,7 +28,7 @@ export const LeaveHistory = ({ user }) => {
     { id: 2, name: "APPROVED", label: "Approuvée" },
     { id: 3, name: "REJECTED", label: "Rejetée" },
     { id: 4, name: "IN_PROCESS", label: "En attente" },
-    { id: 5, name: "CANCELLED", label: "Annulée" },
+    { id: 5, name: "CANCELED", label: "Annulée" },
   ];
 
   const fetchData = async (page = 0, size = 5) => {

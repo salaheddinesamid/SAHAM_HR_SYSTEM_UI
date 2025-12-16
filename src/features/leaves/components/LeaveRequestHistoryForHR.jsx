@@ -99,7 +99,7 @@ export const LeaveRequestHistoryForHR = () => {
     { id: 2, name: "APPROVED", label: "Approuvée" },
     { id: 3, name: "REJECTED", label: "Rejetée" },
     { id: 4, name: "IN_PROCESS", label: "En attente" },
-    { id: 5, name: "CANCELLED", label: "Annulée" }, // FIX: Correct spelling
+    { id: 5, name: "CANCELED", label: "Annulée" }, // FIX: Correct spelling
   ];
 
   useEffect(() => {
