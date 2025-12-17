@@ -33,12 +33,10 @@ export const ExpenseFormDialog = ({ open, onClose, user , onSuccess}) => {
     expenseDate: "",
     designation: "",
     amount: "",
-    invoiced : null
+    invoiced : false
   });
 
   const [selectedLocation,setSelectedLocation] = useState("INSIDE_MOROCCO");
-  const [selectedCurrency,setSelectedCurrency] = useState("MAD");
-  const [exchangeRate,setExchangeRate] = useState(0);
 
   const locations = [
     {id : 1, label : 'Au Maroc', value : 'INSIDE_MOROCCO'},
@@ -134,6 +132,7 @@ export const ExpenseFormDialog = ({ open, onClose, user , onSuccess}) => {
     try {
       setLoading(true);
       console.log(expensesDetail);
+      
       const res = await newExpense(email,expensesDetail)
       
       alert("Fiche de dépense enregistrée avec succès !");
