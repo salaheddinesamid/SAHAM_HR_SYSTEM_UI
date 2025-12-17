@@ -134,11 +134,13 @@ export const ExpenseFormDialog = ({ open, onClose, user , onSuccess}) => {
       console.log(expensesDetail);
       
       const res = await newExpense(email,expensesDetail)
+      if(res === 200){
+        alert("Fiche de dépense enregistrée avec succès !");
+        handleClearRequest(); // clear the request before closing
+        onClose();
+        onSuccess();
+      }
       
-      alert("Fiche de dépense enregistrée avec succès !");
-      handleClearRequest(); // clear the request before closing
-      onClose();
-      onSuccess();
     } catch (err) {
       console.error(err);
       alert("Erreur lors de la soumission !");
