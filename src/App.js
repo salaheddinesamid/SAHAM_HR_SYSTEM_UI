@@ -8,6 +8,8 @@ import { useEffect } from 'react';
 import { ServiceProvider, ViewProvider } from './context/ViewNavigatorContext';
 import { ProtectedRoute } from './ProtectedRoute';
 import { AltLogin } from './routes/AlternativeLogin';
+import { AdminDashboard } from './routes/AdminDashboard';
+import { AdminServiceProvider } from './context/AdminViewNavigatorContext';
 
 function App() {
 
@@ -46,6 +48,11 @@ function App() {
           </ProtectedRoute>
         </ServiceProvider>
         }/>
+      <Route path='/administration' element={
+        <AdminServiceProvider>
+          <AdminDashboard/>
+        </AdminServiceProvider>
+      }/>
       <Route path='/' element={<Login/>}/>
       <Route path='/2' element={<AltLogin/>}/>
      </Routes>
