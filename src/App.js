@@ -10,6 +10,7 @@ import { ProtectedRoute } from './ProtectedRoute';
 import { AltLogin } from './routes/AlternativeLogin';
 import { AdminDashboard } from './routes/AdminDashboard';
 import { AdminServiceProvider } from './context/AdminViewNavigatorContext';
+import { AdminProtectedRoute } from './AdminProtectedRoute';
 
 function App() {
 
@@ -50,7 +51,9 @@ function App() {
         }/>
       <Route path='/administration' element={
         <AdminServiceProvider>
-          <AdminDashboard/>
+          <AdminProtectedRoute>
+            <AdminDashboard/>
+          </AdminProtectedRoute>
         </AdminServiceProvider>
       }/>
       <Route path='/' element={<Login/>}/>
