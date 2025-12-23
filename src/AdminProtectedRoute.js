@@ -23,7 +23,7 @@ export const AdminProtectedRoute = ({children})=>{
                 }
             })
         }
-        if(!isAdmin(userRoles)){
+        if(isAdmin(userRoles)){
             window.alert("You are not authorized")
             navigate("/")
         }

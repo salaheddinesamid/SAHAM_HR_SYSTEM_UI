@@ -108,7 +108,8 @@ export const NewEmployeeDialog = ({ open, onClose, onSuccess }) => {
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      await addEmployee(requestDto);
+      //await addEmployee(requestDto);
+      console.log(requestDto);
       onSuccess?.();
       onClose();
     } finally {
