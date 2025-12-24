@@ -14,8 +14,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { addEmployee, verifyManager } from "../../../services/AdminService";
 import { CheckCircle, XCircle } from "lucide-react";
+import { verifyManager } from "../../../services/EmployeeService";
 
 export const NewEmployeeDialog = ({ open, onClose, onSuccess }) => {
   const [loading, setLoading] = useState(false);

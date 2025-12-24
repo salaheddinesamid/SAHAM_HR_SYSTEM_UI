@@ -14,11 +14,11 @@ import {
   IconButton,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { getAllEmployees } from "../../../services/AdminService";
 import { NewEmployeeDialog } from "../dialogs/NewEmployeeDialog";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AddIcon from "@mui/icons-material/Add";
+import { getAllEmployees } from "../../../services/EmployeeService";
 
 export const EmployeeManagementTable = () => {
   const [employees, setEmployees] = useState([]);

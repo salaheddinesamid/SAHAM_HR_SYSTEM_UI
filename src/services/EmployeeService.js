@@ -22,3 +22,42 @@ export const getSubordinates = async(email)=>{
     });
     return response.data;
 }
+
+/**
+ * 
+ * @param {*} page 
+ * @param {*} size 
+ * @returns 
+ */
+export const getAllEmployees = async(page, size)=>{
+    const response = await EmployeeApi.get("get_all",{
+        params : {
+            pageNumber : page,
+            pageSize : size
+        }
+    });
+    return response.data;
+}
+/**
+ * 
+ * @param {*} request 
+ * @returns 
+ */
+export const addEmployee = async(request)=>{
+    const res = await EmployeeApi.post("/new", request);
+    return res.status;
+}
+/**
+ * 
+ * @param {*} managerName 
+ * @returns 
+ */
+export const verifyManager = async(managerName)=>{
+    const response = await EmployeeApi.get("managers/verify", {
+        params : {
+            fullName : managerName
+        }
+    });
+
+    return response.data;
+}
