@@ -16,7 +16,7 @@ import {
 import { useEffect, useState } from "react";
 import { NewEmployeeDialog } from "../dialogs/NewEmployeeDialog";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import LogoutIcon from '@mui/icons-material/Logout';
 import AddIcon from "@mui/icons-material/Add";
 import { getAllEmployees } from "../../../services/EmployeeService";
 
@@ -102,9 +102,9 @@ export const EmployeeManagementTable = () => {
                         <EditIcon />
                       </IconButton>
                     </Tooltip>
-                    <Tooltip title="Supprimer">
+                    <Tooltip title="Off-boarding">
                       <IconButton color="error">
-                        <DeleteForeverIcon />
+                        <LogoutIcon />
                       </IconButton>
                     </Tooltip>
                   </TableCell>
