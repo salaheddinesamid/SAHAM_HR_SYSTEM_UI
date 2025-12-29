@@ -29,6 +29,19 @@ export const EmployeeManagementTable = () => {
   const [totalElements, setTotalElements] = useState(0);
 
   const [openDialog, setOpenDialog] = useState(false);
+  // Update employee dialog
+  const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+
+  const handleOpenUpdateDialog = (employee)=>{
+    setSelectedEmployee(employee);
+    setOpenDialog(true);
+  }
+
+  const handleCloseUpdateDialog = ()=>{
+    setSelectedEmployee(null);
+    setOpenUpdateDialog(false);
+  }
 
   const fetchEmployees = async () => {
     try {

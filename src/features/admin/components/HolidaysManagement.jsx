@@ -53,9 +53,10 @@ export const HolidaysManagement = ()=>{
                 <TableHead>
                     <TableRow>
                         <TableCell></TableCell>
-                        <TableCell>Date</TableCell>
-                        <TableCell>Nombre des jours</TableCell>
-                        <TableCell>Actions</TableCell>
+                        <TableCell><b>Date</b></TableCell>
+                        <TableCell><b>Nombre des jours</b></TableCell>
+                        <TableCell><b>Dernier changement</b></TableCell>
+                        <TableCell><b>Actions</b></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -64,6 +65,7 @@ export const HolidaysManagement = ()=>{
                             <TableCell>{h?.name}</TableCell>
                             <TableCell>{LocalDateTimeMapper(h?.date)}</TableCell>
                             <TableCell>{h?.leaveDays}</TableCell>
+                            <TableCell>{LocalDateTimeMapper(h?.lastUpdate)}</TableCell>
                             <TableCell>
                                 <Tooltip title="Modifier">
                                     <IconButton onClick={()=> handleOpenEditHoliday(h)}>

@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { CheckCircle, XCircle } from "lucide-react";
-import { verifyManager } from "../../../services/EmployeeService";
+import { addEmployee, verifyManager } from "../../../services/EmployeeService";
 
 export const NewEmployeeDialog = ({ open, onClose, onSuccess }) => {
   const [loading, setLoading] = useState(false);
@@ -108,7 +108,7 @@ export const NewEmployeeDialog = ({ open, onClose, onSuccess }) => {
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      //await addEmployee(requestDto);
+      const res = await addEmployee(requestDto);
       console.log(requestDto);
       onSuccess?.();
       onClose();
