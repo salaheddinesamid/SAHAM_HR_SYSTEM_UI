@@ -1,6 +1,5 @@
 import {
   Dialog,
-  DialogTitle,
   DialogContent,
   DialogActions,
   TextField,
@@ -65,10 +64,10 @@ export const NewEmployeeDialog = ({ open, onClose, onSuccess }) => {
 
   const handleRoleChange = (roleName) => {
     setRequestDto((prev) => ({
-      ...prev,
-      roles: prev.roles.includes(roleName)
-        ? prev.roles.filter((r) => r !== roleName)
-        : [...prev.roles, roleName],
+      ...prev, // keep the previous objects
+      roles: prev.roles.includes(roleName) // update the roles
+        ? prev.roles.filter((r) => r !== roleName) // if the role already included, remove it
+        : [...prev.roles, roleName], // otherwise, the new role will be pushed
     }));
   };
 

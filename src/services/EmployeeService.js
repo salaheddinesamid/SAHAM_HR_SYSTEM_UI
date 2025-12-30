@@ -52,6 +52,17 @@ export const addEmployee = async(request)=>{
  * @param {*} managerName 
  * @returns 
  */
+
+/**
+ * 
+ * @param {*} employeeId 
+ * @param {*} requestDto 
+ * @returns 
+ */
+export const updateEmployee = async(employeeId, requestDto)=>{
+    const response = await EmployeeApi.patch(`patch/${employeeId}`, requestDto);
+    return response;
+}
 export const verifyManager = async(managerName)=>{
     const response = await EmployeeApi.get("managers/verify", {
         params : {

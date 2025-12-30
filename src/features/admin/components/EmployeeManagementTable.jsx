@@ -19,6 +19,14 @@ import EditIcon from "@mui/icons-material/Edit";
 import LogoutIcon from '@mui/icons-material/Logout';
 import AddIcon from "@mui/icons-material/Add";
 import { getAllEmployees } from "../../../services/EmployeeService";
+import { EmployeeModificationDialog } from "../dialogs/EmployeeModificationDialog";
+
+const roles = [
+    { id: 1, name: "ADMIN", label: "Admin" },
+    { id: 2, name: "EMPLOYEE", label: "Collaborateur" },
+    { id: 3, name: "MANAGER", label: "Manager" },
+    { id: 4, name: "HR", label: "RH" },
+];
 
 export const EmployeeManagementTable = () => {
   const [employees, setEmployees] = useState([]);
@@ -35,7 +43,7 @@ export const EmployeeManagementTable = () => {
 
   const handleOpenUpdateDialog = (employee)=>{
     setSelectedEmployee(employee);
-    setOpenDialog(true);
+    setOpenUpdateDialog(true);
   }
 
   const handleCloseUpdateDialog = ()=>{
@@ -110,7 +118,7 @@ export const EmployeeManagementTable = () => {
                   <TableCell>{employee.entity}</TableCell>
                   <TableCell>{employee.email}</TableCell>
                   <TableCell align="right">
-                    <Tooltip title="Modifier">
+                    <Tooltip title="Modifier" onClick={()=> handleOpenUpdateDialog(employee)}>
                       <IconButton>
                         <EditIcon />
                       </IconButton>
@@ -146,6 +154,12 @@ export const EmployeeManagementTable = () => {
         onClose={() => setOpenDialog(false)}
         onSuccess={fetchEmployees}
       />
+      <EmployeeModificationDialog
+      open={openUpdateDialog} 
+      onClose={handleCloseUpdateDialog}
+      employee={selectedEmployee} 
+      roles={roles}
+      setEmployee={setSelectedEmployee}/>
     </Paper>
   );
 };
