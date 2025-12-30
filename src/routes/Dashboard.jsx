@@ -7,6 +7,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import { servicesConfig } from "../components/servicesConfig";
 import { useService } from "../context/ViewNavigatorContext";
 import { motion, AnimatePresence } from "framer-motion";
+import { ProfileManagement } from "../features/profile/ProfileManagement";
 
 export const Dashboard = () => {
   const [openServices, setOpenServices] = useState([]);
@@ -100,7 +101,16 @@ export const Dashboard = () => {
             <div className="notification">
               <NotificationsIcon />
             </div>
-            <UserProfile />
+            <div style={{
+              cursor : "pointer"
+            }} onClick={()=> selectService({
+                id: 7, 
+                name: "Profile", 
+                view: <ProfileManagement/>,
+                color: "#E0F7FA", // Light cyan
+              })}>
+              <UserProfile/>
+            </div>
           </div>
         </div>
 

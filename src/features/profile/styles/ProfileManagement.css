@@ -1,0 +1,16 @@
+.right-section{
+    width: 70%;
+}
+
+.left-section{
+    width: 20%;
+}
+.component-card{
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: white;
+}
+.component-card:active{
+    border: 1px solid black;
+}

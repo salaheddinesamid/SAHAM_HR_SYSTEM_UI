@@ -30,6 +30,7 @@ import RouteIcon from '@mui/icons-material/Route';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
+import { ProfileManagement } from "../features/profile/ProfileManagement";
 
 
 export const servicesConfig = [
@@ -103,5 +104,11 @@ export const servicesConfig = [
     subServices: [
       { id: 1, name: "Dashboard RH", icon: <ChartNoAxesCombined />, color: "#E0F7FA" },
     ],
+  },
+  {
+    id: 7, 
+    name: "Profile", 
+    view: <ProfileManagement/>,
+    color: "#E0F7FA", // Light cyan
   }
 ];
