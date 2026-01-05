@@ -83,7 +83,7 @@ export const rejectAbsence = async(token, refNumber)=>{
  * @returns 
  */
 export const approveAbsence = async(refNumber)=>{
-    const response = await AbsenceAPI.put("/requests/approve",null,{
+    const response = await AbsenceAPI.put("/requests/hr/approve",null,{
         params : {
             refNumber : refNumber
         }
