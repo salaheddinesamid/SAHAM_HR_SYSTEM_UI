@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./styles/WallCalendar.css"
+import { AbsenceTypesMapper, LeaveTypesMapper } from "./utils/LeaveUtils";
 // Generate days between two dates
 const generateDays = (start, end) => {
   const dates = [];
@@ -26,6 +27,15 @@ const WallCalendar = ({manager, subordinates}) => {
     })
   };
 
+  const isAbsenceDay = (date, absences)=>{
+    return absences?.find((absence)=>{
+      const from = new Date(absence.startDate);
+      const to = new Date(absence.endDate);
+
+      return date >= from && date <= to;
+    })
+  }
+
   const leaveMapper = (leave)=>{
     switch(leave?.leaveType){
         case "ANNUAL":
@@ -34,8 +44,17 @@ const WallCalendar = ({manager, subordinates}) => {
             return {type : "EXCEPTIONAL", bgColor : "#ff6b6b"}
     }
   }
+  const absenceMapper = (absence)=>{
+    switch(absence?.absenceType){
+        case "SICKNESS":
+            return {type : "Absence Maladie", bgColor : "#FFC75F"}
+        case "REMOTE_WORK":
+            return {type : "Télétravail", bgColor : "#6fc0ec"}
+    }
+  }
   useEffect(() => {
     setDays(generateDays(startDate, endDate));
+    console.log(subordinates);
   }, [startDate, endDate]);
 
   return (
@@ -69,17 +88,19 @@ const WallCalendar = ({manager, subordinates}) => {
             <div className="user-column">{user.fullName}</div>
             {days.map((date) => {
               const leave = isLeaveDay(date,user.leaves);
+              const absence = isAbsenceDay(date, user.absences);
               const mapper = leaveMapper(leave);
+              const absMapper = absenceMapper(absence);
               return (
                 <div
                   key={date}
                   className={`day-cell`}
                   style={{
-                    backgroundColor : mapper?.bgColor
+                    backgroundColor : leave ? mapper?.bgColor : absence ? absMapper?.bgColor : ""
                   }}
-                  title={leave ? `${leave.leaveType} du ${leave.fromDate} au ${leave.toDate}` : ""}
+                  title={leave ? `${leave.leaveType} du ${leave.fromDate} au ${leave.toDate}` : absence ? `${absence.absenceType} du ${absence.startDate} au ${absence.endDate}` : "c"}
                 >
-                  {leave ? leave.leaveType[0] : ""}
+                  {leave ? leave.leaveType[0] : absence ? absence.absenceType[0] : ""}
                 </div>
               );
             })}
