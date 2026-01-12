@@ -1,9 +1,4 @@
 import { KpiCard } from "./KpiCard";
-import {
-  kpiData,
-  requestsByType,
-  requestsByStatus
-} from "../mockData";
 import { Box } from "@mui/material";
 import DashedLineChart from "./LineChart";
 import BiaxialBarChart from "./BarChart";
@@ -31,7 +26,7 @@ export const Overview = () => {
                 <PieChartWithPaddingAngle/>
             </div>
             <div className="col">
-                
+
             </div>
         </div>
     </div>
