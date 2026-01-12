@@ -1,0 +1,26 @@
+.analytics-container {
+  padding: 16px;
+}
+
+.analytics-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-radius: 12px;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.header-tabs .MuiTab-root {
+  text-transform: none;
+  font-weight: 500;
+  min-width: 120px;
+}
+
+.analytics-content {
+  margin-top: 24px;
+}
