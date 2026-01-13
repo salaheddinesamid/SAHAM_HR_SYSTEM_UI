@@ -25,7 +25,6 @@ export const EmployeeModificationDialog = ({employee, setEmployee, open, onClose
     }
     
     const handleRoleChange = (roleName)=>{
-
         const updatedRoles = employee?.roles.includes(roleName) ? employee?.roles.filter((r)=> r!== roleName) : [...employee.roles, roleName];
         setEmployee((prev)=>(
             {...prev, roles : updatedRoles}
@@ -66,7 +65,6 @@ export const EmployeeModificationDialog = ({employee, setEmployee, open, onClose
             setManagerExists(null);
             return;
         }
-
         const timeOut = setTimeout(async ()=>{
             try{
                 setSearchLoading(true);

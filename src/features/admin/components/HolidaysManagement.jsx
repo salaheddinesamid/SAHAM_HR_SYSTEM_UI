@@ -53,7 +53,8 @@ export const HolidaysManagement = ()=>{
                 <TableHead>
                     <TableRow>
                         <TableCell></TableCell>
-                        <TableCell><b>Date</b></TableCell>
+                        <TableCell><b>Date de début</b></TableCell>
+                        <TableCell><b>Date de fin</b></TableCell>
                         <TableCell><b>Nombre des jours</b></TableCell>
                         <TableCell><b>Dernier changement</b></TableCell>
                         <TableCell><b>Actions</b></TableCell>
@@ -63,7 +64,8 @@ export const HolidaysManagement = ()=>{
                     {holidays.map((h)=>(
                         <TableRow key={h?.id}>
                             <TableCell>{h?.name}</TableCell>
-                            <TableCell>{LocalDateTimeMapper(h?.date)}</TableCell>
+                            <TableCell>{LocalDateTimeMapper(h?.startDate)}</TableCell>
+                            <TableCell>{LocalDateTimeMapper(h?.endDate)}</TableCell>
                             <TableCell>{h?.leaveDays}</TableCell>
                             <TableCell>{LocalDateTimeMapper(h?.lastUpdate)}</TableCell>
                             <TableCell>

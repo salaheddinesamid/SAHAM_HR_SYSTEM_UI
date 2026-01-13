@@ -84,6 +84,7 @@ export const LeaveRequestForm = ({user})=>{
 
     const calculateTotalLeaveDays = async(from, to) =>{
         try{
+            setTotalDaysLoading(true);
             const res = await getTotalLeaveDays(from, to);
             setTotalDays(res);
         }catch(err){

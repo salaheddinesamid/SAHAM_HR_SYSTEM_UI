@@ -3,10 +3,10 @@ import { useEffect, useState } from "react"
 import { updateHoliday } from "../../../services/HolidayService";
 
 export const HolidayUpdateDialog = ({holiday, open, onClose, onSuccess})=>{
-
     const [requestDto, setRequestDto] = useState({
         name : "",
-        date : "",
+        startDate : "",
+        endDate : "",
         leaveDays : 0
     });
     const [loading, setLoading] = useState(false);
@@ -69,7 +69,8 @@ export const HolidayUpdateDialog = ({holiday, open, onClose, onSuccess})=>{
             <DialogContent>
                 <Box display="grid" gap={2} mt={1}>
                     <TextField label="Nom de jour ferié" type="text" value={requestDto.name} onChange={handleChange}/>
-                    <TextField label="Date" type="date" InputLabelProps={{ shrink: true }} name="date" value={requestDto.date} onChange={handleChange}/>
+                    <TextField label="Date de début" type="date" InputLabelProps={{ shrink: true }} name="startDate" value={requestDto.startDate} onChange={handleChange}/>
+                    <TextField label="Date de fin" type="date" InputLabelProps={{ shrink: true }} name="endDate" value={requestDto.endDate} onChange={handleChange}/>
                     <TextField label="Nombre des jours" type="number" value={requestDto.leaveDays} name="leaveDays" onChange={handleChange}/>
                 </Box>
             </DialogContent>
