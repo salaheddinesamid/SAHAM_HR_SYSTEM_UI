@@ -157,10 +157,25 @@ export const getAllRequestsForHr = async(page, size)=>{
  * @param {*} email 
  * @returns 
  */
-export const getAllMyLeaves = async(email)=>{
+export const getAllMyLeaves = async(email)=> {
     const response = await LeaveAPI.get("/employee-leaves/get_all", {
         params : {
             email : email
+        }
+    });
+    return response.data;
+}
+/**
+ * 
+ * @param {*} from 
+ * @param {*} to 
+ * @returns 
+ */
+export const getTotalLeaveDays = async(from, to)=> {
+    const response = await LeaveAPI.get("calculate-total-leave-days", {
+        params : {
+            from: from,
+            to : to
         }
     });
     return response.data;

@@ -1,7 +1,7 @@
 import { Alert, CircularProgress, Snackbar, TextField } from "@mui/material";
 import { CheckIcon, TriangleAlert } from "lucide-react";
 import { useEffect, useState } from "react"
-import { applyLeave } from "../../../services/LeaveService";
+import { applyLeave, getTotalLeaveDays } from "../../../services/LeaveService";
 import { dateFormatter, totalLeaveDaysCalculator } from "../utils/LeaveUtils";
 
 export const LeaveRequestForm = ({user})=>{
@@ -17,10 +17,7 @@ export const LeaveRequestForm = ({user})=>{
     const [totalDays, setTotalDays] = useState(0);
     const [selectedType, setSelectedType] = useState("");
     const [requestLoading, setRequestLoading] = useState(false);
-    const [selectedEntity, setSelectedEntity] = useState("");
-    const [selectedFile,setSelectedFile] = useState(null)
-    
-    const [loading,setLoading] = useState(false);
+    const [totalDaysLoading, setTotalDaysLoading] = useState(false);
     const [submitSuccess,setSubmitSuccess] = useState(false);
     const [error,setError] = useState("");
 
@@ -47,7 +44,7 @@ export const LeaveRequestForm = ({user})=>{
             typeDetails : "",
             comment: "",
         })
-    }
+    };
     
     
     const handleSubmit = async () => {
@@ -57,13 +54,12 @@ export const LeaveRequestForm = ({user})=>{
             const formData = new FormData();
             const payload = {
               ...requestDto,
-              entity: selectedEntity,
               totalDays,
             };
             
             formData.append("requestDto", new Blob([JSON.stringify(payload)], { type: "application/json" }));
     
-            formData.append("file",selectedFile);
+            //formData.append("file",selectedFile);
             console.log(requestDto);
             await applyLeave(email, formData);
             // if success, display a snackbar:
@@ -86,12 +82,22 @@ export const LeaveRequestForm = ({user})=>{
         }
     };
 
+    const calculateTotalLeaveDays = async(from, to) =>{
+        try{
+            const res = await getTotalLeaveDays(from, to);
+            setTotalDays(res);
+        }catch(err){
+            console.log(err);
+        }finally{
+            setTotalDaysLoading(false);
+        }
+    }
+
     useEffect(() => {
         if (from && to) {
             const fromDate = new Date(from);
             const toDate = new Date(to);
-            const totalDays = totalLeaveDaysCalculator(fromDate, toDate);
-            setTotalDays(totalDays > 0 ? totalDays : 0);
+            //calculateTotalLeaveDays(dateFormatter(fromDate), dateFormatter(toDate));
             setRequestDto((prev) => ({
                 ...prev,
                 startDate: dateFormatter(fromDate),
@@ -99,6 +105,15 @@ export const LeaveRequestForm = ({user})=>{
             }));
         }
     }, [from, to]);
+
+    // handle date change and fetch total leave days:
+    useEffect(()=>{
+        if(from && to){
+            const startDate = dateFormatter(from);
+            const endDate = dateFormatter(to);
+            calculateTotalLeaveDays(startDate, endDate);
+        }
+    },[from, to]);
 
     return (
     <div style={{ padding: 20, position: "relative" }}>
@@ -187,7 +202,7 @@ export const LeaveRequestForm = ({user})=>{
         <div style={{ display: "flex", gap: "10px", margin: "10px 0" }}>
           <div className="col d-flex align-items-center">
             <p>
-              Nombre de jours : <b>{totalDays}</b>
+              Nombre de jours : <b>{totalDaysLoading ? <CircularProgress/> : totalDays}</b>
             </p>
           </div>
         </div>
