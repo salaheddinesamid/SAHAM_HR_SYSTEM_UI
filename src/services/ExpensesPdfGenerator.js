@@ -38,7 +38,6 @@ export const ExpensePdfGenerator = (expense) => {
       doc.text(`Date de Motif: ${expense.date || "—"}`, 15, 52);
       doc.text(`Créé le: ${new Date(expense.createdAt).toLocaleString()}`, 15, 59);
       doc.text(`Devise: ${expense.currency}`, 15, 66);
-      doc.text(`Taux d'échange: ${expense.exchangeRate}`, 15, 73);
       doc.text(`Motif: ${expense.motif || "—"}`, 15, 80);
 
       // ===== Expense Items Table =====

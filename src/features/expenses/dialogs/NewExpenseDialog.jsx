@@ -23,7 +23,6 @@ export const ExpenseFormDialog = ({ open, onClose, user , onSuccess}) => {
   const [expensesDetail, setExpenseDetail] = useState({
     motif: "",
     currency : "MAD",
-    exchangeRate : 0,
     location : "INSIDE_MOROCCO",
     expenseItems: [],
     issueDate : ""
@@ -237,16 +236,6 @@ export const ExpenseFormDialog = ({ open, onClose, user , onSuccess}) => {
                   </option>
                 ))}
                 </select>
-              </div>
-              <div>
-                <TextField
-                label={`Taux d'echange`}
-                name="exchangeRate"
-                type="number"
-                value={expensesDetail.exchangeRate}
-                onChange={handleChange}
-                sx={{ flex: 1 }}
-                />
               </div>
             </div>
           )}
