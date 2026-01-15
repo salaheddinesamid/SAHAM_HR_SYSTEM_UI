@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react"
 import { getAllHolidays } from "../../../services/HolidayService";
-import { CircularProgress, IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow, Tooltip } from "@mui/material";
+import { Chip, CircularProgress, IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow, Tooltip } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { LocalDateTimeMapper } from "../../../utils/LocalDateTimeMapper";
 import { HolidayUpdateDialog } from "../dialogs/HolidayUpdateDialog";
+import { mapHolidayStatus } from "../utils/HolidayStatusMapper";
 
 export const HolidaysManagement = ()=>{
 
     const [holidays, setHolidays] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [totalCount, setTotalCount] = useState(0);
     const [selectedHoliday, setSelectedHoliday] = useState(null);
     const [holidayUpdateDialogOpen, setHolidayUpdateDialogOpen] = useState(false);
 
@@ -20,7 +22,8 @@ export const HolidaysManagement = ()=>{
         try {
             setLoading(true);
             const response = await getAllHolidays();
-            setHolidays(response);
+            setHolidays(response?.holidays);
+            setTotalCount(response?.totalCount);
         }catch (err){
             console.log(err);
         }finally{
@@ -55,19 +58,25 @@ export const HolidaysManagement = ()=>{
                         <TableCell></TableCell>
                         <TableCell><b>Date de début</b></TableCell>
                         <TableCell><b>Date de fin</b></TableCell>
-                        <TableCell><b>Nombre des jours</b></TableCell>
+                        <TableCell><b>Nombre de jours</b></TableCell>
                         <TableCell><b>Dernier changement</b></TableCell>
+                        <TableCell><b>Status</b></TableCell>
                         <TableCell><b>Actions</b></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {holidays.map((h)=>(
+                    {holidays.map((h)=> {
+                        const {label, color} = mapHolidayStatus(h?.status);
+                        return(
                         <TableRow key={h?.id}>
                             <TableCell>{h?.name}</TableCell>
                             <TableCell>{LocalDateTimeMapper(h?.startDate)}</TableCell>
                             <TableCell>{LocalDateTimeMapper(h?.endDate)}</TableCell>
                             <TableCell>{h?.leaveDays}</TableCell>
                             <TableCell>{LocalDateTimeMapper(h?.lastUpdate)}</TableCell>
+                            <TableCell>
+                                <span className={`badge ${color}`}>{label}</span>
+                            </TableCell>
                             <TableCell>
                                 <Tooltip title="Modifier">
                                     <IconButton onClick={()=> handleOpenEditHoliday(h)}>
@@ -81,8 +90,14 @@ export const HolidaysManagement = ()=>{
                                 </Tooltip>
                             </TableCell>
                         </TableRow>
-                    ))}
+                        )
+                    })}
                 </TableBody>
+                <div className="col-xl-12 d-flex" style={{
+                    justifyContent : "end"
+                }}>
+                    <p>Total: {totalCount} jours</p>
+                </div>
               </Table>
             </>
         )}
