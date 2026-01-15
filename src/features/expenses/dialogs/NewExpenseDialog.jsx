@@ -54,13 +54,6 @@ export const ExpenseFormDialog = ({ open, onClose, user , onSuccess}) => {
     { id: 9, label: 'Riyal Saoudien (SAR)' },
     { id: 10, label: 'Dinar Koweïtien (KWD)' }
   ];
-
-  const invoicedChoices = [
-    {id: 1, label : 'Oui', value : true},
-    {id : 2, label : 'Non', value : false}
-  ]
-
-
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -73,6 +66,13 @@ export const ExpenseFormDialog = ({ open, onClose, user , onSuccess}) => {
 
   const handleItemChange = (e) => {
     const { name, value } = e.target;
+    if (name === "invoiced") {
+      setDetail((prev) => ({
+        ...prev,
+        invoiced: JSON.parse(value),
+      }));
+      return;
+    }
     setDetail((prev) => ({
       ...prev,
       [name]: value,
@@ -284,11 +284,8 @@ export const ExpenseFormDialog = ({ open, onClose, user , onSuccess}) => {
                 onChange={handleItemChange}
                 >
                   <option value="">Facture?</option>
-                  {invoicedChoices.map((choice, i) => (
-                    <option key={i} value={choice.value}>
-                      {choice.label}
-                  </option>
-                ))}
+                  <option value={true}>Oui</option>
+                  <option value={false}>Non</option>
                 </select>
             <IconButton color="primary" onClick={handleAddItem}>
               <AddCircle />

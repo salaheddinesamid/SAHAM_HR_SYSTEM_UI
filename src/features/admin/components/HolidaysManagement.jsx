@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { getAllHolidays } from "../../../services/HolidayService";
-import { Chip, CircularProgress, IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow, Tooltip } from "@mui/material";
+import {  CircularProgress, IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow, Tooltip } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { LocalDateTimeMapper } from "../../../utils/LocalDateTimeMapper";
