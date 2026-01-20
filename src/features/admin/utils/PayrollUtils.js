@@ -19,6 +19,7 @@ export const mapPayrollStatus = (status)=>{
  * @returns 
  */
 export const payrollDateParser = (date)=>{
-    return date.split("-");
+    const [year, month, day] = date.split("-");
+    return {year, month, day};
     //return {year : splitDate[0], month : splitDate[1], day : splitDate[2]};
 }
