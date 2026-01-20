@@ -26,7 +26,7 @@ export const LeaveRequestForm = ({user})=>{
         { id: 2, name: "Exceptionnel", value : "EXCEPTIONAL" ,subTypes: [
           {id: 1, name: "Mariage du salarié "},
           {id: 2, name: "Mariage d’un enfant du salarié "},
-          {id: 3, name: "Naissance "},
+          {id: 3, name: "Naissance (Paternité)"},
           {id: 4, name: "Circoncision de l’enfant "},
           {id: 5, name: "Déménagement "},
           {id: 6, name: "Opération chirurgicale grave du conjoint ou d’un enfant "},

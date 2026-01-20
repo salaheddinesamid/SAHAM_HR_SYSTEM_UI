@@ -29,7 +29,7 @@ export const PayrollManagement = ()=>{
                         <TableCell>Année</TableCell>
                         <TableCell>Date de l'execution</TableCell>
                         <TableCell>Nombre de pages traités</TableCell>
-                        <TableCell>Nombre d'operations succeed</TableCell>
+                        <TableCell>Nombre d'operations réussi</TableCell>
                         <TableCell>Nombre d'operations échoué</TableCell>
                         <TableCell>Status</TableCell>
                     </TableRow>

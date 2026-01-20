@@ -25,7 +25,8 @@ export const AbsenceRequestForm = ({user})=>{
 
     const absenceTypes = [
         {id : 1, name : "Télétravail", value : "REMOTE_WORK"},
-        {id : 2, name : "Maladie", value : "SICKNESS"}
+        {id : 2, name : "Maladie", value : "SICKNESS"},
+        { id : 3, name : "Maternité", value : "MATERNITY"}
     ]
 
     // clean the request after success submission
