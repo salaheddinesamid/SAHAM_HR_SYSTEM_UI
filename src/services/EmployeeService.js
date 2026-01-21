@@ -60,7 +60,7 @@ export const addEmployee = async(request)=>{
  * @returns 
  */
 export const updateEmployee = async(employeeId, requestDto)=>{
-    const response = await EmployeeApi.patch(`patch/${employeeId}`, requestDto);
+    const response = await EmployeeApi.patch(`update/${employeeId}`, requestDto);
     return response;
 }
 export const verifyManager = async(managerName)=>{

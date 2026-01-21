@@ -111,7 +111,7 @@ export const EmployeeManagementTable = () => {
 
             <TableBody>
               {employees.map((employee) => (
-                <TableRow key={employee.id} hover>
+                <TableRow key={employee.employeeId} hover>
                   <TableCell>{employee.matriculation}</TableCell>
                   <TableCell>{employee.fullName}</TableCell>
                   <TableCell>{employee.occupation}</TableCell>
@@ -159,6 +159,7 @@ export const EmployeeManagementTable = () => {
       onClose={handleCloseUpdateDialog}
       employee={selectedEmployee} 
       roles={roles}
+      onSuccess={fetchEmployees}
       setEmployee={setSelectedEmployee}/>
     </Paper>
   );

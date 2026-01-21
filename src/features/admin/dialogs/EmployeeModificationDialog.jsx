@@ -1,17 +1,19 @@
 import { Box, Button, Checkbox, CircularProgress, Dialog, DialogActions, DialogContent, Divider, FormControlLabel, InputAdornment, TextField, Typography } from "@mui/material";
 import { CheckCircle, XCircle } from "lucide-react";
 import { useEffect, useState } from "react"
-import { verifyManager } from "../../../services/EmployeeService";
+import { updateEmployee, verifyManager } from "../../../services/EmployeeService";
 import { parseFullName } from "../../../utils/FullNameParser";
 
-export const EmployeeModificationDialog = ({employee, setEmployee, open, onClose, roles})=>{
+export const EmployeeModificationDialog = ({employee, setEmployee, open, onClose, onSuccess, roles})=>{
 
     const [requestDto, setRequestDto] = useState({})
     const [searchLoading, setSearchLoading] = useState(false);
     const [managerExists, setManagerExists] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [success, setSuccess] = useState(false);
-
+    /**
+     * 
+     * @param {*} e 
+     */
     const handleChange = (e)=>{
         const {name, value} = e.target;
         // update the employee details only visually
@@ -23,7 +25,10 @@ export const EmployeeModificationDialog = ({employee, setEmployee, open, onClose
             {...prev, [name] : value}
         ))
     }
-    
+    /**
+     * 
+     * @param {*} roleName 
+     */
     const handleRoleChange = (roleName)=>{
         const updatedRoles = employee?.roles.includes(roleName) ? employee?.roles.filter((r)=> r!== roleName) : [...employee.roles, roleName];
         setEmployee((prev)=>(
@@ -34,7 +39,10 @@ export const EmployeeModificationDialog = ({employee, setEmployee, open, onClose
         ))
         
     }
-
+    /**
+     * 
+     * @param {*} e 
+     */
     const handleBalanceChange = (e)=>{
         const {name, value} = e.target;
 
@@ -54,9 +62,17 @@ export const EmployeeModificationDialog = ({employee, setEmployee, open, onClose
      */
     const handleSubmit = async()=>{
         try{
-
+            setLoading(true);
+            /*
+            const res = await updateEmployee(
+                employee?.employeeId, requestDto
+            );
+            if(res === 200){
+                onSuccess();
+            }*/
+           console.log(employee?.employeeId)
         }catch(err){
-
+            console.log(err);
         }finally{
             setLoading(false);
         }
@@ -90,11 +106,11 @@ export const EmployeeModificationDialog = ({employee, setEmployee, open, onClose
                         <TextField label="Prénom" name="firstName" value={employee && parseFullName(employee?.fullName)[0]} onChange={handleChange} required />
                         <TextField label="Nom" name="lastName" value={employee && parseFullName(employee?.fullName)[1]} onChange={handleChange} required />
                         <TextField label="Matriculation" name="matriculation" value={employee?.matriculation} onChange={handleChange} required />
-                        <TextField label="Entité" name="entity" onChange={handleChange} required />
-                        <TextField label="Poste" name="occupation" onChange={handleChange} required />
+                        <TextField label="Entité" name="entity" onChange={handleChange} InputLabelProps={{ shrink: true }} value={employee?.entity} required />
+                        <TextField label="Poste" name="occupation" onChange={handleChange} InputLabelProps={{ shrink: true }} value={employee?.occupation} required />
                         <TextField label="Date de joindre" type="date" InputLabelProps={{ shrink: true }} variant="outlined" name="joinDate" onChange={handleChange} required />
-                        <TextField label="E-mail" type="email" name="email" onChange={handleChange} required />
-                        <TextField label="Mot de passe" type="password" name="password" onChange={handleChange} required />
+                        <TextField label="E-mail" type="email" name="email" onChange={handleChange} value={employee?.email} required />
+                        <TextField label="Mot de passe" type="password" name="password" onChange={handleChange} value={""} required />
                         <TextField
                             label="Manager"
                             name="managerName"
@@ -154,7 +170,7 @@ export const EmployeeModificationDialog = ({employee, setEmployee, open, onClose
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose}>Annuler</Button>
-                <Button onClick={()=> console.log(requestDto)}>
+                <Button onClick={handleSubmit}>
                     {loading ? <CircularProgress size={22}/> : "Modifier"}
                 </Button>
             </DialogActions>
