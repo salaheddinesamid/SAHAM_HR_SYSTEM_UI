@@ -21,3 +21,12 @@ export const uploadPayroll = async (month, year, requestDto)=>{
     });
     return res.status;
 }
+export const getPayrollsOverview = async(year) =>{
+    const res = await PayrollAPI.get("overview", {
+        params : {
+            year : year,
+            matriculation : "10001"
+        }
+    })
+    return res.data;
+}

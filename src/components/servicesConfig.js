@@ -32,6 +32,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import { ProfileManagement } from "../features/profile/ProfileManagement";
 import { AnalyticsDashboard } from "../features/dashboard/AnalyticsDashboard";
+import { EmployeePayrolls } from "../features/payrolls/Payrolls";
 
 
 export const servicesConfig = [
@@ -51,7 +52,7 @@ export const servicesConfig = [
     subServices: [
       { id: 1, name: "Congés & Absences", view: <LeaveRequest />, icon: <GroupRemoveIcon />, color: "#E3F2FD" },
       { id: 2, name: "Attestations & Documents", view: <DocumentRequest/>, icon : <FileText/>, color: "#E3F2FD" },
-      { id: 5, name: "Bulletins de paie", view: <></>, icon : <PaymentsIcon/> , color: "#E3F2FD" },
+      { id: 5, name: "Bulletins de paie", view: <EmployeePayrolls/>, icon : <PaymentsIcon/> , color: "#E3F2FD" },
       { id: 3, name: "Prêts", view: <Loan/>, icon: <RealEstateAgentIcon />, color: "#E3F2FD" },
       { id: 4, name: "Guide RH", view: <HRGuide/>, icon: <Info />, color: "#E3F2FD" },
       { id: 7, name: "Mes dépenses", view: <Expenses/> , icon: <Wallet />, color: "#E3F2FD" },
