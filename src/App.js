@@ -7,11 +7,11 @@ import { Login } from './routes/Login';
 import { useEffect } from 'react';
 import { ServiceProvider, ViewProvider } from './context/ViewNavigatorContext';
 import { ProtectedRoute } from './ProtectedRoute';
-import { AltLogin } from './routes/AlternativeLogin';
 import { AdminDashboard } from './routes/AdminDashboard';
 import { AdminServiceProvider } from './context/AdminViewNavigatorContext';
 import { AdminProtectedRoute } from './AdminProtectedRoute';
 import WebSocketTester from './routes/WebSocketTest';
+import { AdminLoginPage } from './routes/AdminLoginPage';
 
 function App() {
 
@@ -58,7 +58,7 @@ function App() {
         </AdminServiceProvider>
       }/>
       <Route path='/' element={<Login/>}/>
-      <Route path='/2' element={<AltLogin/>}/>
+      <Route path='/login/admin' element={<AdminLoginPage/>}/>
       <Route path='/websocket' element={<WebSocketTester/>}/>
      </Routes>
     </BrowserRouter>
