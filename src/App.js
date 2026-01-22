@@ -9,9 +9,9 @@ import { ServiceProvider, ViewProvider } from './context/ViewNavigatorContext';
 import { ProtectedRoute } from './ProtectedRoute';
 import { AdminDashboard } from './routes/AdminDashboard';
 import { AdminServiceProvider } from './context/AdminViewNavigatorContext';
-import { AdminProtectedRoute } from './AdminProtectedRoute';
 import WebSocketTester from './routes/WebSocketTest';
 import { AdminLoginPage } from './routes/AdminLoginPage';
+import { AdminProtectedRoute } from './routes/AdminProtectedRoute';
 
 function App() {
 
