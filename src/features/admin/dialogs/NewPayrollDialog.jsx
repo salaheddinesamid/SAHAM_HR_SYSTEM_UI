@@ -99,7 +99,7 @@ export const NewPayrollDialog = ({open, onClose, onSuccess})=>{
     }
     return(
         <Dialog open={open} maxWidth="sm" fullWidth>
-            <DialogTitle>Nouvelle Fiche de Bulettin des paies</DialogTitle>
+            <DialogTitle>Nouvelle Fiche des Bulettins de paie</DialogTitle>
             <DialogContent>
                 <Box display="grid" gap={2} mt={1}>
                     <Typography></Typography>

@@ -2,7 +2,6 @@ import { Box, Button, Checkbox, CircularProgress, Dialog, DialogActions, DialogC
 import { CheckCircle, XCircle } from "lucide-react";
 import { useEffect, useState } from "react"
 import { updateEmployee, verifyManager } from "../../../services/EmployeeService";
-import { parseFullName } from "../../../utils/FullNameParser";
 
 export const EmployeeModificationDialog = ({employee, setEmployee, open, onClose, onSuccess, roles})=>{
 
@@ -63,14 +62,14 @@ export const EmployeeModificationDialog = ({employee, setEmployee, open, onClose
     const handleSubmit = async()=>{
         try{
             setLoading(true);
-            /*
+            
             const res = await updateEmployee(
                 employee?.employeeId, requestDto
             );
             if(res === 200){
+                open = false;
                 onSuccess();
-            }*/
-           console.log(employee?.employeeId)
+            }
         }catch(err){
             console.log(err);
         }finally{
@@ -103,13 +102,13 @@ export const EmployeeModificationDialog = ({employee, setEmployee, open, onClose
             <DialogContent>
                 <Box display="grid" gap={2} mt={1}>
                     <Typography fontWeight={600}>Informations personnelles</Typography>
-                        <TextField label="Prénom" name="firstName" value={employee && parseFullName(employee?.fullName)[0]} onChange={handleChange} required />
-                        <TextField label="Nom" name="lastName" value={employee && parseFullName(employee?.fullName)[1]} onChange={handleChange} required />
+                        <TextField label="Prénom" name="firstName" value={employee?.firstName} onChange={handleChange} required />
+                        <TextField label="Nom" name="lastName" value={employee?.lastName} onChange={handleChange} required />
                         <TextField label="Matriculation" name="matriculation" value={employee?.matriculation} onChange={handleChange} required />
                         <TextField label="Entité" name="entity" onChange={handleChange} InputLabelProps={{ shrink: true }} value={employee?.entity} required />
                         <TextField label="Poste" name="occupation" onChange={handleChange} InputLabelProps={{ shrink: true }} value={employee?.occupation} required />
                         <TextField label="Date de joindre" type="date" InputLabelProps={{ shrink: true }} variant="outlined" name="joinDate" onChange={handleChange} required />
-                        <TextField label="E-mail" type="email" name="email" onChange={handleChange} value={employee?.email} required />
+                        <TextField label="E-mail" type="email" name="email" autoComplete={false} onChange={handleChange} value={employee?.email} required />
                         <TextField label="Mot de passe" type="password" name="password" onChange={handleChange} value={""} required />
                         <TextField
                             label="Manager"
