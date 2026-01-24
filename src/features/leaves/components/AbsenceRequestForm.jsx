@@ -1,5 +1,5 @@
 import { CloudUpload } from "@mui/icons-material";
-import { Alert, Button, CircularProgress, Snackbar, styled, TextField } from "@mui/material";
+import { Alert, Box, Button, CircularProgress, Snackbar, styled, TextField, Typography } from "@mui/material";
 import { CheckIcon, TriangleAlert } from "lucide-react";
 import { useEffect, useState } from "react"
 import { dateFormatter, totalLeaveDaysCalculator } from "../utils/LeaveUtils";
@@ -81,8 +81,8 @@ export const AbsenceRequestForm = ({user})=>{
         }
     }
 
-    const DocumentUploader = ()=>{
-          const VisuallyHiddenInput = styled("input")({
+    const DocumentUploader = () => {
+        const VisuallyHiddenInput = styled("input")({
             clip: "rect(0 0 0 0)",
             clipPath: "inset(50%)",
             height: 1,
@@ -92,30 +92,66 @@ export const AbsenceRequestForm = ({user})=>{
             left: 0,
             whiteSpace: "nowrap",
             width: 1
-          });
-    
-          return(
-            <div className="row mb-3">
-                <div className="col-xl-4">
-                    <Button
-                    style={{
-                        marginBottom  : 30
-                    }}
-                    component="label"
-                    variant="contained"
-                    startIcon={<CloudUpload />}
-                    fullWidth>
-                        Veuillez uploader le certificat medical
-                        <VisuallyHiddenInput
-                        type="file"
-                        accept=".pdf"
-                        onChange={handleFileChange}
-                    />
-                    </Button>
-                </div>
-            </div>
-          )
-        }
+        });
+        
+        return (
+        <Box
+        sx={{
+            border: "2px dashed #1976d2",
+            borderRadius: 2,
+            p: 3,
+            textAlign: "center",
+            backgroundColor: "#f9fbff",
+            transition: "0.3s",
+            "&:hover": {
+                backgroundColor: "#f0f6ff"
+            }
+        }}>
+            <Button
+            component="label"
+            variant="contained"
+            startIcon={<CloudUpload />}
+            sx={{
+                textTransform: "none",
+                px: 3,
+                py: 1.2,
+                borderRadius: 2
+            }}>Uploader le certificat médical
+            <VisuallyHiddenInput
+            type="file"
+            accept=".pdf"
+            onChange={handleFileChange}
+            />
+            </Button>
+            
+            <Typography variant="body2" color="text.secondary" mt={1}>
+                PDF uniquement • Taille max 5MB
+            </Typography>
+            
+            {medicalCertificate && (
+                <Box
+                mt={2}
+                p={1.5}
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
+                sx={{
+                    border: "1px solid #e0e0e0",
+                    borderRadius: 2,
+                    backgroundColor: "#fff"
+                }}>
+                    <Typography variant="body2">
+                        📄 {medicalCertificate.name}
+                    </Typography>
+                    <Typography variant="caption" color="success.main">
+                        ✔ Fichier sélectionné
+                    </Typography>
+                </Box>
+            )}
+        </Box>
+        );
+    };
+
 
     useEffect(() => {
         if (fromDate && toDate) {
