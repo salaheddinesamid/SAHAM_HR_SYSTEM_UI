@@ -10,14 +10,13 @@ const MyTeam = lazy(() => import("./MyTeam"));
 */
 
 import { UserInformationCard } from "./UserInformationCard";
-import { LeaveHistory } from "./LeaveHistory";
-import { SubordinateRequestsHistory, SubordinatesLeaveRequestsHistory } from "./SubordinatesRequestsHistory";
-import { PendingLeaveRequests } from "./PendingLeaveRequests";
+import { SubordinateRequestsHistory} from "./SubordinatesRequestsHistory";
 import { MyTeam } from "./MyTeam";
 import "./styles/LeaveRequest.css"
 import { MyLeaves } from "./MyLeaves";
 import { Request } from "./components/Request";
 import { RequestHistoryForHR } from "./RequestHistoryForHR";
+import { EmployeeRequestsHistory } from "./EmployeeRequestsHistory";
 
 export const LeaveRequest = () => {
   const user = JSON.parse(localStorage.getItem("userDetails")); 
@@ -31,8 +30,8 @@ export const LeaveRequest = () => {
       </Suspense> },
     { id: 2, name: "Nouvelle Demande", view: <Request user={user}/> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},
     { id: 8, name: "Mes congés", view: <MyLeaves user={user}/> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},
-    { id: 3, name: "Statuts des demandes", view: <Suspense fallback={<CircularProgress/>}>
-      <LeaveHistory user={user}/>
+    { id: 3, name: "Status des demandes", view: <Suspense fallback={<CircularProgress/>}>
+      <EmployeeRequestsHistory />
     </Suspense> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},
     { id: 4, name: "Les demandes de mon équipe", view: <SubordinateRequestsHistory manager={user}/> , allowedRoles:["MANAGER"]},
     { id: 5, name: "Demandes des collaborateurs", view: <Suspense fallback={<CircularProgress/>}>

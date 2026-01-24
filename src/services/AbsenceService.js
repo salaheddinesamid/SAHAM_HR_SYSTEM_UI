@@ -1,10 +1,10 @@
 import { AbsenceAPI } from "../apis/AbsenceAPI"
 /**
- * 
+ * Apply new absence request
  * @param {*} email 
  * @param {*} requestDto 
  * @param {*} token
- * @returns 
+ * @returns status response
  */
 export const applyAbsence = async (email, requestDto) => {
     const response = await AbsenceAPI.post("new", requestDto, {
@@ -15,11 +15,28 @@ export const applyAbsence = async (email, requestDto) => {
     });
     return response.status;
 };
+/**
+ * Get all absence requests for an employee.
+ * @param {*} email 
+ * @param {*} page 
+ * @param {*} size 
+ * @returns list of all absence requests
+ */
+export const getMyAbsenceRequests = async (email, page, size)=>{
+    const response = await AbsenceAPI.get("employee-absences/get_all", {
+        params : {
+            email : email,
+            pageNumber : page,
+            pageSize : size
+        }
+    });
+    return response.data;
+}
 
 /**
- * 
+ * Get all the absence requests that needs approval/rejection by the manager.
  * @param {*} email 
- * @returns 
+ * @returns list of all subordinates absence requests
  */
 export const getAllSubordinatesAbsenceRequests = async(email, pageNumber, pageSize)=>{
     const response = await AbsenceAPI.get("/requests/subordinates/get_all",{
