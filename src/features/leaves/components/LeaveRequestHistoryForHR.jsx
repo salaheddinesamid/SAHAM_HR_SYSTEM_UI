@@ -125,10 +125,10 @@ export const LeaveRequestHistoryForHR = () => {
 
 
   return (
-    <div className="container mt-3">
+    <div className="row mt-3">
       {loading ? (
         <CircularProgress />
-      ) : requests.length === 0 ? (
+      ) : !loading && requests.length === 0 ? (
         <p className="text-center">Aucune demande trouvée.</p>
       ) : (
         <div className="row">
@@ -175,7 +175,7 @@ export const LeaveRequestHistoryForHR = () => {
           </Box>
         </Toolbar>
 
-          <Table className="table table-striped">
+          <Table className="">
             <TableHead>
               <TableRow>
                 <TableCell>Demandé par</TableCell>

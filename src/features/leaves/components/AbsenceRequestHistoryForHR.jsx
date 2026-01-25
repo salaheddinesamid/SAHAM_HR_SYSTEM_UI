@@ -229,7 +229,7 @@ export const AbsenceRequestHistoryForHR = () => {
   
 
   return (
-    <div className="container mt-3">
+    <div className="row mt-3">
       {requests.length === 0 ? (
         <p className="text-center">Aucune demande trouvée.</p>
       ) : (
@@ -275,7 +275,7 @@ export const AbsenceRequestHistoryForHR = () => {
                       </Box>
                     </Box>
             </Toolbar>
-            <Table className="table table-striped">
+            <Table className="">
               <TableHead>
                 <TableRow>
                     <TableCell>Demandé par</TableCell>

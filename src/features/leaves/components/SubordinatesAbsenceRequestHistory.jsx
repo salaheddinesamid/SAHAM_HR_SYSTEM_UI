@@ -228,7 +228,7 @@ export const SubordinatesAbsenceRequestsHistory = ({ manager }) => {
   
 
   return (
-    <div className="container mt-3">
+    <div className="row mt-3">
       {requests.length === 0 ? (
         <p className="text-center">Aucune demande trouvée.</p>
       ) : (

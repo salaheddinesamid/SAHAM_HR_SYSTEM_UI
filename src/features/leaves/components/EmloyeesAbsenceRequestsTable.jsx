@@ -17,7 +17,7 @@ export const EmployeesAbsenceRequestsTable = ({
 
 })=> {
     return(
-        <Table className="table table-striped">
+        <Table className="">
         <TableHead>
             <TableRow>
                 <TableCell>Demandé par</TableCell>
