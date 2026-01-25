@@ -1,5 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import handleExpiredJWT from "../utils/JwtExpirationHandler";
 
 export const FileStorageAPI = axios.create({
     baseURL : `${process.env.REACT_APP_SERVER_URL}/api/v1/files`,
@@ -29,7 +30,9 @@ FileStorageAPI.interceptors.response.use(
         } else if (!error.response) {
             // Network error
             return Promise.reject({ message: "Network Error. Please check your connection." });
-        } else {
+        } else if (error.response.status === 401){
+            handleExpiredJWT();
+        }else {
             // Server responded with an error
             // Return server error message or default to generic
             const message =
