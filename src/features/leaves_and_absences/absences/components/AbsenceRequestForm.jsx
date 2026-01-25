@@ -243,7 +243,11 @@ export const AbsenceRequestForm = ({user})=>{
                  {selectedType === "Maladie" && (
                     <DocumentUploader/>
                 )}
-                <TextField name="comment" label="Commentaire (optionnel)" multiline rows={3} fullWidth variant="outlined" onChange={handleChange}/>
+                <div className="row mt-2">
+                    <div className="col-xl-6">
+                        <TextField name="comment" label="Commentaire (optionnel)" multiline rows={3} fullWidth variant="outlined" onChange={handleChange}/>
+                    </div>
+                </div>
                 <button className="submit-btn" onClick={handleSubmit} disabled={loading}>
                     Soumettre
                 </button>
