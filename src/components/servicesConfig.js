@@ -13,11 +13,10 @@ import {
   UserStar, 
   Wallet 
 } from "lucide-react";
-import { DocumentRequest } from "../features/documents/DocumentRequest";
+import { DocumentRequest } from "../features/documents/Main";
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { Home } from "./Home";
-import { LeaveRequest } from "../features/leaves/Leave";
 import { FaCalendarAlt, FaHome } from "react-icons/fa";
 import { Annuaire } from "./Directory";
 import { Expenses } from "../features/expenses/Expenses";
@@ -33,6 +32,7 @@ import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
 import { ProfileManagement } from "../features/profile/ProfileManagement";
 import { AnalyticsDashboard } from "../features/dashboard/AnalyticsDashboard";
 import { EmployeePayrolls } from "../features/payrolls/Payrolls";
+import { LeavesAndAbsences } from "../features/leaves_and_absences/Main";
 
 
 export const servicesConfig = [
@@ -50,7 +50,7 @@ export const servicesConfig = [
     view: <></>,
     color: "#E3F2FD", // Light blue
     subServices: [
-      { id: 1, name: "Congés & Absences", view: <LeaveRequest />, icon: <GroupRemoveIcon />, color: "#E3F2FD" },
+      { id: 1, name: "Congés & Absences", view: <LeavesAndAbsences />, icon: <GroupRemoveIcon />, color: "#E3F2FD" },
       { id: 2, name: "Attestations & Documents", view: <DocumentRequest/>, icon : <FileText/>, color: "#E3F2FD" },
       { id: 5, name: "Bulletins de paie", view: <EmployeePayrolls/>, icon : <PaymentsIcon/> , color: "#E3F2FD" },
       { id: 3, name: "Prêts", view: <Loan/>, icon: <RealEstateAgentIcon />, color: "#E3F2FD" },

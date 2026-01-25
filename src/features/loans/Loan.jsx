@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Alert, CircularProgress, Snackbar, TextField } from "@mui/material";
 import { LoanHistory } from "./LoanHistory";
-import { UserInformationCard } from "../leaves/UserInformationCard";
 import { applyLoan } from "../../services/LoanService";
 import { EmployeeLoanRequests } from "./EmployeeLoanRequestHistory";
 import { CheckIcon, TriangleAlert } from "lucide-react";
+import { UserInformationCard } from "../profile/UserInformationCard";
 
 
 export const Loan = ()=>{
