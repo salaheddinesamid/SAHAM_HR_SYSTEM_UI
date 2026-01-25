@@ -17,6 +17,61 @@ import { Search } from "lucide-react";
 import { getAllDocumentRequests } from "../../../services/DocumentService";
 import { LocalDateTimeMapper } from "../../../utils/LocalDateTimeMapper";
 
+const StatusMapper = (status) => {
+    switch (status) {
+      case "IN_PROCESS":
+        return { message: "En attente", color: "bg-warning text-dark" };
+      case "APPROVED":
+        return { message: "Approuvée", color: "bg-success" };
+      case "REJECTED":
+        return { message: "Rejetée", color: "bg-danger" };
+      default:
+        return { message: "-", color: "bg-secondary" };
+    }
+};
+const RequestsTable = ({filteredRequests, totalElements, currentPageNumber, pageSize, setCurrentPageNumber, handleChangeRowsPerPage}) => (
+    <>
+      <Table className="table table-striped">
+        <TableHead>
+          <TableRow>
+            <TableCell>N° de Reference</TableCell>
+            <TableCell>Date de demande</TableCell>
+            <TableCell>Liste des documents</TableCell>
+            <TableCell>Status</TableCell>
+          </TableRow>
+        </TableHead>
+
+        <TableBody>
+          {filteredRequests.map((r) => {
+            const { message, color } = StatusMapper(r.status);
+
+            return (
+              <TableRow key={r.id}>
+                <TableCell>{r.refNumber}</TableCell>
+                <TableCell>
+                  {LocalDateTimeMapper(r.requestDate)}
+                </TableCell>
+                <TableCell>{r.documents}</TableCell>
+                <TableCell>
+                  <span className={`badge ${color}`}>{message}</span>
+                </TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
+
+      <TablePagination
+        component="div"
+        count={totalElements}
+        page={currentPageNumber}
+        rowsPerPage={pageSize}
+        rowsPerPageOptions={[5, 10, 25]}
+        onPageChange={(e, newPage) => setCurrentPageNumber(newPage)}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </>
+  );
 export const DocumentRequestHistory = ({ user }) => {
 
   const [requests, setRequests] = useState([]);
@@ -73,126 +128,25 @@ export const DocumentRequestHistory = ({ user }) => {
     setCurrentPageNumber(0);
   };
 
-
+  // handle page and page size change
   useEffect(() => {
     fetchRequests(currentPageNumber, pageSize);
-  }, [currentPageNumber, pageSize])
+  }, [currentPageNumber, pageSize]);
 
-  const StatusMapper = (status) => {
-    switch (status) {
-      case "IN_PROCESS":
-        return { message: "En attente", color: "bg-warning text-dark" };
-      case "APPROVED":
-        return { message: "Approuvée", color: "bg-success" };
-      case "REJECTED":
-        return { message: "Rejetée", color: "bg-danger" };
-      default:
-        return { message: "-", color: "bg-secondary" };
+  // handle search and filter change
+  useEffect(()=>{
+    let filtered = [...requests];
+    if(currentFilter !== "ALL"){
+      filtered = 
+         filtered.filter((r)=> r?.status === currentFilter);
     }
-  };
-  const RequestsFilter = () => {
-    return(
-        <div className="row">
-            <Toolbar
-            sx={{ display: "flex",
-            justifyContent: "space-between",
-            mb: 2,
-            flexWrap: "wrap"
-            }}>
-                <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", alignItems: "center" }}>
-                    <TextField
-                        size="small"
-                        placeholder="Recherche par N° de Reference"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        InputProps={{
-                            startAdornment: (
-                            <InputAdornment position="start">
-                                <Search size={16} />
-                            </InputAdornment>
-                            ),
-                        }}
-                        sx={{
-                            backgroundColor: "white",
-                            borderRadius: 2,
-                            width: { xs: "100%", sm: 280 },
-                          }}
-                        />
-                        <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
-                          {filters.map((f) => (
-                            <Button
-                              key={f.id}
-                              variant={currentFilter === f.name ? "contained" : "outlined"}
-                              size="small"
-                              onClick={() => handleFilterChange(f.name)}
-                              sx={{ borderRadius: 3, textTransform: "none", fontWeight: 500 }}
-                            >
-                              {f.label}
-                            </Button>
-                          ))}
-                          </Box>
-                        </Box>
-                    </Toolbar>
-                    <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
-                        {filters.map((f) => (
-                            <Button
-                            key={f.id}
-                            size="small"
-                            variant={currentFilter === f.value ? "contained" : "outlined"}
-                            onClick={() => handleFilterChange(f.value)}
-                            sx={{ borderRadius: 3, textTransform: "none", fontWeight: 500 }}>
-                                {f.name}
-                            </Button>
-                        ))}
-                    </Box>
-                </div>
-            )
-    };
+    if(searchQuery.trim().toLocaleLowerCase !== ""){
+      filtered = 
+         filtered.filter((r)=> r?.refNumber.toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase()));
+    }
+    setFilteredRequests(filtered);
+  },[requests, currentFilter, searchQuery])
 
-
-const RequestsTable = () => (
-    <>
-      <Table className="table table-striped">
-        <TableHead>
-          <TableRow>
-            <TableCell>N° de Reference</TableCell>
-            <TableCell>Date de demande</TableCell>
-            <TableCell>Liste des documents</TableCell>
-            <TableCell>Status</TableCell>
-          </TableRow>
-        </TableHead>
-
-        <TableBody>
-          {filteredRequests.map((r) => {
-            const { message, color } = StatusMapper(r.status);
-
-            return (
-              <TableRow key={r.id}>
-                <TableCell>{r.refNumber}</TableCell>
-                <TableCell>
-                  {LocalDateTimeMapper(r.requestDate)}
-                </TableCell>
-                <TableCell>{r.documents}</TableCell>
-                <TableCell>
-                  <span className={`badge ${color}`}>{message}</span>
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-
-      <TablePagination
-        component="div"
-        count={totalElements}
-        page={currentPageNumber}
-        rowsPerPage={pageSize}
-        rowsPerPageOptions={[5, 10, 25]}
-        onPageChange={(e, newPage) => setCurrentPageNumber(newPage)}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </>
-  );
   return (
     <div className="row">
 
@@ -210,9 +164,43 @@ const RequestsTable = () => (
 
       {!loading && requests.length > 0 && (
         <div className="row mt-3">
-          <RequestsFilter />
+          <Toolbar sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
+              <Box sx={{ display: "flex", gap: 2, alignItems: "center", flexWrap: "wrap" }}>
+                <TextField
+                size="small"
+                placeholder="Recherche par N° de Référence"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                InputProps={{
+                  startAdornment: (
+                  <InputAdornment position="start">
+                    <Search size={16} />
+                  </InputAdornment>
+                  ),
+                }}
+                sx={{ backgroundColor: "white", borderRadius: 2, width: { xs: "100%", sm: 280 } }}
+                />
+                <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+                  {filters.map((f) => (
+                    <Button
+                    key={f.id}
+                    variant={currentFilter === f.value ? "contained" : "outlined"}
+                    size="small"
+                    onClick={() => handleFilterChange(f.value)}
+                    sx={{ borderRadius: 3, textTransform: "none", fontWeight: 500 }}>
+                      {f.name}
+                    </Button>
+                  ))}
+                </Box>
+              </Box>
+            </Toolbar>
           <div className="mt-3">
-            <RequestsTable />
+            <RequestsTable 
+            filteredRequests={filteredRequests} 
+            totalElements={totalElements} 
+            pageSize={pageSize} 
+            handleChangeRowsPerPage={handleChangeRowsPerPage}
+            setCurrentPageNumber={setCurrentPageNumber}/>
           </div>
         </div>
       )}
