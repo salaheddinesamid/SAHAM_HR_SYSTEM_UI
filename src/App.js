@@ -12,6 +12,7 @@ import { AdminServiceProvider } from './context/AdminViewNavigatorContext';
 import WebSocketTester from './routes/WebSocketTest';
 import { AdminLoginPage } from './routes/AdminLoginPage';
 import { AdminProtectedRoute } from './routes/AdminProtectedRoute';
+import { AltLogin } from './routes/AltLogin';
 
 function App() {
 
@@ -58,6 +59,7 @@ function App() {
         </AdminServiceProvider>
       }/>
       <Route path='/' element={<Login/>}/>
+      <Route path='/alt_login' element={<AltLogin/>}/>
       <Route path='/login/admin' element={<AdminLoginPage/>}/>
       <Route path='/websocket' element={<WebSocketTester/>}/>
      </Routes>

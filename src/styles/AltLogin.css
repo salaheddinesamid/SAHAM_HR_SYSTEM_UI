@@ -1,183 +1,95 @@
-/* === Full Page Background === */
-.login-full {
-  height: 100vh;
-  width: 100%;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  font-family: "Montserrat", sans-serif;
-  overflow: hidden;
-}
-
-/* === Blue Transparent Overlay for Text & Button === */
-.overlay {
+.login-form-overlay {
   position: absolute;
-  inset: 0;
-  background-color: rgba(0, 65, 112, 0.75);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  text-align: center;
-  padding: 20px;
+  top: 50%;
+  right: 6%;
+  transform: translateY(-50%);
+  z-index: 10;
 }
 
-/* === Welcome Text === */
-.welcome-text {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 15px;
-}
-
-.welcome-sub {
-  font-size: 1.1rem;
-  font-weight: 300;
-  color: #dce6f2;
-}
-
-/* === Connexion Button === */
-.login-btn {
-  background-color: #004170;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 12px 28px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.login-btn:hover {
-  background-color: #0066a1;
-  transform: translateY(-2px);
-}
-
-/* === Right Side Form Panel === */
-.login-form-right {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 35%;
-  height: 100%;
-  background-color: #f8f9fb;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  animation: slideIn 0.5s ease forwards;
-  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
-  z-index: 20;
-}
-
-/* === Form Container === */
 .login-container {
-  background: white;
-  border-radius: 12px;
-  padding: 40px 35px;
-  width: 100%;
-  max-width: 380px;
-  text-align: center;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(145deg, #ffffff, #f5f8fc);
+  border-radius: 14px;
+  padding: 45px 40px;
+  width: 380px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+  animation: fadeSlide 0.6s ease forwards;
 }
 
-.login-title {
+.login-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login-logo {
+  height: 60px;
+  margin-bottom: 12px;
+}
+
+.login-header h2 {
   font-weight: 700;
   color: #004170;
-  font-size: 1.8rem;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 
-.login-subtitle {
-  color: #666;
-  font-size: 0.95rem;
-  margin-bottom: 25px;
+.login-header p {
+  font-size: 14px;
+  color: #6b7280;
 }
 
-/* === Input Fields === */
+.form-group {
+  margin-bottom: 18px;
+}
+
 .form-control {
   width: 100%;
-  padding: 12px 14px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  padding: 13px 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
   font-size: 15px;
-  outline: none;
-  transition: all 0.3s ease;
+  background: #f9fafb;
+  transition: 0.3s ease;
 }
 
 .form-control:focus {
   border-color: #004170;
-  box-shadow: 0 0 5px rgba(0, 65, 112, 0.3);
+  box-shadow: 0 0 0 2px rgba(0,65,112,0.15);
+  background: white;
 }
 
-/* === Login Button Inside Form === */
-.login-container .login-btn {
+.crm-btn {
   width: 100%;
-  margin-top: 20px;
-  background-color: #004170;
-  color: white;
+  background: linear-gradient(135deg, #004170, #0066a1);
+  padding: 13px;
+  border-radius: 8px;
   border: none;
-  border-radius: 6px;
-  padding: 12px;
   font-size: 16px;
   font-weight: 600;
-  cursor: pointer;
-  transition: background 0.3s ease;
+  letter-spacing: 0.3px;
 }
 
-.login-container .login-btn:hover {
-  background-color: #0066a1;
+.crm-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.25);
 }
 
-/* === Footer (Forgot Password) === */
 .login-footer {
-  font-size: 0.9rem;
-  color: #666;
-  margin-top: 15px;
+  text-align: center;
+  margin-top: 18px;
 }
 
 .login-footer a {
+  font-size: 14px;
   color: #004170;
-  text-decoration: none;
   font-weight: 500;
 }
 
-.login-footer a:hover {
-  text-decoration: underline;
-}
-
-/* === Animation: Slide In from Right === */
-@keyframes slideIn {
+@keyframes fadeSlide {
   from {
-    transform: translateX(100%);
     opacity: 0;
+    transform: translateY(-40px);
   }
   to {
-    transform: translateX(0%);
     opacity: 1;
-  }
-}
-
-/* === Responsive Design === */
-@media (max-width: 992px) {
-  .login-form-right {
-    width: 100%;
-    box-shadow: none;
-  }
-
-  .login-container {
-    max-width: 90%;
-  }
-}
-
-@media (max-width: 600px) {
-  .welcome-text {
-    font-size: 2rem;
-  }
-
-  .login-btn {
-    padding: 10px 22px;
-    font-size: 15px;
+    transform: translateY(0);
   }
 }
