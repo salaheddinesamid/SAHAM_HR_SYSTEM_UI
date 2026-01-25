@@ -11,14 +11,14 @@ const AbsenceRequestsTable = ({requests, loading, currentPage, currentSize, setC
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell>Ref N°</TableCell>
-          <TableCell>Type</TableCell>
-          <TableCell>Date de début</TableCell>
-          <TableCell>Date de fin</TableCell>
-          <TableCell>Nombre de jours</TableCell>
-          <TableCell>Status</TableCell>
-          <TableCell>Commentaire</TableCell>
-          <TableCell>Actions</TableCell>
+          <TableCell><b>Ref N°</b></TableCell>
+          <TableCell><b>Type</b></TableCell>
+          <TableCell><b>Date de début</b></TableCell>
+          <TableCell><b>Date de fin</b></TableCell>
+          <TableCell><b>Nombre de jours</b></TableCell>
+          <TableCell><b>Status</b></TableCell>
+          <TableCell><b>Commentaire</b></TableCell>
+          <TableCell><b>Actions</b></TableCell>
         </TableRow>
       </TableHead>
 

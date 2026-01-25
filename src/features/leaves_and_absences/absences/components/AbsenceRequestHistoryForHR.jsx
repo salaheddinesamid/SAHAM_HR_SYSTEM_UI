@@ -57,11 +57,11 @@ export const AbsenceRequestHistoryForHR = () => {
         { id: 5, name: "CANCELED", label: "Annulée" }, // FIX: Correct spelling
     ];
     
-    const fetchRequests = useCallback(async () => {
+    const fetchRequests = async (page, size) => {
         try {
             setLoading(true);
             console.log("...Fetching data")
-            const data = await getAllAbsenceRequestsForHR();
+            const data = await getAllAbsenceRequestsForHR(page, size);
             setRequests(data?.content || []);
             setFilteredRequests(data?.content || []);
             setTotalElements(data?.totalElements);
@@ -72,15 +72,15 @@ export const AbsenceRequestHistoryForHR = () => {
         } finally {
             setLoading(false);
         }
-    }, []);
+    };
     
     const handleFilterChange = (filter) => {
         setCurrentStatusFilter(filter);
     };
     
     useEffect(() => {
-        fetchRequests();
-    }, []);
+        fetchRequests(currentPageNumber, pageSize);
+    }, [currentPageNumber, pageSize]);
     
     // Filtering logic
     useEffect(() => {
@@ -278,15 +278,16 @@ export const AbsenceRequestHistoryForHR = () => {
             <Table className="">
               <TableHead>
                 <TableRow>
-                    <TableCell>Demandé par</TableCell>
-                    <TableCell>Type</TableCell>
-                    <TableCell>Date de début</TableCell>
-                    <TableCell>Date de fin</TableCell>
-                    <TableCell>Nombre de jours</TableCell>
-                    <TableCell>Status</TableCell>
-                    <TableCell>Commentaire</TableCell>
-                    <TableCell>Documents</TableCell>
-                    <TableCell>Actions</TableCell>
+                    <TableCell><b>Ref N°</b></TableCell>
+                    <TableCell><b>Demandé par</b></TableCell>
+                    <TableCell><b>Type</b></TableCell>
+                    <TableCell><b>Date de début</b></TableCell>
+                    <TableCell><b>Date de fin</b></TableCell>
+                    <TableCell><b>Nombre de jours</b></TableCell>
+                    <TableCell><b>Status</b></TableCell>
+                    <TableCell><b>Commentaire</b></TableCell>
+                    <TableCell><b>Documents</b></TableCell>
+                    <TableCell><b>Actions</b></TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
@@ -294,6 +295,7 @@ export const AbsenceRequestHistoryForHR = () => {
               const { message, color } = leaveStatusMapper(req.status);
               return (
                 <TableRow key={req.id}>
+                  <TableCell>{req.referenceNumber}</TableCell>
                   <TableCell>{req.requestedBy}</TableCell>
                   <TableCell>{AbsenceTypesMapper(req.type)}</TableCell>
                   <TableCell>{LocalDateTimeMapper(req.startDate)}</TableCell>

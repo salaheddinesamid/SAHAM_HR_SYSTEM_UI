@@ -27,14 +27,14 @@ export const EmployeesLeaveRequestsTable = ({
                 <Table className="">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Demandé par</TableCell>
-                            <TableCell>Type</TableCell>
-                            <TableCell>Date de début</TableCell>
-                            <TableCell>Date de fin</TableCell>
-                            <TableCell>Nombre de jours</TableCell>
-                            <TableCell>Status</TableCell>
-                            <TableCell>Commentaire</TableCell>
-                            <TableCell>Actions</TableCell>
+                            <TableCell><b>Demandé par</b></TableCell>
+                            <TableCell><b>Type</b></TableCell>
+                            <TableCell><b>Date de début</b></TableCell>
+                            <TableCell><b>Date de fin</b></TableCell>
+                            <TableCell><b>Nombre de jours</b></TableCell>
+                            <TableCell><b>Status</b></TableCell>
+                            <TableCell><b>Commentaire</b></TableCell>
+                            <TableCell><b>Actions</b></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
