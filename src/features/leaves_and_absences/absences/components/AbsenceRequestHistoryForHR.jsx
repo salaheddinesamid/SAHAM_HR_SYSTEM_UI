@@ -280,11 +280,13 @@ export const AbsenceRequestHistoryForHR = () => {
       <AbsenceApprovalDialog
         open={approvalDialogOpen}
         onClose={handeCloseApprovalDialog}
+        onSuccess={fetchRequests}
         request={currentRequest}
       />
       <AbsenceRejectionDialog 
       open={rejectDialogOpen}
         onClose={handleCloseRejectionDialog}
+        onSuccess={fetchRequests}
         request={currentRequest}/>
     </div>
   );

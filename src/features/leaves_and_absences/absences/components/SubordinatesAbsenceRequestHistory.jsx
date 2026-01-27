@@ -215,11 +215,13 @@ export const SubordinatesAbsenceRequestsHistory = ({ manager }) => {
       <AbsenceRequestApprovalDialog
         open={approvalDialogOpen}
         onClose={handeCloseApprovalDialog}
+        onSuccess={fetchRequests}
         request={currentRequest}
       />
       <AbsenceRequestRejectionDialog 
       open={rejectDialogOpen}
         onClose={handleCloseRejectionDialog}
+        onSuccess={fetchRequests}
         request={currentRequest}/>
     </div>
   );
