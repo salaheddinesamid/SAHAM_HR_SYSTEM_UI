@@ -24,6 +24,8 @@ import { AbsenceTypesMapper, leaveStatusMapper } from "../../utils/LeaveUtils";
 import { saveAs } from "file-saver";
 import { LocalDateTimeMapper } from "../../../../utils/LocalDateTimeMapper";
 import { EmployeesAbsenceRequestsTable } from "./EmloyeesAbsenceRequestsTable";
+import { AbsenceRequestApprovalDialog } from "../dialogs/AbsenceRequestApprovalDialog";
+import { AbsenceRequestRejectionDialog } from "../dialogs/AbsenceRequestRejectionDialog";
 
 export const SubordinatesAbsenceRequestsHistory = ({ manager }) => {
     const [loading, setLoading] = useState(false);
@@ -94,86 +96,10 @@ export const SubordinatesAbsenceRequestsHistory = ({ manager }) => {
   }, [searchQuery, requests, currentStatusFilter])
 
   // Reject dialog:
-  const RejectDialog = ({open,onClose,request})=>{
-    if(!request) return null;
-
-    const handleConfirm = async()=>{
-
-        const id = request?.id;
-        const managerEmail = manager?.email;
-        try{
-            setLoading(true);
-            //const res = await rejectSubordinatesLeave(id,managerEmail );
-            /*
-            if(res === 200){
-                fetchRequests();
-                onClose();
-            }*/
-        }catch(err){
-            console.log(err);
-        }finally{
-            setLoading(false);
-        }
-    }
-
-    return(
-        <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Rejeter la demande</DialogTitle>
-            <DialogContent>
-                Êtes-vous sûr de vouloir rejeter la demande de{" "}
-                <strong>{request.requestedBy}</strong> du{" "}
-                <strong>{request.startDate}</strong> au{" "}
-                <strong>{request.endDate}</strong> ?
-            </DialogContent>
-            
-            <DialogActions>
-                <Button variant="outlined" color="secondary" onClick={onClose}>
-                    Annuler
-                </Button>
-                <Button variant="contained" color="warning" onClick={handleConfirm}>
-                    Confirmer
-                </Button>
-            </DialogActions>
-        </Dialog>
-    )
-  }
+  
 
   // Separate dialog component
-  const ApproveDialog = ({ open, onClose, request }) => {
-    if (!request) return null;
-
-    const handleConfirm = async () => {
-        const referenceNumber = request?.referenceNumber; // leave request Ref N°
-        const email = manager?.email; // approved by 
-      try {
-        await approveSubordinate(email, referenceNumber);
-        onClose();
-        fetchRequests(); // Refresh list
-      } catch (err) {
-        console.error("Approval failed:", err);
-      }
-    };
-
-    return (
-      <Dialog open={open} onClose={onClose}>
-        <DialogTitle>Confirmer la demande</DialogTitle>
-        <DialogContent>
-          Êtes-vous sûr de vouloir approuver la demande de{" "}
-          <strong>{request.requestedBy}</strong> du{" "}
-          <strong>{request.startDate}</strong> au{" "}
-          <strong>{request.endDate}</strong> ?
-        </DialogContent>
-        <DialogActions>
-          <Button variant="outlined" color="secondary" onClick={onClose}>
-            Annuler
-          </Button>
-          <Button variant="contained" color="success" onClick={handleConfirm}>
-            Confirmer
-          </Button>
-        </DialogActions>
-      </Dialog>
-    );
-  };
+  
 
   const handleOpenApprovalDialog = (req) => {
     setCurrentRequest(req);
@@ -286,12 +212,12 @@ export const SubordinatesAbsenceRequestsHistory = ({ manager }) => {
         </div>
       )}
 
-      <ApproveDialog
+      <AbsenceRequestApprovalDialog
         open={approvalDialogOpen}
         onClose={handeCloseApprovalDialog}
         request={currentRequest}
       />
-      <RejectDialog 
+      <AbsenceRequestRejectionDialog 
       open={rejectDialogOpen}
         onClose={handleCloseRejectionDialog}
         request={currentRequest}/>

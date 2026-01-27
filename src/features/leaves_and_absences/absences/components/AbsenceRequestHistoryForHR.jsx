@@ -1,9 +1,5 @@
 import {
   CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   Button,
   Table,
   TableBody,
@@ -20,11 +16,13 @@ import {
 import { useEffect, useState, useCallback } from "react";
 import { Check, X } from "lucide-react";
 import { Download, Search } from "@mui/icons-material";
-import { approveAbsence, approveSubordinate, downloadAbsenceMedicaleCertificate, getAllAbsenceRequestsForHR, getAllSubordinatesAbsenceRequests } from "../../../../services/AbsenceService";
+import { downloadAbsenceMedicaleCertificate, getAllAbsenceRequestsForHR, getAllSubordinatesAbsenceRequests, rejectAbsence } from "../../../../services/AbsenceService";
 import { AbsenceTypesMapper, leaveStatusMapper } from "../../utils/LeaveUtils";
 import { saveAs } from "file-saver";
 import { LocalDateTimeMapper } from "../../../../utils/LocalDateTimeMapper";
 import Cookies from "js-cookie";
+import { AbsenceApprovalDialog } from "../dialogs/AbsenceApprovalDialog";
+import { AbsenceRejectionDialog, AbsenceRequestRejectionDialog } from "../dialogs/AbsenceRejectionDialog";
 
 export const AbsenceRequestHistoryForHR = () => {
     const token = Cookies.get("accessToken");
@@ -101,80 +99,8 @@ export const AbsenceRequestHistoryForHR = () => {
     
     // Reject dialog:
     // 
-    const RejectDialog = ({open,onClose,request})=>{
-        if(!request) return null;
-        
-        const handleConfirm = async()=>{
-            try{
-                setLoading(true);
-            //const res = await rejectSubordinatesLeave(id,managerEmail );
-            /*
-            if(res === 200){
-                fetchRequests();
-                onClose();
-            }*/
-           }catch(err){
-            console.log(err);
-        }finally{
-            setLoading(false);
-        }
-    }
     
-    return(
-        <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Rejeter la demande</DialogTitle>
-            <DialogContent>
-                Êtes-vous sûr de vouloir rejeter la demande de{" "}
-                <strong>{request.requestedBy}</strong> du{" "}
-                <strong>{request.startDate}</strong> au{" "}
-                <strong>{request.endDate}</strong> ?
-            </DialogContent>
-            
-            <DialogActions>
-                <Button variant="outlined" color="secondary" onClick={onClose}>
-                    Annuler
-                </Button>
-                <Button variant="contained" color="warning" onClick={handleConfirm}>
-                    Confirmer
-                </Button>
-            </DialogActions>
-        </Dialog>
-    )
-  }
-  const ApproveDialog = ({ open, onClose, request }) => {
-    if (!request) return null;
-
-    const handleConfirm = async () => {
-        const refNumber = request?.referenceNumber; // Reference Number
-        try {
-            await approveAbsence(refNumber);
-            onClose();
-            fetchRequests(); // Refresh list
-        } catch (err) {
-            console.error("Approval failed:", err);
-        }
-    };
-
-    return (
-      <Dialog open={open} onClose={onClose}>
-        <DialogTitle>Confirmer la demande</DialogTitle>
-        <DialogContent>
-          Êtes-vous sûr de vouloir approuver la demande de{" "}
-          <strong>{request.requestedBy}</strong> du{" "}
-          <strong>{request.startDate}</strong> au{" "}
-          <strong>{request.endDate}</strong> ?
-        </DialogContent>
-        <DialogActions>
-          <Button variant="outlined" color="secondary" onClick={onClose}>
-            Annuler
-          </Button>
-          <Button variant="contained" color="success" onClick={handleConfirm}>
-            Confirmer
-          </Button>
-        </DialogActions>
-      </Dialog>
-    );
-  };
+  
   
   const handleOpenApprovalDialog = (req) => {
     setCurrentRequest(req);
@@ -208,9 +134,9 @@ export const AbsenceRequestHistoryForHR = () => {
     }
   }
 
-  const handleReject = async (requestId) => {
+  const handleReject = async (refNumber) => {
     try {
-      await fin(requestId);
+      await rejectAbsence(refNumber);
       fetchRequests();
     } catch (err) {
       console.error("Rejection failed:", err);
@@ -351,12 +277,12 @@ export const AbsenceRequestHistoryForHR = () => {
         </div>
       )}
 
-      <ApproveDialog
+      <AbsenceApprovalDialog
         open={approvalDialogOpen}
         onClose={handeCloseApprovalDialog}
         request={currentRequest}
       />
-      <RejectDialog 
+      <AbsenceRejectionDialog 
       open={rejectDialogOpen}
         onClose={handleCloseRejectionDialog}
         request={currentRequest}/>

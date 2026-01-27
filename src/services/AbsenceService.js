@@ -83,15 +83,25 @@ export const approveSubordinate = async(email, refNumber)=>{
  * @param {*} email 
  * @param {*} refNumber 
  */
-export const rejectSubordinate = async(token, email, refNumber)=>{
-
+export const rejectSubordinate = async(refNumber)=>{
+    const res = await AbsenceAPI.put("/requests/subordinates/reject-request",null,{
+        params : {
+            refNumber : refNumber
+        }
+    })
+    return res.status;
 };
 /**
  * @param {*} token
  * @param {*} refNumber 
  */
-export const rejectAbsence = async(token, refNumber)=>{
-
+export const rejectAbsence = async(refNumber)=>{
+    const res = await AbsenceAPI.put("/requests/hr/reject", null, {
+        params : {
+            refNumber : refNumber
+        }
+    })
+    return res.status;
 }
 
 /**

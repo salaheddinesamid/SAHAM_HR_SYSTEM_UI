@@ -35,8 +35,6 @@ AbsenceAPI.interceptors.response.use(
         } else if (!error.response) {
             // Network error
             return Promise.reject({ message: "Network Error. Please check your connection." });
-        } else if (error.response.status === 401){
-            handleExpiredJWT();
         } else {
             // Server responded with an error
             // Return server error message or default to generic
