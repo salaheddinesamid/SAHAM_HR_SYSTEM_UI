@@ -3,15 +3,10 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Dashboard } from './routes/Dashboard';
 import "bootstrap/dist/js/bootstrap.js"
 import "bootstrap/dist/css/bootstrap.css"
-import { Login } from './routes/Login';
 import { useEffect } from 'react';
 import { ServiceProvider, ViewProvider } from './context/ViewNavigatorContext';
 import { ProtectedRoute } from './ProtectedRoute';
-import { AdminDashboard } from './routes/AdminDashboard';
-import { AdminServiceProvider } from './context/AdminViewNavigatorContext';
 import WebSocketTester from './routes/WebSocketTest';
-import { AdminLoginPage } from './routes/AdminLoginPage';
-import { AdminProtectedRoute } from './routes/AdminProtectedRoute';
 import { AltLogin } from './routes/AltLogin';
 
 function App() {
@@ -44,23 +39,15 @@ function App() {
   return (
     <BrowserRouter>
      <Routes>
-      <Route path='/dashboard' element={
+      <Route path='/' element={
         <ServiceProvider>
           <ProtectedRoute>
             <Dashboard/>
           </ProtectedRoute>
         </ServiceProvider>
         }/>
-      <Route path='/administration' element={
-        <AdminServiceProvider>
-          <AdminProtectedRoute>
-            <AdminDashboard/>
-          </AdminProtectedRoute>
-        </AdminServiceProvider>
-      }/>
-      <Route path='/' element={<Login/>}/>
+      <Route path='/login' element={<AltLogin/>}/>
       <Route path='/alt_login' element={<AltLogin/>}/>
-      <Route path='/login/admin' element={<AdminLoginPage/>}/>
       <Route path='/websocket' element={<WebSocketTester/>}/>
      </Routes>
     </BrowserRouter>

@@ -46,7 +46,7 @@ export const AltLogin = () => {
 
     localStorage.setItem("userDetails", JSON.stringify(userDetails));
 
-    setTimeout(() => navigate("/dashboard"), 1200);
+    setTimeout(() => navigate("/"), 1200);
   };
 
   const handleLogin = async () => {

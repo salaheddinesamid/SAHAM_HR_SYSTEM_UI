@@ -44,7 +44,7 @@ export const Login = () => {
         localStorage.setItem("userDetails",JSON.stringify(userDetails));
 
         // redirection:
-        setTimeout(()=>navigate("/dashboard"),2000);
+        setTimeout(()=>navigate("/"),2000);
     }
 
     const handleLogin = async()=>{

@@ -34,19 +34,21 @@ export const MyLeaves = ({user})=>{
             {!loading && leaves.length === 0 && (
                 <p className="text-center">Aucun congé trouvée.</p>
             )}
-            <Table className="table table-striped">
+            <Table className="">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Type</TableCell>
-                        <TableCell>Date de début</TableCell>
-                        <TableCell>Date de fin</TableCell>
-                        <TableCell>Nombre de jours</TableCell>
+                        <TableCell><b>Ref N</b></TableCell>
+                        <TableCell><b>Type</b></TableCell>
+                        <TableCell><b>Date de début</b></TableCell>
+                        <TableCell><b>Date de fin</b></TableCell>
+                        <TableCell><b>Nombre de jours</b></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {leaves.map((leave) => {
                         return (
                         <TableRow key={leave.id}>
+                            <TableCell>{leave?.refNumber}</TableCell>
                             <TableCell>{LeaveTypesMapper(leave?.leaveType)}</TableCell>
                             <TableCell>{leave.fromDate}</TableCell>
                             <TableCell>{leave.toDate}</TableCell>

@@ -11,7 +11,7 @@ export const ProtectedRoute = ({children})=>{
 
     useEffect(()=>{
         if(!userDetails && !accessToken){
-            navigate('/',{
+            navigate('/login',{
                 state : {
                     message : "",
                     from : window.location.pathname

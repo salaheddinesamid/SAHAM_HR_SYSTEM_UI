@@ -198,8 +198,11 @@ export const AbsenceRequestHistoryForHR = () => {
 
   const handleDownloadDocument = async(path)=>{
     try{
-      const res = await downloadAbsenceMedicaleCertificate(path); 
-      saveAs(res)
+      if(path !== null){
+        console.log("Downloading Medical Certificate with path:", path);
+        const res = await downloadAbsenceMedicaleCertificate(path); 
+        saveAs(res)
+      }
     }catch(err){
       console.log(err);
     }
@@ -207,7 +210,7 @@ export const AbsenceRequestHistoryForHR = () => {
 
   const handleReject = async (requestId) => {
     try {
-      //await rejectLeave(requestId);
+      await fin(requestId);
       fetchRequests();
     } catch (err) {
       console.error("Rejection failed:", err);
@@ -306,7 +309,7 @@ export const AbsenceRequestHistoryForHR = () => {
                   </TableCell>
                   <TableCell>{req.comment || "-"}</TableCell>
                   <TableCell>{req.document !== null ? <IconButton >
-                    <Download onClick={()=>handleDownloadDocument(req.documentPath)}/>
+                    <Download onClick={()=>handleDownloadDocument(req?.documentPath)}/>
                   </IconButton> : <p>No documents found</p>}</TableCell>
                   <TableCell>
                     {req.status === "IN_PROCESS" && (
