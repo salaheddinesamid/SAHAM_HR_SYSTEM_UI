@@ -31,13 +31,13 @@ const StatusMapper = (status) => {
 };
 const RequestsTable = ({filteredRequests, totalElements, currentPageNumber, pageSize, setCurrentPageNumber, handleChangeRowsPerPage}) => (
     <>
-      <Table className="table table-striped">
+      <Table className="">
         <TableHead>
           <TableRow>
-            <TableCell>N° de Reference</TableCell>
-            <TableCell>Date de demande</TableCell>
-            <TableCell>Liste des documents</TableCell>
-            <TableCell>Status</TableCell>
+            <TableCell><b>N° de Reference</b></TableCell>
+            <TableCell><b>Date de demande</b></TableCell>
+            <TableCell><b>Liste des documents</b></TableCell>
+            <TableCell><b>Status</b></TableCell>
           </TableRow>
         </TableHead>
 

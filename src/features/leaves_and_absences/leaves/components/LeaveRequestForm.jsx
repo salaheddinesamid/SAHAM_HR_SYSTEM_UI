@@ -251,17 +251,11 @@ export const LeaveRequestForm = ({user})=>{
             ))}
           </div>
         </div>
-        <TextField
-          name="comment"
-          label="Commentaire (optionnel)"
-          multiline
-          rows={3}
-          fullWidth
-          variant="outlined"
-          onChange={(e)=>setRequestDto((prev)=>(
-            {...prev, commen : e.target.value}
-          ))}
-        />
+        <div className="row mt-2">
+          <div className="col-xl-6">
+            <TextField name="comment" label="Commentaire (optionnel)" multiline rows={3} fullWidth variant="outlined"/>
+          </div>
+        </div>
         <button className="submit-btn" onClick={handleSubmit} disabled={requestLoading}>
           Soumettre
         </button>
