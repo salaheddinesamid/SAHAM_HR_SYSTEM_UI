@@ -13,16 +13,16 @@ import {
   InputAdornment,
   TablePagination,
 } from "@mui/material";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { Check, X } from "lucide-react";
 import { Download, Search } from "@mui/icons-material";
-import { downloadAbsenceMedicaleCertificate, getAllAbsenceRequestsForHR, getAllSubordinatesAbsenceRequests, rejectAbsence } from "../../../../services/AbsenceService";
+import { downloadAbsenceMedicaleCertificate, getAllAbsenceRequestsForHR } from "../../../../services/AbsenceService";
 import { AbsenceTypesMapper, leaveStatusMapper } from "../../utils/LeaveUtils";
 import { saveAs } from "file-saver";
 import { LocalDateTimeMapper } from "../../../../utils/LocalDateTimeMapper";
 import Cookies from "js-cookie";
 import { AbsenceApprovalDialog } from "../dialogs/AbsenceApprovalDialog";
-import { AbsenceRejectionDialog, AbsenceRequestRejectionDialog } from "../dialogs/AbsenceRejectionDialog";
+import { AbsenceRejectionDialog } from "../dialogs/AbsenceRejectionDialog";
 
 export const AbsenceRequestHistoryForHR = () => {
     const token = Cookies.get("accessToken");
@@ -133,15 +133,6 @@ export const AbsenceRequestHistoryForHR = () => {
       console.log(err);
     }
   }
-
-  const handleReject = async (refNumber) => {
-    try {
-      await rejectAbsence(refNumber);
-      fetchRequests();
-    } catch (err) {
-      console.error("Rejection failed:", err);
-    }
-  };
   
   if (loading) {
     return (
