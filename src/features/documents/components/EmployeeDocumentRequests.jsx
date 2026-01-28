@@ -65,6 +65,7 @@ export const EmployeeDocumentRequestHistory = ()=>{
             {!loading && requests.length !== 0 && (
                 <Table>
                     <TableHead>
+                        <TableCell><b>N° de Reference</b></TableCell>
                         <TableCell><b>Date de demande</b></TableCell>
                         <TableCell><b>Demandé par</b></TableCell>
                         <TableCell><b>Les documents demandee</b></TableCell>
@@ -73,6 +74,7 @@ export const EmployeeDocumentRequestHistory = ()=>{
                     <TableBody>
                         {requests.map((r)=>(
                             <TableRow key={r.id}>
+                                <TableCell>{r?.refNumber}</TableCell>
                                 <TableCell>{LocalDateTimeMapper(r?.requestDate)}</TableCell>
                                 <TableCell>{r.requestedBy}</TableCell>
                                 <TableCell>{r.documents}</TableCell>
