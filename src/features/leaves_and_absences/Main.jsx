@@ -21,8 +21,6 @@ export const LeavesAndAbsences = () => {
   const user = JSON.parse(localStorage.getItem("userDetails")); 
   const userRoles = user?.roles || [];
   const [selectedService, setSelectedService] = useState(1);
-  const [error,setError] = useState("");
-  const [submitSuccess,setSubmitSuccess] = useState(false);
   const services = [
     { id: 1, name: "Profil", view: <Suspense fallback={<CircularProgress/>}>
       <UserInformationCard email={user?.email}/>
