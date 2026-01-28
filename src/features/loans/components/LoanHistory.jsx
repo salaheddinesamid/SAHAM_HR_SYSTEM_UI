@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
-import { getAllEmployeeRequests } from "../../services/LoanService";
+import { getAllEmployeeRequests } from "../../../services/LoanService";
 import { CircularProgress, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { loanAmountMapper, loanStatusMapper, loanTypeMapper } from "./utils/Mapper";
-import { LocalDateTimeMapper } from "../../utils/LocalDateTimeMapper";
+import { loanAmountMapper, loanStatusMapper, loanTypeMapper } from "../utils/Mapper";
+import { LocalDateTimeMapper } from "../../../utils/LocalDateTimeMapper";
 
 // This component returns and renders all employee's loan requests
 export const LoanHistory = ({user})=>{

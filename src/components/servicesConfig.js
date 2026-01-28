@@ -21,7 +21,7 @@ import { FaCalendarAlt, FaHome } from "react-icons/fa";
 import { Annuaire } from "./Directory";
 import { Expenses } from "../features/expenses/Expenses";
 import { HRGuide } from "./HRGuide";
-import { Loan } from "../features/loans/Loan";
+import { Loan } from "../features/loans/Main";
 import GroupRemoveIcon from '@mui/icons-material/GroupRemove';
 import RealEstateAgentIcon from '@mui/icons-material/RealEstateAgent';
 import PaymentsIcon from '@mui/icons-material/Payments';

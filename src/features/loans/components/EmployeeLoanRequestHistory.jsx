@@ -1,11 +1,11 @@
 import { Box, Button, CircularProgress, InputAdornment, Table, TableBody, TableCell, TableHead, TableRow, TextField, Toolbar } from "@mui/material";
 import { useEffect, useState } from "react"
-import { getAllPendingRequests } from "../../services/LoanService";
-import { loanAmountMapper, loanStatusMapper, loanTypeMapper } from "./utils/Mapper";
+import { getAllPendingRequests } from "../../../services/LoanService";
+import { loanAmountMapper, loanStatusMapper, loanTypeMapper } from "../utils/Mapper";
 import { Check, X } from "lucide-react";
-import { LoanApprovalDialog } from "./dialogs/LoanApprovaDialog";
-import { LocalDateTimeMapper } from "../../utils/LocalDateTimeMapper";
-import { LoanRejectionDialog } from "./dialogs/LoanRejectionDialog";
+import { LoanApprovalDialog } from "../dialogs/LoanApprovaDialog";
+import { LocalDateTimeMapper } from "../../../utils/LocalDateTimeMapper";
+import { LoanRejectionDialog } from "../dialogs/LoanRejectionDialog";
 import { Search } from "@mui/icons-material";
 
 export const EmployeeLoanRequests = ()=>{
