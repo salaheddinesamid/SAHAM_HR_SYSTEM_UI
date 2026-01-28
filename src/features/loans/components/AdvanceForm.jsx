@@ -85,7 +85,7 @@ export const AdvanceForm = () =>{
                         </Alert>
                     </Snackbar>
                     
-                    <h4>Demande de Prêt</h4>
+                    <h4>Demande d'avance sur salaire</h4>
                     <div className="row mt-3">
                         <div className="col">
                             <TextField
