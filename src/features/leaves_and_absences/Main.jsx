@@ -29,7 +29,7 @@ export const LeavesAndAbsences = () => {
       </Suspense> },
     { id: 2, name: "Nouvelle Demande", view: <Request user={user}/> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},
     { id: 8, name: "Mes congés", view: <MyLeaves user={user}/> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},
-    { id: 3, name: "Status des demandes", view: <Suspense fallback={<CircularProgress/>}>
+    { id: 3, name: "Statut des demandes", view: <Suspense fallback={<CircularProgress/>}>
       <EmployeeRequestsHistory />
     </Suspense> , allowedRoles:["EMPLOYEE","MANAGER","HR"]},
     { id: 4, name: "Les demandes de mon équipe", view: <SubordinateRequestsHistory manager={user}/> , allowedRoles:["MANAGER"]},
