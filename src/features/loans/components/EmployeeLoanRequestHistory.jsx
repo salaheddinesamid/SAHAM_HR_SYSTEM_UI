@@ -150,7 +150,7 @@ export const EmployeeLoanRequests = ()=>{
                 </Toolbar>
                     <Table>
                         <TableHead>
-                            <TableCell><b>Demande par</b></TableCell>
+                            <TableCell><b>Demandé par</b></TableCell>
                             <TableCell><b>Date de soumission</b></TableCell>
                             <TableCell><b>Type de demande</b></TableCell>
                             <TableCell><b>Montant (MAD)</b></TableCell>
@@ -164,7 +164,7 @@ export const EmployeeLoanRequests = ()=>{
                         <TableBody>
                         {filteredRequests && filteredRequests   .map((r)=>(
                             <TableRow>
-                                <TableCell>{r?.requestedBy}</TableCell>
+                                <TableCell>{r?.employeeDetails?.employeeName}</TableCell>
                                 <TableCell>{LocalDateTimeMapper(r?.issueDate)}</TableCell>
                                 <TableCell>{loanTypeMapper(r?.type)}</TableCell>
                                 <TableCell>{loanAmountMapper(r?.amount)}</TableCell>
