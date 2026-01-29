@@ -36,6 +36,9 @@ EmployeeApi.interceptors.response.use(
         } else if (error.response.errorCode === "JWT_EXPIRED"){
             handleExpiredJWT();
         } 
+        else if(!error.response){
+            return Promise.reject({message : " Le serveur est momentanément indisponible. Veuillez réessayer dans quelques instants."});
+        }
         else {
             // Server responded with an error
             // Return server error message or default to generic

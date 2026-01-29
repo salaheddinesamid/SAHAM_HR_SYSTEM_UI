@@ -32,8 +32,9 @@ DocumentAPI.interceptors.response.use(
             return Promise.reject({ message: "Request timed out. Please try again." });
         } else if (!error.response) {
             // Network error
-            return Promise.reject({ message: "Network Error. Please check your connection." });
-        } else if (error.response.errorCode === "JWT_EXPIRED"){
+            return Promise.reject({message : " Le serveur est momentanément indisponible. Veuillez réessayer dans quelques instants."});
+        } 
+        else if (error.response.errorCode === "JWT_EXPIRED"){
             handleExpiredJWT();
         } else {
             // Server responded with an error

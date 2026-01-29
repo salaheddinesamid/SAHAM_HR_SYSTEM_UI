@@ -75,7 +75,7 @@ export const AbsenceRequestForm = ({user})=>{
             
         }catch(err){
             console.log(err);
-            setError(err.message); // get the error message
+            setError(err?.message); // get the error message
         }finally{
             setLoading(false);
         }
