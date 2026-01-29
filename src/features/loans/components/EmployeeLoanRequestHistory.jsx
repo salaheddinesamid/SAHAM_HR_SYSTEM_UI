@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, InputAdornment, Table, TableBody, TableCell, TableHead, TableRow, TextField, Toolbar } from "@mui/material";
+import { Box, Button, CircularProgress, IconButton, InputAdornment, Table, TableBody, TableCell, TableHead, TableRow, TextField, Toolbar } from "@mui/material";
 import { useEffect, useState } from "react"
 import { getAllPendingRequests } from "../../../services/LoanService";
 import { loanAmountMapper, loanStatusMapper, loanTypeMapper } from "../utils/Mapper";
@@ -6,7 +6,9 @@ import { Check, X } from "lucide-react";
 import { LoanApprovalDialog } from "../dialogs/LoanApprovaDialog";
 import { LocalDateTimeMapper } from "../../../utils/LocalDateTimeMapper";
 import { LoanRejectionDialog } from "../dialogs/LoanRejectionDialog";
-import { Search } from "@mui/icons-material";
+import { FileDownload, Search } from "@mui/icons-material";
+import { LoanRequest } from "./LoanRequest";
+import { LoanRequestPdfGenerator } from "../../../services/LoanRequestPdfGenerator";
 
 export const EmployeeLoanRequests = ()=>{
 
@@ -15,6 +17,7 @@ export const EmployeeLoanRequests = ()=>{
     const [searchQuery,setSearchQuery] = useState("");
     const [currentStatusFilter,setCurrentStatusFilter] = useState("ALL");
     const [loading,setLoading] = useState(false);
+    const [downloadError, setDownloadError] = useState("");
     const [selectedRequest,setSelectedRequest] = useState(null);
     const [loanApprovalDialogOpen,setLoanApprovalDialogOpen] = useState(false);
     const [loanRejectionDialogOpen,setLoanRejectionDialogOpen] = useState(false);
@@ -67,6 +70,13 @@ export const EmployeeLoanRequests = ()=>{
 
     const handleFilterChange = (filter)=>{
         setCurrentStatusFilter(filter);
+    }
+    const handleGenerateLoanRequestPDF = async(loanRequest)=>{
+        try{
+            const res = LoanRequestPdfGenerator(loanRequest);
+        }catch(err){
+            setDownloadError(err);
+        }
     }
 
     // handle search and filter:
@@ -147,6 +157,7 @@ export const EmployeeLoanRequests = ()=>{
                             <TableCell><b>Motif</b></TableCell>
                             <TableCell><b>Status</b></TableCell>
                             <TableCell><b>Actions</b></TableCell>
+                            <TableCell>Télécharger le PDF</TableCell>
                             
                         </TableHead>
                         
@@ -174,6 +185,11 @@ export const EmployeeLoanRequests = ()=>{
                                         </Button>
                                     </>
                                 )}
+                                </TableCell>
+                                <TableCell>
+                                    <IconButton onClick={()=>handleGenerateLoanRequestPDF(r)}>
+                                        <FileDownload />
+                                    </IconButton>
                                 </TableCell>
                             </TableRow>
                         ))}
