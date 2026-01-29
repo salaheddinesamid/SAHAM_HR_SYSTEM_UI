@@ -21,7 +21,7 @@ export const applyLoan = async(email,requestDto)=>{
  * @returns 
  */
 export const getAllEmployeeRequests = async(email)=>{
-    const response = await LoanAPI.get("/employee/requests/get-all",{
+    const response = await LoanAPI.get("/requests/employee/get-all",{
         params : {
             email : email
         }

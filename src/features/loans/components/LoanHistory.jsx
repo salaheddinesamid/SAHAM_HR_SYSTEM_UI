@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react"
 import { getAllEmployeeRequests } from "../../../services/LoanService";
-import { CircularProgress, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { CircularProgress, IconButton, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { loanAmountMapper, loanStatusMapper, loanTypeMapper } from "../utils/Mapper";
 import { LocalDateTimeMapper } from "../../../utils/LocalDateTimeMapper";
+import { LoanRequestPdfGenerator } from "../../../services/LoanRequestPdfGenerator";
+import { FileDownload } from "@mui/icons-material";
 
 // This component returns and renders all employee's loan requests
 export const LoanHistory = ({user})=>{
@@ -15,12 +17,14 @@ export const LoanHistory = ({user})=>{
             setLoading(true);
             const res = await getAllEmployeeRequests(email);
             setRequests(res);
-
         }catch(err){
             console.log(err);
         }finally{
             setLoading(false);
         }
+    }
+    const handleGenerateLoanRequestPDF = async(loanRequest) =>{
+        const res = LoanRequestPdfGenerator(loanRequest);
     }
 
     useEffect(()=>{
@@ -44,6 +48,7 @@ export const LoanHistory = ({user})=>{
                         <TableCell><b>Montant (MAD)</b></TableCell>
                         <TableCell><b>Motif</b></TableCell>
                         <TableCell><b>Status</b></TableCell>
+                        <TableCell><b>Télécharger PDF</b></TableCell>
                     </TableHead>
                     <TableBody>
                         {requests.map((r)=>(
@@ -53,9 +58,15 @@ export const LoanHistory = ({user})=>{
                                 <TableCell>{loanAmountMapper(r?.amount)}</TableCell>
                                 <TableCell>{r?.motif }</TableCell>
                                 <TableCell>{(() => {
-                        const { message, color } = loanStatusMapper(r.status);
-                        return <span className={`badge ${color}`}>{message}</span>;
-                        })()}</TableCell>
+                                    const { message, color } = loanStatusMapper(r.status);
+                                    return <span className={`badge ${color}`}>{message}</span>;
+                                    })()}
+                                </TableCell>
+                                <TableCell>
+                                    <IconButton onClick={()=>handleGenerateLoanRequestPDF(r)}>
+                                        <FileDownload />
+                                    </IconButton>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
