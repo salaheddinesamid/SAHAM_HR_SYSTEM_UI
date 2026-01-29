@@ -64,7 +64,7 @@ export const AltLogin = () => {
       if (res) postAuthentication(bearerToken, userDetails);
     } catch (err) {
       setLoginError(
-        err?.response?.data?.message || "Identifiants incorrects"
+        err?.message || "Identifiants incorrects"
       );
     } finally {
       setLoading(false);

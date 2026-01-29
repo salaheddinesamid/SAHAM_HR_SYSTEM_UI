@@ -24,7 +24,7 @@ AuthAPI.interceptors.response.use(
         }
         if(!error.response){
             console.error("Network Error",error);
-            return Promise.reject({message : "Network Error, Please try again"});
+            return Promise.reject({message : " Le serveur est momentanément indisponible. Veuillez réessayer dans quelques instants."});
         }
         
     }
