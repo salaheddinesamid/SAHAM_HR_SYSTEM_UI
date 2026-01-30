@@ -43,7 +43,7 @@ export const LoanHistory = ({user})=>{
             const res = await getAllEmployeeRequests(email, page, size);
             setRequests(res?.content || []);
             setFilteredRequests(res?.content || []);
-            setTotalElements(res?.totalElements || 0)
+            setTotalElements(res?.totalElements || 0);
         }catch(err){
             console.log(err);
         }finally{
