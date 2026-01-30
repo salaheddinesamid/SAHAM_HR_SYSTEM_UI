@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, IconButton, InputAdornment, Table, TableBody, TableCell, TableHead, TableRow, TextField, Toolbar } from "@mui/material";
+import { Box, Button, CircularProgress, IconButton, InputAdornment, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, TextField, Toolbar } from "@mui/material";
 import { useEffect, useState } from "react"
 import { getAllPendingRequests } from "../../../services/LoanService";
 import { loanAmountMapper, loanStatusMapper, loanTypeMapper } from "../utils/Mapper";
@@ -7,15 +7,19 @@ import { LoanApprovalDialog } from "../dialogs/LoanApprovaDialog";
 import { LocalDateTimeMapper } from "../../../utils/LocalDateTimeMapper";
 import { LoanRejectionDialog } from "../dialogs/LoanRejectionDialog";
 import { FileDownload, Search } from "@mui/icons-material";
-import { LoanRequest } from "./LoanRequest";
 import { LoanRequestPdfGenerator } from "../../../services/LoanRequestPdfGenerator";
 
 export const EmployeeLoanRequests = ()=>{
 
     const [requests,setRequests] = useState([]);
     const [filteredRequests,setFilteredRequest] = useState([]);
+    // Filter and Search
     const [searchQuery,setSearchQuery] = useState("");
     const [currentStatusFilter,setCurrentStatusFilter] = useState("ALL");
+    // Pagintation
+    const [currentPage, setCuerrentPage] = useState(0);
+    const [currentSize, setCurrentSize] = useState(5);
+    const [totalElements, setTotalElements] = useState(0);
     const [loading,setLoading] = useState(false);
     const [downloadError, setDownloadError] = useState("");
     const [selectedRequest,setSelectedRequest] = useState(null);
@@ -31,12 +35,13 @@ export const EmployeeLoanRequests = ()=>{
     ];
 
     // fetch pending loan requests
-    const fetchEmployeeRequests = async()=>{
+    const fetchEmployeeRequests = async(page, size)=>{
         try{
             setLoading(true);
-            const res = await getAllPendingRequests();
-            setRequests(res);
-            setFilteredRequest(res);
+            const res = await getAllPendingRequests(page, size);
+            setRequests(res?.content || []);
+            setFilteredRequest(res?.content || []);
+            setTotalElements(res?.totalElements);
         }catch(err){
             console.log(err);
         }finally{
@@ -67,6 +72,11 @@ export const EmployeeLoanRequests = ()=>{
         setSelectedRequest(null);
         setLoanRejectionDialogOpen(false);
     }
+    // handle change number of rows per page
+    const changeRowsPerPage = (e) =>{
+        setCurrentSize(parseInt(e.target.value));
+        setCuerrentPage(0);
+    }
 
     const handleFilterChange = (filter)=>{
         setCurrentStatusFilter(filter);
@@ -94,9 +104,10 @@ export const EmployeeLoanRequests = ()=>{
 
     },[searchQuery, currentStatusFilter, requests])
 
+    // handle fetch requests
     useEffect(()=>{
         fetchEmployeeRequests();
-    },[])
+    },[currentPage, currentSize])
     return(
         <div className="row">
             {loading && requests.length === 0 && (
@@ -193,6 +204,15 @@ export const EmployeeLoanRequests = ()=>{
                                 </TableCell>
                             </TableRow>
                         ))}
+                        <TablePagination
+                        rowsPerPageOptions={[5, 10, 25]}
+                        component="div"
+                        count={totalElements}
+                        rowsPerPage={currentSize}
+                        page={currentPage}
+                        onPageChange={(e, newPage)=> setCuerrentPage(newPage)}
+                        onRowsPerPageChange={changeRowsPerPage}
+                        />
                     </TableBody>
                     <LoanApprovalDialog open={loanApprovalDialogOpen} onClose={handleCloseApprovalDialog} request={selectedRequest} onSuccess={fetchEmployeeRequests}/>
                     <LoanRejectionDialog open={loanRejectionDialogOpen} onClose={handleCloseRejectionDialog} request={selectedRequest} onSuccess={fetchEmployeeRequests}/>

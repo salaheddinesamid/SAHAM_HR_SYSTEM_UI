@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { getAllEmployeeRequests } from "../../../services/LoanService";
-import { Box, Button, CircularProgress, IconButton, InputAdornment, Table, TableBody, TableCell, TableHead, TableRow, TextField, Toolbar } from "@mui/material";
+import { Box, Button, CircularProgress, IconButton, InputAdornment, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, TextField, Toolbar } from "@mui/material";
 import { loanAmountMapper, loanStatusMapper, loanTypeMapper } from "../utils/Mapper";
 import { LocalDateTimeMapper } from "../../../utils/LocalDateTimeMapper";
 import { LoanRequestPdfGenerator } from "../../../services/LoanRequestPdfGenerator";
@@ -23,18 +23,27 @@ export const LoanHistory = ({user})=>{
     // search and filter:
     const [currentFilter, setCurrentFilter] = useState("ALL")
     const [searchQuery, setSearchQuery] = useState("");
+    // Pagination:
+    const [currentPage, setCurrentPage] = useState(0);
+    const [currentSize, setCurrentSize] = useState(5);
+    const [totalElements, setTotalElements] = useState(0);
+    const changeRowsPerPage = (e)=>{
+        setCurrentSize(parseInt(e.target.value, 10));
+        setCurrentPage(0);
+    }
 
     const handleFilterChange = (status) =>{
         setCurrentFilter(status);
     }
 
-    const fetchRequests = async()=>{
+    const fetchRequests = async(page, size)=>{
         const email = user?.email;
         try{
             setLoading(true);
-            const res = await getAllEmployeeRequests(email);
-            setRequests(res || []);
-            setFilteredRequests(res || []);
+            const res = await getAllEmployeeRequests(email, page, size);
+            setRequests(res?.content || []);
+            setFilteredRequests(res?.content || []);
+            setTotalElements(res?.totalElements || 0)
         }catch(err){
             console.log(err);
         }finally{
@@ -45,9 +54,10 @@ export const LoanHistory = ({user})=>{
         const res = LoanRequestPdfGenerator(loanRequest);
     }
 
+    // handle fetch requests
     useEffect(()=>{
-        fetchRequests();
-    },[user])
+        fetchRequests(currentPage, currentSize);
+    },[currentPage, currentSize])
 
     // handle filter and search
     useEffect(()=>{
@@ -146,6 +156,15 @@ export const LoanHistory = ({user})=>{
                                 </TableRow>
                             ))}
                         </TableBody>
+                        <TablePagination
+                        rowsPerPageOptions={[5, 10, 25]}
+                        component="div"
+                        count={totalElements}
+                        rowsPerPage={currentSize}
+                        page={currentPage}
+                        onPageChange={(e, newPage)=> setCurrentPage(newPage)}
+                        onRowsPerPageChange={changeRowsPerPage}
+                        />
                     </Table>
                 </div>
             )}

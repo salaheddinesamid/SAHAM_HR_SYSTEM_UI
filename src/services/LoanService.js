@@ -17,13 +17,16 @@ export const applyLoan = async(email,requestDto)=>{
 /**
  * Fetch all employee's loan requests.
  * @param {string} email 
- * @param {string} token
+ * @param {int} page
+ * @param {int} size
  * @returns 
  */
-export const getAllEmployeeRequests = async(email)=>{
+export const getAllEmployeeRequests = async(email, page, size)=>{
     const response = await LoanAPI.get("/requests/employee/get-all",{
         params : {
-            email : email
+            email : email,
+            pageNumber : page,
+            pageSize : size
         }
     });
     return response.data;
@@ -32,8 +35,13 @@ export const getAllEmployeeRequests = async(email)=>{
  * 
  * @returns 
  */
-export const getAllPendingRequests  = async()=>{
-    const res = await LoanAPI.get("/requests/hr/get-all");
+export const getAllPendingRequests  = async(page, size)=>{
+    const res = await LoanAPI.get("/requests/hr/get-all", {
+        params : {
+            pageNumber : page,
+            pageSize : size
+        }
+    });
     return res.data;
 }
 /**
