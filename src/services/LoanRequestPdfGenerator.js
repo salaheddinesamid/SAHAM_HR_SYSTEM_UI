@@ -3,6 +3,16 @@ import sahamLogo from "../logo_bg.png";
 import autoTable from "jspdf-autotable";
 import { LocalDateTimeMapper } from "../utils/LocalDateTimeMapper";
 
+const mapTitle = (type)=>{
+    switch (type){
+        case "NORMAL":
+            return "DEMANDE DE PRET";
+        case "ADVANCE":
+            return "DEMANDE D'AVANCE";
+        default:
+            return ''
+    }
+}
 export const LoanRequestPdfGenerator = (loanRequest) =>{
     try{
         const doc = new jsPDF();
@@ -22,15 +32,20 @@ export const LoanRequestPdfGenerator = (loanRequest) =>{
         }
         //
         const drawPDF = () =>{
-            const title = `DEMANDE DE PRET OU AVANCE`;
+            const title = mapTitle(loanRequest?.type);
             doc.setFontSize(18);
             doc.setTextColor(...primaryColor);
             doc.setFont("helvetica", "bold");
             doc.text(title, 105, 25, {align : "center"});
             // General Information:
             doc.setFontSize(11);
-            doc.setFont("helvetica", "bold");
-            doc.text(`Nom et Prénom: ${loanRequest?.requestedBy}`, 15, 45);
+            doc.setFont("helvetica", "normal");
+            doc.setTextColor(...secondaryText);
+            doc.text(`N de Reference: ${loanRequest?.refNumber || "Indisponible"}`, 15, 35)
+            doc.text(`Nom et Prénom: ${loanRequest?.employeeDetails?.employeeName}`, 15, 45);
+            doc.text(`Matricule: ${loanRequest?.employeeDetails?.employeeMatriculation}`, 15, 52)
+            doc.text(`Poste: ${loanRequest?.employeeDetails?.occupation}`, 15, 59)
+            doc.text(`Entite: ${loanRequest?.employeeDetails?.entity}`, 15, 66)
 
             // Loan request details:
             const detailsColumns = ["Date", "Montant (DH)", "Motif"]
@@ -49,8 +64,8 @@ export const LoanRequestPdfGenerator = (loanRequest) =>{
                 },
                 columnStyles : {
                     0 : {halign : "center"},
-                    1 : { halign : "left" },
-                    2 : { halign  : "right"}
+                    1 : { halign : "center" },
+                    2 : { halign  : "center"}
                 }
             });
 
@@ -71,6 +86,11 @@ export const LoanRequestPdfGenerator = (loanRequest) =>{
                     fontStyle : "bold"
                 }
             });
+            // Footer section
+            doc.setFontSize(9);
+            doc.setFont("helvetica", "italic");
+            doc.setTextColor(...secondaryText);
+            doc.text("Saham HR System © 2025", 105, 285, { align: "center" });
 
             doc.save(`demande.pdf`);
         }
