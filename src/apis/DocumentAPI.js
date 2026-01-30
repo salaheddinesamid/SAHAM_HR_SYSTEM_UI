@@ -34,7 +34,7 @@ DocumentAPI.interceptors.response.use(
             // Network error
             return Promise.reject({message : " Le serveur est momentanément indisponible. Veuillez réessayer dans quelques instants."});
         } 
-        else if (error.response.errorCode === "JWT_EXPIRED"){
+        else if (error?.response?.data?.errorCode === "JWT_EXPIRED"){
             handleExpiredJWT();
         } else {
             // Server responded with an error

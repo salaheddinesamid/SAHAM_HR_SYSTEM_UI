@@ -23,7 +23,7 @@ PayrollAPI.interceptors.response.use(
     (response) => response,
     // Handle Error response:
     (error) =>{
-        if (error.response.errorCode === "JWT_EXPIRED"){
+        if (error?.response?.data?.errorCode === "JWT_EXPIRED"){
             handleExpiredJWT();
         }
     }
