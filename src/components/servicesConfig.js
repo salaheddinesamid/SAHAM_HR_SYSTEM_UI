@@ -106,11 +106,5 @@ export const servicesConfig = [
     subServices: [
       { id: 1, name: "Dashboard RH", icon: <ChartNoAxesCombined />, color: "#E0F7FA" , view: <AnalyticsDashboard/>},
     ],
-  },
-  {
-    id: 7, 
-    name: "Profile", 
-    view: <ProfileManagement/>,
-    color: "#E0F7FA", // Light cyan
   }
 ];
