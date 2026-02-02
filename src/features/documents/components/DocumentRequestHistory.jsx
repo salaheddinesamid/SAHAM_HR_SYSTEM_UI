@@ -105,6 +105,7 @@ export const DocumentRequestHistory = ({ user }) => {
       setRequests(response?.content || []);
       setFilteredRequests(response?.content || []);
       setTotalElements(response?.totalElements || 0);
+      console.log(response);
     } catch (err) {
       console.error(err);
       setError(err);
@@ -200,6 +201,7 @@ export const DocumentRequestHistory = ({ user }) => {
             totalElements={totalElements} 
             pageSize={pageSize} 
             handleChangeRowsPerPage={handleChangeRowsPerPage}
+            currentPageNumber={currentPageNumber}
             setCurrentPageNumber={setCurrentPageNumber}/>
           </div>
         </div>
