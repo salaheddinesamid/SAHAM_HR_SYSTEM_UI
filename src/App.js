@@ -47,7 +47,6 @@ function App() {
         </ServiceProvider>
         }/>
       <Route path='/login' element={<AltLogin/>}/>
-      <Route path='/alt_login' element={<AltLogin/>}/>
       <Route path='/websocket' element={<WebSocketTester/>}/>
      </Routes>
     </BrowserRouter>
