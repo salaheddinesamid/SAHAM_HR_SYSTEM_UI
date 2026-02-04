@@ -7,7 +7,7 @@ import { LoanApprovalDialog } from "../dialogs/LoanApprovaDialog";
 import { LocalDateTimeMapper } from "../../../utils/LocalDateTimeMapper";
 import { LoanRejectionDialog } from "../dialogs/LoanRejectionDialog";
 import { FileDownload, Search } from "@mui/icons-material";
-import { LoanRequestPdfGenerator } from "../../../services/LoanRequestPdfGenerator";
+import { LoanRequestPdfGenerator } from "../utils/LoanRequestPdfGenerator";
 
 export const EmployeeLoanRequests = ()=>{
 

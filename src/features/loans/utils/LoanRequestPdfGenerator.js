@@ -1,7 +1,7 @@
 import jsPDF from "jspdf";
-import sahamLogo from "../logo_bg.png";
+import sahamLogo from "../../../logo_bg.png";
 import autoTable from "jspdf-autotable";
-import { LocalDateTimeMapper } from "../utils/LocalDateTimeMapper";
+import { LocalDateTimeMapper } from "../../../utils/LocalDateTimeMapper";
 
 const mapTitle = (type)=>{
     switch (type){
@@ -41,7 +41,7 @@ export const LoanRequestPdfGenerator = (loanRequest) =>{
             doc.setFontSize(11);
             doc.setFont("helvetica", "normal");
             doc.setTextColor(...secondaryText);
-            doc.text(`N de Reference: ${loanRequest?.refNumber || "Indisponible"}`, 15, 35)
+            doc.text(`N° de Reference: ${loanRequest?.refNumber || "Indisponible"}`, 15, 35)
             doc.text(`Nom et Prénom: ${loanRequest?.employeeDetails?.employeeName}`, 15, 45);
             doc.text(`Matricule: ${loanRequest?.employeeDetails?.employeeMatriculation}`, 15, 52)
             doc.text(`Poste: ${loanRequest?.employeeDetails?.occupation}`, 15, 59)

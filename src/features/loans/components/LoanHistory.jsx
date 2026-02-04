@@ -3,9 +3,9 @@ import { getAllEmployeeRequests } from "../../../services/LoanService";
 import { Box, Button, CircularProgress, IconButton, InputAdornment, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, TextField, Toolbar } from "@mui/material";
 import { loanAmountMapper, loanStatusMapper, loanTypeMapper } from "../utils/Mapper";
 import { LocalDateTimeMapper } from "../../../utils/LocalDateTimeMapper";
-import { LoanRequestPdfGenerator } from "../../../services/LoanRequestPdfGenerator";
 import { FileDownload } from "@mui/icons-material";
 import { Search } from "lucide-react";
+import { LoanRequestPdfGenerator } from "../utils/LoanRequestPdfGenerator";
 
 const filters = [
     { id: 1, name: "ALL", label: "Tous" },
