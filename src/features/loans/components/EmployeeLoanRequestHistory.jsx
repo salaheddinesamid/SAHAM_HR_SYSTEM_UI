@@ -168,7 +168,7 @@ export const EmployeeLoanRequests = ()=>{
                             <TableCell><b>Motif</b></TableCell>
                             <TableCell><b>Status</b></TableCell>
                             <TableCell><b>Actions</b></TableCell>
-                            <TableCell>Télécharger le PDF</TableCell>
+                            <TableCell><b>Télécharger le PDF</b></TableCell>
                             
                         </TableHead>
                         

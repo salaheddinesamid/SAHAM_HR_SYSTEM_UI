@@ -1,6 +1,7 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import sahamLogo from "../logo_bg.png"; 
+import { LocalDateTimeMapper } from "../utils/LocalDateTimeMapper";
 
 export const ExpensePdfGenerator = (expense) => {
   try {
@@ -35,15 +36,16 @@ export const ExpensePdfGenerator = (expense) => {
       doc.setFont("helvetica", "normal");
       doc.setTextColor(...secondaryText);
       doc.text(`Nom et Prénom: ${expense.issueBy || "—"}`, 15, 45);
-      doc.text(`Date de Motif: ${expense.date || "—"}`, 15, 52);
-      doc.text(`Créé le: ${new Date(expense.createdAt).toLocaleString()}`, 15, 59);
-      doc.text(`Devise: ${expense.currency}`, 15, 66);
-      doc.text(`Motif: ${expense.motif || "—"}`, 15, 80);
+      doc.text(`Créé le: ${new Date(expense.createdAt).toLocaleString()}`, 15, 52);
+      doc.text(`Devise: ${expense.currency}`, 15, 59);
+      doc.text(`Motif: ${expense.motif || "—"}`, 15, 66);
 
       // ===== Expense Items Table =====
+      doc.setFont("helvetica", "bold");
+      doc.text("DETAIL DE DEPENSE", 105, 70, {align : "center"});
       const expenseColumns = ["Date", "Désignation", "Montant", "Facture"];
       const expenseRows = expense.expenseItems.map((item) => [
-        item.date,
+        LocalDateTimeMapper(item?.date),
         item.designation,
         expense.totalAmount.toLocaleString("fr-MA", {
           style: "currency",
