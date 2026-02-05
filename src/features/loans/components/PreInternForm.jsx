@@ -10,7 +10,8 @@ export const PreInternRequestForm = ()=>{
     const [requestDto, setRequestDto] = useState({
         loanType : "NORMAL",
         amount : 0,
-        motif : ""
+        motif : "",
+        dateOfCollection : ""
     })
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -73,7 +74,7 @@ export const PreInternRequestForm = ()=>{
                     
                     <h4>Demande de Prêt</h4>
                     <div className="row mt-3">
-                        <div className="col">
+                        <div className="col-xl-8">
                             <TextField
                             label="Montant"
                             type="number"
@@ -84,7 +85,16 @@ export const PreInternRequestForm = ()=>{
                             onChange={handleChange}
                             placeholder="Montant"/>
                         </div>
-                        <div className="col">
+                        <div className="col-xl-3">
+                            <TextField 
+                            type="date" 
+                            label="date de prélèvement" 
+                            InputLabelProps={{shrink : true}}
+                            value={requestDto.dateOfCollection}
+                            name="dateOfCollection" 
+                            onChange={handleChange}/>
+                        </div>
+                        <div className="col-xl-4 mt-3">
                             <textarea class="form-control" name="motif" onChange={handleChange} placeholder="Motif" id="exampleFormControlTextarea1" rows="3"></textarea>
                         </div>
                     </div>

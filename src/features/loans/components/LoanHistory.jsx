@@ -132,6 +132,7 @@ export const LoanHistory = ({user})=>{
                             <TableCell><b>Type de demande</b></TableCell>
                             <TableCell><b>Montant (MAD)</b></TableCell>
                             <TableCell><b>Motif</b></TableCell>
+                            <TableCell><b>Date de prélèvement</b></TableCell>
                             <TableCell><b>Status</b></TableCell>
                             <TableCell><b>Télécharger PDF</b></TableCell>
                         </TableHead>
@@ -143,6 +144,7 @@ export const LoanHistory = ({user})=>{
                                     <TableCell>{loanTypeMapper(r?.type)}</TableCell>
                                     <TableCell>{loanAmountMapper(r?.amount)}</TableCell>
                                     <TableCell>{r?.motif }</TableCell>
+                                    <TableCell>{LocalDateTimeMapper(r?.dateOfCollection)}</TableCell>
                                     <TableCell>{(() => {
                                         const { message, color } = loanStatusMapper(r.status);
                                         return <span className={`badge ${color}`}>{message}</span>;

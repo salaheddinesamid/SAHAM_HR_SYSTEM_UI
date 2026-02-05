@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, IconButton, InputAdornment, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, TextField, Toolbar } from "@mui/material";
+import { Box, Button, CircularProgress, IconButton, InputAdornment, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, TextField, Toolbar, Tooltip, Typography } from "@mui/material";
 import { useEffect, useState } from "react"
 import { getAllPendingRequests } from "../../../services/LoanService";
 import { loanAmountMapper, loanStatusMapper, loanTypeMapper } from "../utils/Mapper";
@@ -159,66 +159,110 @@ export const EmployeeLoanRequests = ()=>{
                         </Box>
                     </Box>
                 </Toolbar>
-                    <Table>
-                        <TableHead>
-                            <TableCell><b>Demandé par</b></TableCell>
-                            <TableCell><b>Date de soumission</b></TableCell>
-                            <TableCell><b>Type de demande</b></TableCell>
-                            <TableCell><b>Montant (MAD)</b></TableCell>
-                            <TableCell><b>Motif</b></TableCell>
-                            <TableCell><b>Status</b></TableCell>
-                            <TableCell><b>Actions</b></TableCell>
-                            <TableCell><b>Télécharger le PDF</b></TableCell>
-                            
-                        </TableHead>
-                        
-                        <TableBody>
-                        {filteredRequests && filteredRequests   .map((r)=>(
-                            <TableRow>
-                                <TableCell>{r?.employeeDetails?.employeeName}</TableCell>
-                                <TableCell>{LocalDateTimeMapper(r?.issueDate)}</TableCell>
-                                <TableCell>{loanTypeMapper(r?.type)}</TableCell>
-                                <TableCell>{loanAmountMapper(r?.amount)}</TableCell>
-                                <TableCell>{r?.motif}</TableCell>
-                                <TableCell>{(() => {
-                                    const { message, color } = loanStatusMapper(r.status);
-                                    return <span className={`badge ${color}`}>{message}</span>;
-                                    })()}
-                                </TableCell>
-                                <TableCell>
-                                    {r?.status === "IN_PROCESS" && (
-                                        <>
-                                        <Button variant="contained" color="success" size="small" onClick={()=> handleOpenApprovalDialog(r)}>
-                                            <Check size={16} />
-                                        </Button>
-                                        <Button variant="contained" color="error" size="small" className="ms-1" onClick={()=> handleOpenRejectionDialog(r)}>
-                                            <X size={16} />
-                                        </Button>
-                                    </>
-                                )}
-                                </TableCell>
-                                <TableCell>
-                                    <IconButton onClick={()=>handleGenerateLoanRequestPDF(r)}>
-                                        <FileDownload />
-                                    </IconButton>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                        <TablePagination
-                        rowsPerPageOptions={[5, 10, 25]}
-                        component="div"
-                        count={totalElements}
-                        rowsPerPage={currentSize}
-                        page={currentPage}
-                        onPageChange={(e, newPage)=> setCuerrentPage(newPage)}
-                        onRowsPerPageChange={changeRowsPerPage}
-                        />
-                    </TableBody>
-                    <LoanApprovalDialog open={loanApprovalDialogOpen} onClose={handleCloseApprovalDialog} request={selectedRequest} onSuccess={fetchEmployeeRequests}/>
-                    <LoanRejectionDialog open={loanRejectionDialogOpen} onClose={handleCloseRejectionDialog} request={selectedRequest} onSuccess={fetchEmployeeRequests}/>
-                </Table>
-                </div>
-            )}
-        </div>
-    )
+                    <Box sx={{ width: '100%', overflowX: 'auto' }}>
+                        <Table hover>
+                            <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
+                                <TableRow>
+                                    <TableCell><b>Demandé par</b></TableCell>
+                                    <TableCell><b>Date de soumission</b></TableCell>
+                                    <TableCell><b>Type</b></TableCell>
+                                    <TableCell align="right"><b>Montant (MAD)</b></TableCell>
+                                    <TableCell><b>Motif</b></TableCell>
+                                    <TableCell><b>Prélèvement</b></TableCell>
+                                    <TableCell align="center"><b>Status</b></TableCell>
+                                    <TableCell align="center"><b>PDF</b></TableCell>
+                                    <TableCell align="right"><b>Actions</b></TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                
+                                {filteredRequests && filteredRequests.length > 0 ? (
+                                    filteredRequests.map((r) => {
+                                        const { message, color } = loanStatusMapper(r.status);
+                                        
+                                        return (
+                                        <TableRow key={r.id || r.issueDate} hover>
+                                            <TableCell sx={{ fontWeight: 500 }}>
+                                                {r?.employeeDetails?.employeeName}
+                                            </TableCell>
+                                            <TableCell>{LocalDateTimeMapper(r?.issueDate)}</TableCell>
+                                            <TableCell>{loanTypeMapper(r?.type)}</TableCell>
+                                            <TableCell align="right" sx={{ fontFamily: 'monospace' }}>
+                                                {loanAmountMapper(r?.amount)}
+                                            </TableCell>
+                                            <TableCell>
+                                                <Tooltip title={r?.motif}>
+                                                    <span>{r?.motif?.length > 20 ? `${r.motif.substring(0, 20)}...` : r.motif}</span>
+                                                </Tooltip>
+                                            </TableCell>
+                                            <TableCell>{LocalDateTimeMapper(r?.dateOfCollection)}</TableCell>
+                                            <TableCell align="center">
+                                                <span className={`badge ${color}`} style={{ padding: '5px 10px', borderRadius: '4px' }}>
+                                                    {message}
+                                                </span>
+                                            </TableCell>
+                                            <TableCell align="center">
+                                                <Tooltip title="Télécharger">
+                                                    <IconButton onClick={() => handleGenerateLoanRequestPDF(r)} color="primary">
+                                                        <FileDownload />
+                                                    </IconButton>
+                                                </Tooltip>
+                                            </TableCell>
+                                            
+                                            <TableCell align="right">
+                                                {r?.status === "IN_PROCESS" && (
+                                                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
+                                                        <Tooltip title="Approuver">
+                                                            <Button variant="contained" color="success" size="small" onClick={() => handleOpenApprovalDialog(r)}>
+                                                                <Check size={16} />
+                                                            </Button>
+                                                        </Tooltip>
+                                                        <Tooltip title="Rejeter">
+                                                            <Button variant="contained" color="error" size="small" onClick={() => handleOpenRejectionDialog(r)}>
+                                                                <X size={16} />
+                                                            </Button>
+                                                        </Tooltip>
+                                                    </Box>
+                                                )}
+                                            </TableCell>
+                                        </TableRow>
+                                );
+                            })
+                        ) : (
+                        <TableRow>
+                            <TableCell colSpan={9} align="center" sx={{ py: 3 }}>
+                                <Typography variant="body2" color="textSecondary">Aucune demande trouvée</Typography>
+                            </TableCell>
+                        </TableRow>
+                    )}
+                </TableBody>
+            </Table>
+            
+            <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={totalElements}
+            rowsPerPage={currentSize}
+            page={currentPage}
+            onPageChange={(e, newPage) => setCuerrentPage(newPage)}
+            onRowsPerPageChange={changeRowsPerPage}
+            />
+            
+            <LoanApprovalDialog 
+            open={loanApprovalDialogOpen} 
+            onClose={handleCloseApprovalDialog} 
+            request={selectedRequest} 
+            onSuccess={fetchEmployeeRequests}
+            />
+            <LoanRejectionDialog 
+            open={loanRejectionDialogOpen} 
+            onClose={handleCloseRejectionDialog} 
+            request={selectedRequest} 
+            onSuccess={fetchEmployeeRequests}
+            />
+        </Box>
+    </div>
+)}
+</div>
+)
 }
