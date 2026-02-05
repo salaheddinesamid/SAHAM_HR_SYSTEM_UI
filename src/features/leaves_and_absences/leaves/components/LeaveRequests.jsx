@@ -100,6 +100,7 @@ export const LeaveRequests = ({user, filters})=>{
     // Search Part
     const [currentFilter, setCurrentFilter] = useState("ALL");
     const [searchQuery, setSearchQuery] = useState("");
+    const [startDate, setStartDate] = useState("");
 
     // Dialogs
     const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
@@ -141,8 +142,11 @@ export const LeaveRequests = ({user, filters})=>{
             filtered = 
                  filtered.filter((r)=> r.refNumber?.toLowerCase().includes(searchQuery.toLocaleLowerCase()));
         }
+        if(startDate !== ""){
+          filtered = filtered.filter((r)=> r?.startDate === startDate);
+        }
         setFilteredRequest(filtered);
-    }, [requests, searchQuery, currentFilter])
+    }, [requests, searchQuery, currentFilter, startDate])
 
     return (
     <div className="leave-history-container p-4">
@@ -184,6 +188,16 @@ export const LeaveRequests = ({user, filters})=>{
                   </Button>
                 ))}
               </Box>
+              <TextField 
+              type="date"
+              value={startDate}
+              label="Date de départ"
+              InputLabelProps={{shrink : true}}
+              onChange={(e)=> {
+                setStartDate(e.target.value);
+                console.log(startDate);
+              }}
+              />
             </Box>
           </Toolbar>
           <LeaveRequestsTable
