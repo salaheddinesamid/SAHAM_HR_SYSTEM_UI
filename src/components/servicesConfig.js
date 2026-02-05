@@ -44,6 +44,11 @@ export const servicesConfig = [
     color: "#F5F7FA"  // Light neutral gray-blue
   },
   {
+    id : 10,
+    name : "Profile",
+    view : <ProfileManagement/>
+  },
+  {
     id: 2,
     name: "Demandes administratives",
     icon: <FaCalendarAlt />,
