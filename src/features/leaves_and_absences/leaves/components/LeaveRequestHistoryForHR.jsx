@@ -27,8 +27,11 @@ export const LeaveRequestHistoryForHR = () => {
     const [loading, setLoading] = useState(false);
     const [requests, setRequests] = useState([]);
     const [filteredRequests, setFilteredRequests] = useState([]);
+
+    // Search and Filer
     const [searchQuery, setSearchQuery] = useState("");
     const [currentFilter, setCurrentFilter] = useState("ALL");
+
     const [selectedRequest, setSelectedRequest] = useState(null);
     const [approvalDialogOpen, setApprovalDialogOpen] = useState(false);
     const [rejectionDialogOpen, setRejectionDialogOpen] = useState(false);
@@ -116,7 +119,7 @@ export const LeaveRequestHistoryForHR = () => {
 
     if (searchQuery.trim() !== "") {
       filtered = filtered.filter((r) =>
-        r.refNumber?.toLowerCase().includes(searchQuery)
+        r.requestedBy?.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
 
@@ -143,7 +146,7 @@ export const LeaveRequestHistoryForHR = () => {
           <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", alignItems: "center" }}>
             <TextField
             size="small"
-            placeholder="Recherche par N° de Reference"
+            placeholder="Recherche par Nom et Prénom"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             InputProps={{

@@ -90,37 +90,31 @@ export const AbsenceRequestHistoryForHR = () => {
         
         if (searchQuery.trim() !== "") {
             filtered = filtered.filter((r) =>
-                r.refNumber?.includes(searchQuery)
+                r.requestedBy?.toLowerCase().includes(searchQuery.toLocaleLowerCase())
         );}
         
         setFilteredRequests(filtered);
     
     }, [searchQuery, requests, currentStatusFilter])
     
-    // Reject dialog:
-    // 
+    const handleOpenApprovalDialog = (req) => {
+      setCurrentRequest(req);
+      setApprovalDialogOpen(true);
+    };
     
-  
-  
-  const handleOpenApprovalDialog = (req) => {
-    setCurrentRequest(req);
-    setApprovalDialogOpen(true);
-  };
-
-  const handeCloseApprovalDialog = ()=>{
-    setCurrentRequest(null);
-    setApprovalDialogOpen(false);
-  }
-
-  const handleCloseRejectionDialog = ()=>{
-    setCurrentRequest(null);
-    setRejectDialogOpen(false);
-  }
-
-  const handleOpenRejectionDialog = (req) => {
-    setCurrentRequest(req);
-    setRejectDialogOpen(true);
-  };
+    const handeCloseApprovalDialog = ()=>{
+      setCurrentRequest(null);
+      setApprovalDialogOpen(false);
+    }
+    
+    const handleCloseRejectionDialog = ()=>{
+      setCurrentRequest(null);
+      setRejectDialogOpen(false)
+    }
+    const handleOpenRejectionDialog = (req) => {
+      setCurrentRequest(req);
+      setRejectDialogOpen(true);
+    };
 
   const handleDownloadDocument = async(path)=>{
     try{
@@ -164,7 +158,7 @@ export const AbsenceRequestHistoryForHR = () => {
             <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", alignItems: "center" }}>
               <TextField
               size="small"
-              placeholder="Recherche par N° de Reference"
+              placeholder="Recherche par Nom et Prénom"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               InputProps={{
