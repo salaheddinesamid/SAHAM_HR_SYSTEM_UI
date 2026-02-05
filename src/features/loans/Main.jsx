@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { LoanHistory } from "./components/LoanHistory";
 import { EmployeeLoanRequests } from "./components/EmployeeLoanRequestHistory";
-import { UserInformationCard } from "../profile/UserInformationCard";
 import { LoanRequest } from "./components/LoanRequest";
 
 
@@ -11,10 +10,9 @@ export const Loan = ()=>{
     const [selectedService, setSelectedService] = useState(1);
     // This array contains services provided and rendered by Loan service
     const services = [
-        {id: 1, name: "Profil", view: <UserInformationCard exception={"Without solde"} email={user?.email}/>},
-        {id: 2, name: "Nouvelle Demande", view: <LoanRequest/>},
-        {id: 3, name: "Statut des demandes", view:<LoanHistory user={user}/>},
-        {id: 4, name: "Les demandes en attente", view:<EmployeeLoanRequests/>}
+        {id: 1, name: "Nouvelle Demande", view: <LoanRequest/>},
+        {id: 2, name: "Statut des demandes", view:<LoanHistory user={user}/>},
+        {id: 3, name: "Les demandes en attente", view:<EmployeeLoanRequests/>}
     ]
     return(
         <div style={{ padding: "20px" }}>
@@ -31,9 +29,6 @@ export const Loan = ()=>{
                     {service.name}
                   </p>
                 ))}
-            </div>
-            <div>
-                {selectedService === 1 ? <></>: <UserInformationCard exception={"Without solde"} email={user?.email}/>}
             </div>
             <div className="row">
                 {services.map((s) => (s.id === selectedService ? s.view : ""))}

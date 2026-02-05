@@ -132,7 +132,6 @@ export const DocumentRequest = ()=>{
     }
 
     const services = [
-        {id: 1, name: "Profil", view: <UserInformationCard exception={"Without solde"} email={user?.email}/>},
         {id: 2, name: "Nouvelle Demande", view: <RequestForm user={user}/>},
         {id: 3, name: "Statut des demandes", view:<DocumentRequestHistory user={user}/>},
         {id: 4, name: "Les demandes des collaborateurs", view:<EmployeeDocumentRequestHistory/>},
@@ -152,9 +151,6 @@ export const DocumentRequest = ()=>{
                     {service.name}
                   </p>
                 ))}
-              </div>
-              <div>
-                {selectedService === 1 ? <></>: <UserInformationCard exception={"Without solde"} email={user?.email}/>}
               </div>
               <div className="row">
                 {services.map((s) => (s.id === selectedService ? s.view : ""))}
