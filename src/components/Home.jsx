@@ -13,7 +13,7 @@ export const Home = () => {
 
       <div className="home-content">
         <div className="">
-          {servicesConfig.map((s) => (
+          {servicesConfig.filter((s)=> s.id !== 10).map((s) => (
             s.id !== 1 && (
                 <div key={s.id} className="row">
                     <h3>{s.name}</h3>

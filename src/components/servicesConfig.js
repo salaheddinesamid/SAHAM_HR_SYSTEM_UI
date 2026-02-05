@@ -33,7 +33,8 @@ import { ProfileManagement } from "../features/profile/ProfileManagement";
 import { AnalyticsDashboard } from "../features/dashboard/AnalyticsDashboard";
 import { EmployeePayrolls } from "../features/payrolls/Payrolls";
 import { LeavesAndAbsences } from "../features/leaves_and_absences/Main";
-
+import { HrGuide } from "../features/guides/hr/Main";
+import { EmployeeGuide } from "../features/guides/employee/Main";
 
 export const servicesConfig = [
   { 
@@ -59,7 +60,6 @@ export const servicesConfig = [
       { id: 2, name: "Attestations & Documents", view: <DocumentRequest/>, icon : <FileText/>, color: "#E3F2FD" },
       { id: 5, name: "Bulletins de paie", view: <EmployeePayrolls/>, icon : <PaymentsIcon/> , color: "#E3F2FD" },
       { id: 3, name: "Prêts", view: <Loan/>, icon: <RealEstateAgentIcon />, color: "#E3F2FD" },
-      { id: 4, name: "Guide RH", view: <HRGuide/>, icon: <Info />, color: "#E3F2FD" },
       { id: 7, name: "Mes dépenses", view: <Expenses/> , icon: <Wallet />, color: "#E3F2FD" },
     ],
   },
@@ -71,9 +71,10 @@ export const servicesConfig = [
     subServices: [
       { id: 1, name: "Les bons plans Saham", icon: <Gift />, color: "#FFF3E0" },
       { id: 2, name: "Annuaire", icon: <Network />, color: "#FFF3E0", view:<Annuaire/> },
-      { id: 3, name: "Guide Collaborateur", icon : <RouteIcon/> ,color: "#FFF3E0" },
-      { id: 4, name: "Tribus", color: "#FFF3E0" },
-      { id: 5, name: "Evénements SAHAM", icon : <CelebrationIcon/>, color: "#FFF3E0" },
+      { id: 3, name: "Guide Collaborateur", icon : <RouteIcon/> ,color: "#FFF3E0", view: <EmployeeGuide/>},
+      { id: 4, name: "Guide RH", icon : <RouteIcon/> ,color: "#FFF3E0", view: <HrGuide/>},
+      { id: 5, name: "Tribus", color: "#FFF3E0" },
+      { id: 6, name: "Evénements SAHAM", icon : <CelebrationIcon/>, color: "#FFF3E0" },
     ],
   },
   {
