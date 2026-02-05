@@ -46,13 +46,14 @@ export const LoanRequestPdfGenerator = (loanRequest) =>{
             doc.text(`Matricule: ${loanRequest?.employeeDetails?.employeeMatriculation}`, 15, 52)
             doc.text(`Poste: ${loanRequest?.employeeDetails?.occupation}`, 15, 59)
             doc.text(`Entite: ${loanRequest?.employeeDetails?.entity}`, 15, 66)
+            doc.text(`Date: ${LocalDateTimeMapper(loanRequest?.issueDate)}`, 15, 73)
 
             // Loan request details:
-            const detailsColumns = ["Date", "Montant (DH)", "Motif"]
-            const detailsRows = [[LocalDateTimeMapper(loanRequest?.issueDate), loanRequest?.amount, loanRequest?.motif]];
+            const detailsColumns = [ "Montant (DH)", "Date de prélèvement", "Motif"]
+            const detailsRows = [[loanRequest?.amount , loanRequest?.dateOfCollection || '-', loanRequest?.motif]];
 
             autoTable(doc, {
-                startY : 75,
+                startY : 80,
                 head : [detailsColumns],
                 body : detailsRows,
                 theme : "grid",
