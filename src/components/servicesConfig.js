@@ -2,6 +2,7 @@ import {
   Activity, 
   ChartNoAxesCombined, 
   FileText, 
+  Folders, 
   Gift, 
   GraduationCap, 
   HandCoins, 
@@ -18,9 +19,10 @@ import AssessmentIcon from '@mui/icons-material/Assessment';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { Home } from "./Home";
 import { FaCalendarAlt, FaHome } from "react-icons/fa";
+import MapsHomeWorkIcon from '@mui/icons-material/MapsHomeWork';
 import { Annuaire } from "./Directory";
 import { Expenses } from "../features/expenses/Expenses";
-import { HRGuide } from "./HRGuide";
+import CarCrashIcon from '@mui/icons-material/CarCrash';
 import { Loan } from "../features/loans/Main";
 import GroupRemoveIcon from '@mui/icons-material/GroupRemove';
 import RealEstateAgentIcon from '@mui/icons-material/RealEstateAgent';
@@ -35,6 +37,13 @@ import { EmployeePayrolls } from "../features/payrolls/Payrolls";
 import { LeavesAndAbsences } from "../features/leaves_and_absences/Main";
 import { HrGuide } from "../features/guides/hr/Main";
 import { EmployeeGuide } from "../features/guides/employee/Main";
+import { CarInsuranceDetails } from "../features/advantages/insurance/Main";
+import { HomeInsuranceDetails } from "../features/advantages/home/Main";
+import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
+import { GreenCardDetails } from "../features/advantages/green_card/Main";
+import Groups2Icon from '@mui/icons-material/Groups2';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+
 
 export const servicesConfig = [
   { 
@@ -46,7 +55,7 @@ export const servicesConfig = [
   },
   {
     id : 10,
-    name : "Profile",
+    name : "Profil",
     view : <ProfileManagement/>
   },
   {
@@ -71,22 +80,25 @@ export const servicesConfig = [
     subServices: [
       { id: 1, name: "Les bons plans Saham", icon: <Gift />, color: "#FFF3E0" },
       { id: 2, name: "Annuaire", icon: <Network />, color: "#FFF3E0", view:<Annuaire/> },
-      { id: 3, name: "Guide Collaborateur", icon : <RouteIcon/> ,color: "#FFF3E0", view: <EmployeeGuide/>},
-      { id: 4, name: "Guide RH", icon : <RouteIcon/> ,color: "#FFF3E0", view: <HrGuide/>},
-      { id: 5, name: "Tribus", color: "#FFF3E0" },
+      { id: 3, name: "Guide Collaborateur", icon : <MenuBookIcon/> ,color: "#FFF3E0", view: <EmployeeGuide/>},
+      { id: 4, name: "Guide RH", icon : <Folders/> ,color: "#FFF3E0", view: <HrGuide/>},
+      { id: 5, name: "Tribus", color: "#FFF3E0", icon : <Groups2Icon/>},
       { id: 6, name: "Evénements SAHAM", icon : <CelebrationIcon/>, color: "#FFF3E0" },
     ],
   },
   {
     id: 4, 
-    name: "Santé & avantages", 
+    name: "Avantages & Assurances", 
     view: <></>,
     color: "#E8F5E9", // Light green
     subServices: [
-      { id: 1, name: "Infos médicales & d’urgence", icon: <HeartPulse />, color: "#E8F5E9" },
-      { id: 2, name: "Mes remboursements médicaux", icon: <AttachMoneyIcon />, color: "#E8F5E9" },
-      { id: 3, name: "Conventions & Tiers Payant", icon: <HandCoins />, color: "#E8F5E9" },
-      { id: 4, name: "Campagne de Vaccination", icon: <Syringe />, color: "#E8F5E9" },
+      { id: 1, name: "Assurance Auto", icon: <CarCrashIcon />, color: "#E8F5E9", view: <CarInsuranceDetails/>},
+      { id: 2, name: "Avantage Multirisque Habitation", icon: <MapsHomeWorkIcon />, color: "#E8F5E9", view: <HomeInsuranceDetails/>},
+      { id: 3, name: "Avantage Carte Verte", icon: <CardGiftcardIcon />, color: "#E8F5E9", view : <GreenCardDetails/>},
+      { id: 4, name: "Mes remboursements médicaux", icon: <AttachMoneyIcon />, color: "#E8F5E9" },
+      { id: 5, name: "Conventions & Tiers Payant", icon: <HandCoins />, color: "#E8F5E9" },
+      { id: 6, name: "Campagne de Vaccination", icon: <Syringe />, color: "#E8F5E9" },
+      
     ],
   },
   {

@@ -66,34 +66,7 @@ export const UserInformationCard = ({exception,email}) => {
   return (
     <div className="user-information-card card shadow p-3 rounded-3">
       <div className="card-body">
-        <div className="row">
-            <div className="col">
-                <p>Nom et Prénom : {user?.fullName}</p>
-            </div>
-            <div className="col">
-                <p>Poste : {user?.occupation}</p>
-            </div>
-            <div className="col">
-                <p>Matricule : {user?.matriculation}</p>
-            </div>
-            
-        </div>
-        <div className="row">
-            <div className="col">
-                <p>Date d'entrée : {user?.joinDate} </p>
-            </div>
-            <div className="col">
-                <p>Entité : {user?.entity}</p>
-            </div>
-            <div className="col">
-                <p>Responsable : {user?.managerName || "MME"}</p>
-            </div>
-        </div>
-        <div className="row">
-        </div>
-        {
-            exception !== "Without solde" ? <EmployeeBalance balanceDetails={user?.balanceDetails}/>: <></>
-        }
+         <EmployeeBalance balanceDetails={user?.balanceDetails}/>
       </div>
     </div>
   );
