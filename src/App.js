@@ -8,6 +8,8 @@ import { ServiceProvider, ViewProvider } from './context/ViewNavigatorContext';
 import { ProtectedRoute } from './ProtectedRoute';
 import WebSocketTester from './routes/WebSocketTest';
 import { AltLogin } from './routes/AltLogin';
+import { ForgotPassword } from './routes/ForgotPassword';
+import { SetupPassword } from './routes/SetupPassword';
 
 function App() {
 
@@ -47,6 +49,8 @@ function App() {
         </ServiceProvider>
         }/>
       <Route path='/login' element={<AltLogin/>}/>
+      <Route path='/forgot-password' element={<ForgotPassword/>}/>
+      <Route path='/setup-password' element={<SetupPassword/>}/>
       <Route path='/websocket' element={<WebSocketTester/>}/>
      </Routes>
     </BrowserRouter>

@@ -117,7 +117,7 @@ export const Login = () => {
     }
 
         <p className="login-footer mt-3">
-          Mot de passe oublié ? <a href="#">Réinitialiser</a>
+          Mot de passe oublié ? <a onClick={()=> navigate("/forgot-password")}>Réinitialiser</a>
         </p>
       </div>
     </div>
