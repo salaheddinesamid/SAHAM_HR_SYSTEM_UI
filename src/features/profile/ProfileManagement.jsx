@@ -1,41 +1,8 @@
+import { useEffect, useState } from "react";
 import "./styles/ProfileManagement.css";
+import { getEmployee } from "../../services/EmployeeService";
+import axios from "axios";
 
-const mockEmployee = {
-  firstName: "Salaheddine",
-  lastName: "Samid",
-  birthDate: "1995-06-12",
-  profilePicture: "https://i.pravatar.cc/150?img=12",
-  nationality: "Marocaine",
-  cin: "BE123456",
-  familySituation: "Marié",
-  childrenCount: 1,
-  address: "Casablanca, Maroc",
-
-  professionalDetails: {
-    matriculation: "SAHAMEMP001",
-    occupation: "Software Engineer",
-    department: "IT",
-    managerName: "Ciryane El Khiati",
-    joinDate: "2025-11-01",
-    site: "Casablanca",
-    professionalPhoneNumber: "+212 6 12 34 56 78",
-    professionalFixedPhoneNumber: "05 22 12 34 56",
-    extension: "1234",
-    professionalEmail: "samid@saham.com"
-  },
-
-  socialDetails: {
-    cnssNumber: "CNSS-789456",
-    cimrNumber: "CIMR-456123",
-    insuranceNumber: "MUT-123789"
-  },
-
-  contactDetails: {
-    emergencyContactName: "Amina Samid",
-    relationship: "Épouse",
-    emergencyPhone: "+212 6 98 76 54 32"
-  }
-};
 const Section = ({ title, children }) => (
   <div className="profile-section">
     <h3>{title}</h3>
@@ -50,15 +17,64 @@ const Field = ({ label, value }) => (
   </div>
 );
 
-const ProfileHeader = ({ employee }) => (
-  <div className="profile-header">
-    <img
-      src={employee.profilePicture}
-      alt="Profile"
-      className="profile-avatar"
-    />
-  </div>
-);
+const ProfileHeader = ({ employee }) => {
+  if (!employee) return null;
+
+  const hasProfilePic =
+    employee.profilePictureUrl &&
+    employee.profilePictureUrl.trim() !== "";
+
+  return (
+    <div className="profile-header">
+      {hasProfilePic ? (
+        <img
+          src={`/api/profile-picture/${employee.profilePictureUrl}`}
+          alt="Profile"
+          className="profile-avatar"
+        />
+      ) : (
+        <ProfilePictureUploader employeeId={employee.id} />
+      )}
+    </div>
+  );
+};
+const ProfilePictureUploader = ({ employeeId }) => {
+  const [file, setFile] = useState(null);
+
+  const handleUpload = async () => {
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      await axios.post(
+        `/api/profile-picture/upload/${employeeId}`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" }
+        }
+      );
+
+      window.location.reload(); // quick refresh
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  return (
+    <div>
+      <input
+        type="file"
+        onChange={(e) => setFile(e.target.files[0])}
+      />
+
+      <button onClick={handleUpload}>
+        Upload
+      </button>
+    </div>
+  );
+};
 
 
 const PersonalDetails = ({ data }) => (
@@ -106,13 +122,31 @@ const ContactDetails = ({ data }) => (
 );
 
 export const ProfileManagement = () => {
+  const [employeeDetails, setEmployeeDetails] = useState(null);
+
+  const fetchEmployeeDetails = async() =>{
+    const authUserEmail = JSON.parse(localStorage.getItem("userDetails"))?.email
+    try{
+      const res = await getEmployee(authUserEmail);
+      console.log(res);
+      setEmployeeDetails(res);
+    }catch(err){
+      console.log(err);
+    }
+    finally{
+      console.log(employeeDetails);
+    }
+  }
+  useEffect(()=>{
+    fetchEmployeeDetails();
+  },[])
   return (
     <div className="profile-container">
-      <ProfileHeader employee={mockEmployee} />
-      <PersonalDetails data={mockEmployee} />
-      <ProfessionalDetails data={mockEmployee.professionalDetails} />
-      <SocialDetails data={mockEmployee.socialDetails} />
-      <ContactDetails data={mockEmployee.contactDetails} />
+      <ProfileHeader employee={employeeDetails} />
+      <PersonalDetails data={employeeDetails} />
+      <ProfessionalDetails data={employeeDetails?.professionalDetails} />
+      <SocialDetails data={employeeDetails?.socialDetails} />
+      <ContactDetails data={employeeDetails?.contactDetails} />
     </div>
   );
 };

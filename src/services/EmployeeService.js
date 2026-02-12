@@ -6,7 +6,11 @@ import EmployeeApi from "../apis/EmployeeAPI"
  * @returns 
  */
 export const getEmployee = async(email)=>{
-    const response = await EmployeeApi.get(`/get?email=${email}`);
+    const response = await EmployeeApi.get('profile/get', {
+        params : {
+            email : email
+        }
+    });
     return response.data;
 }
 /**
