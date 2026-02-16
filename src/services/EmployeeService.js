@@ -76,3 +76,17 @@ export const verifyManager = async(managerName)=>{
 
     return response.data;
 }
+/**
+ * 
+ * @param {*} email 
+ * @param {*} request 
+ * @returns 
+ */
+export const updatePassword = async(email, request) =>{
+    const response = await EmployeeApi.put("update/password", request, {
+        params : {
+            email : email
+        }
+    });
+    return response.status;
+}

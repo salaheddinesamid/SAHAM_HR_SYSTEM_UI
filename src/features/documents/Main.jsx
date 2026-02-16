@@ -132,9 +132,9 @@ export const DocumentRequest = ()=>{
     }
 
     const services = [
-        {id: 2, name: "Nouvelle Demande", view: <RequestForm user={user}/>},
-        {id: 3, name: "Statut des demandes", view:<DocumentRequestHistory user={user}/>},
-        {id: 4, name: "Les demandes des collaborateurs", view:<EmployeeDocumentRequestHistory/>},
+        {id: 1, name: "Nouvelle Demande", view: <RequestForm user={user}/>},
+        {id: 2, name: "Statut des demandes", view:<DocumentRequestHistory user={user}/>},
+        {id: 3, name: "Les demandes des collaborateurs", view:<EmployeeDocumentRequestHistory/>},
     ]
     return(
         <div style={{ padding: "20px" }}>

@@ -17,6 +17,11 @@
   font-weight: 600;
 }
 
+h3{
+  font-size: 16px;
+  font-weight: 600;
+}
+
 .profile-view-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
