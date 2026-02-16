@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { requestDocument } from "../../services/DocumentService";
-import { Alert, CircularProgress, Snackbar } from "@mui/material";
+import { Alert, Box, Button, Checkbox, CircularProgress, Divider, FormControlLabel, Paper, Snackbar, Stack, Typography } from "@mui/material";
 import { CheckIcon, TriangleAlert } from "lucide-react";
 import { DocumentRequestHistory } from "./components/DocumentRequestHistory";
 import { EmployeeDocumentRequestHistory } from "./components/EmployeeDocumentRequests";
@@ -62,73 +62,81 @@ export const DocumentRequest = ()=>{
             console.log(requestDto);
             
         }
-        return(
-            <div>
-                <Snackbar
-                open={submitSuccess}
-                autoHideDuration={4000}
-                onClose={() => setSubmitSuccess(false)}
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
-                    <Alert 
-                    severity="success" 
-                    icon={<CheckIcon fontSize="inherit" />}
-                    sx={{ width: '100%' }}>
-                          Votre demande a été enregistrer avec success
-                        </Alert>
-                </Snackbar>
-                <Snackbar
-                open={error !== ""}
-                autoHideDuration={4000}
-                onClose={() => setError("")}
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
-                    <Alert 
-                    severity="error" 
-                    icon={<TriangleAlert fontSize="inherit"/>}
-                    sx={{ width: '100%' }}>
-                        {error}
-                    </Alert>
-                </Snackbar>
-                {requestLoading && (
-                    <div
-                    style={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        width: "100%",
-                        height: "100%",
-                        backgroundColor: "rgba(255,255,255,0.7)",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        zIndex: 10,
-                    }}>
-                        <CircularProgress size={60} color="primary" />
-                    </div>
-                )}
-                <div className="row mt-4">
-                    <div className="col">
-                        <p><b>Sélectionnez le type de document : </b></p>
-                        {
-                            documentTypes.map((type)=>(
-                                <label className="d-flex">
-                                    <input type="checkbox" name="document" id="" onChange={()=>handleDocumentToggle(type.name)}/>
-                                    {type.name} 
-                                    {type.component && type.component}
-                                </label>
-                            ))
-                        }
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-xl-12">
-                        <button className="submit-btn" onClick={handleSubmit}>
-                        Soumettre
+        return (
+        <Box sx={{ maxWidth: 650, mx: "auto", mt: 3 }}>
+            <Snackbar
+            open={submitSuccess}
+            autoHideDuration={4000}
+            onClose={() => setSubmitSuccess(false)}>
+                <Alert severity="success">
+                    Votre demande a été enregistrée avec succès
+                </Alert>
+            </Snackbar>
+            
+            <Snackbar
+            open={error !== ""}
+            autoHideDuration={4000}
+            onClose={() => setError("")}>
+                <Alert severity="error">{error}</Alert>
+            </Snackbar>
+            
+            <Paper elevation={2} sx={{ p: 4, borderRadius: 3 }}>
+                <Typography variant="h6" fontWeight={600} mb={1}>
+                    Demande de documents RH
+                </Typography>
+                <Typography variant="body2" color="text.secondary" mb={3}>
+                    Sélectionnez les documents que vous souhaitez recevoir.
+                </Typography>
+                
+                <Stack spacing={1.5}>
+                    {documentTypes.map((type) => {
+                        const selected = requestDto.documents.includes(type.name);
+                        return (
+                        <Box
+                        key={type.id}
+                        sx={{
+                            border: "1px solid",
+                            borderColor: selected ? "primary.main" : "divider",
+                            borderRadius: 2,
+                            px: 2,
+                            py: 1,
+                            bgcolor: selected ? "action.selected" : "transparent"
+                        }}>
+                            <FormControlLabel
+                            control={
+                            <Checkbox
+                            checked={selected}
+                            onChange={() => handleDocumentToggle(type.name)}/>}
+                            label={
+                            <Stack>
+                                <Typography fontWeight={500}>
+                                    {type.name || "Autre"}
+                                </Typography>
+                                {selected && type.component}
+                            </Stack>}/>
+                        </Box>
+                        );
+                    })}
+                </Stack>
+                <Divider sx={{ my: 3 }} />
+                <Box display="flex" justifyContent="flex-end">
+                    <button
+                    className="submit-btn"
+                    variant="contained"
+                    size="large"
+                    disabled={
+                        requestDto.documents.length === 0 || requestLoading
+                    }
+                    onClick={handleSubmit}>
+                        {requestLoading
+                        ? <CircularProgress size={22} />
+                        : "Soumettre la demande"}
                     </button>
-                    </div>
-                </div>
-            </div>
-        )
-    }
+                </Box>
+            </Paper>
+        </Box>
+    );
+}
 
     const services = [
         {id: 1, name: "Nouvelle Demande", view: <RequestForm user={user}/>},

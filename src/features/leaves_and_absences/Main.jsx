@@ -55,9 +55,6 @@ export const LeavesAndAbsences = () => {
           </p>
         ))}
       </div>
-      <div>
-        {selectedService === 4 || selectedService === 1 || selectedService === 5 || selectedService === 6 ? <></>: <UserInformationCard email={user?.email}/>}
-      </div>
       <div className="row">
         {services.find((s) => s.id === selectedService)?.view}
       </div>

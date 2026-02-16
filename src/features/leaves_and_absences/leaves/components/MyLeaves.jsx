@@ -17,7 +17,7 @@ export const MyLeaves = ({user})=>{
         }catch(err){
             console.log(err);
         }finally{
-            setLoading(true);
+            setLoading(false);
         }
     }
 
@@ -34,6 +34,7 @@ export const MyLeaves = ({user})=>{
             {!loading && leaves.length === 0 && (
                 <p className="text-center">Aucun congé trouvée.</p>
             )}
+            {!loading && leaves.length !== 0 && (
             <Table className="">
                 <TableHead>
                     <TableRow>
@@ -58,6 +59,7 @@ export const MyLeaves = ({user})=>{
                 })}
                 </TableBody>
             </Table>
+            )}
         </div>
     )
 }
