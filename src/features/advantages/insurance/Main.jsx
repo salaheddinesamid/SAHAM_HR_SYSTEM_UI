@@ -1,69 +1,93 @@
+import { FaCar, FaFileAlt, FaSync, FaSignOutAlt, FaExclamationTriangle } from "react-icons/fa";
+
 export const CarInsuranceDetails = () => {
   return (
-    <div className="container my-4">
-      <div className="card shadow-sm">
-        <div className="card-body">
-          <p>
+    <div className="container my-5">
+      <div className="card shadow border-0 rounded-4">
+        <div className="card-body px-4 py-4">
+
+          <div className="mb-3 fs-6">
             Tout salarié du Groupe bénéficie d’une
-            <strong> réduction de 50 % </strong>
+            <strong className="text-primary"> réduction de 50 % </strong>
             sur la souscription à l’assurance auto <strong>SANLAM</strong>,
             au profit du salarié et de son conjoint.
-          </p>
+          </div>
+          <div className="alert alert-warning d-flex align-items-center rounded-3">
+            <FaExclamationTriangle className="me-2"/>
+            Cet avantage est débloqué uniquement après titularisation.
+          </div>
 
-          <p className="text-warning fw-semibold">
-            ⚠️ Cet avantage est débloqué uniquement après titularisation.
-          </p>
+          <Section
+            icon={<FaFileAlt />}
+            title="Première demande"
+          >
+            <p>
+              La première demande doit être adressée au service
+              <strong> RH</strong> par email.
+            </p>
 
-          <hr />
+            <h6 className="fw-bold mt-3">Documents requis</h6>
+            <ul className="list-group list-group-flush">
+              <li className="list-group-item">Copie de la CIN</li>
+              <li className="list-group-item">Copie de la carte de travail</li>
+              <li className="list-group-item">Carte grise / mise en circulation</li>
+              <li className="list-group-item">Permis de conduire</li>
+              <li className="list-group-item">Type d’assurance souhaitée</li>
+              <li className="list-group-item">Valeur du véhicule</li>
+              <li className="list-group-item">Date d’effet souhaitée</li>
+            </ul>
 
-          <h5 className="mt-3">Première demande</h5>
-          <p>
-            La première demande doit impérativement être adressée
-            au service <strong>RH</strong> par email.
-          </p>
+            <div className="mt-3">
+              <strong>Pour le conjoint :</strong>
+              <ul className="mt-2">
+                <li>Acte de mariage</li>
+                <li>Carte de travail du collaborateur</li>
+              </ul>
+            </div>
+          </Section>
+          <Section
+            icon={<FaSync />}
+            title="Renouvellement"
+          >
+            <p>
+              À partir de la deuxième demande, le collaborateur gère directement
+              son assurance auprès du bureau direct <strong>Sanlam</strong>.
+            </p>
 
-          <h6 className="mt-3">Documents requis :</h6>
-          <ul>
-            <li>Copie de la CIN</li>
-            <li>Copie de la carte de travail</li>
-            <li>Copie de la carte grise / déclaration de mise en circulation</li>
-            <li>Copie du permis de conduire</li>
-            <li>Type d’assurance souhaitée</li>
-            <li>Valeur du véhicule</li>
-            <li>Date d’effet souhaitée</li>
-          </ul>
+            <div className="bg-light p-3 rounded-3 fw-semibold">
+              📍 216, Boulevard Mohammed Zerktouni
+            </div>
+          </Section>
 
-          <p className="mt-2">
-            <strong>En cas de souscription pour le conjoint :</strong>
-          </p>
-          <ul>
-            <li>Copie de l’acte de mariage</li>
-            <li>Copie de la carte de travail du collaborateur</li>
-          </ul>
-
-          <hr />
-
-          <h5>Renouvellement</h5>
-          <p>
-            À partir de la deuxième demande, le collaborateur pourra gérer
-            directement son assurance auprès du bureau direct <strong>Sanlam</strong>,
-            situé à l’adresse suivante :
-          </p>
-
-          <p className="fw-semibold">
-            📍 216, Boulevard Mohammed Zerktouni
-          </p>
-
-          <hr />
-
-          <h5>En cas de départ</h5>
-          <p>
-            Le collaborateur doit obligatoirement transmettre au service
-            <strong> RH</strong> une copie de son contrat d’assurance auto.
-          </p>
+          {/* Section */}
+          <Section
+            icon={<FaSignOutAlt />}
+            title="En cas de départ"
+          >
+            <p>
+              Le collaborateur doit transmettre au service
+              <strong> RH</strong> une copie du contrat d’assurance auto.
+            </p>
+          </Section>
 
         </div>
       </div>
     </div>
   );
 };
+
+const Section = ({ icon, title, children }) => (
+  <div className="mb-4">
+
+    <div className="d-flex align-items-center mb-2">
+      <div className="me-2 text-primary">{icon}</div>
+      <h6 className="fw-bold mb-0">{title}</h6>
+    </div>
+
+    <div className="ps-4">
+      {children}
+    </div>
+
+    <hr className="mt-4"/>
+  </div>
+);

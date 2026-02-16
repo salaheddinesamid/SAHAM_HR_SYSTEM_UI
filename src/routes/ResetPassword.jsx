@@ -50,7 +50,7 @@ const ResetPasswordPage = () => {
       setLoading(true);
 
       // Example:
-      await authService.resetPassword(token, password);
+      //await authService.resetPassword(token, password);
 
       setSuccess(true);
 

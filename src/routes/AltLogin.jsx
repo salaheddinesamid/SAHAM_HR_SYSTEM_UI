@@ -162,7 +162,7 @@ export const AltLogin = () => {
             </button>
 
             <div className="login-footer">
-              <a href="#">Mot de passe oublié ?</a>
+              <a href="forgot-password">Mot de passe oublié ?</a>
             </div>
           </div>
         </div>

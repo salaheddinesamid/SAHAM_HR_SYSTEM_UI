@@ -1,40 +1,64 @@
+import { FaIdCard, FaMapMarkerAlt, FaUserTie } from "react-icons/fa";
+
 export const GreenCardDetails = () => {
   return (
-    <div className="container my-4">
-      <div className="card shadow-sm">
-        <div className="card-body">
-          <p>
-            Tout salarié du Groupe bénéficie d’une réduction de 50 % sur la souscription à la Carte Verte auprès de SANLAM.
-            Vous êtes amené(e) à vous présenter directement au bureau direct Sanlam pour effectuer votre souscription ou pour toute demande d’information complémentaire.
-          </p>
+    <div className="container my-5">
 
-          <p>
-            Vous êtes amené(e) à vous présenter directement
-            au bureau direct <strong>Sanlam</strong> pour effectuer
-            votre souscription ou pour toute demande
-            d’information complémentaire.
+      <div className="card shadow border-0 rounded-4">
+        <div className="card-header bg-success text-white rounded-top-4">
+          <div className="d-flex align-items-center">
+            <FaIdCard className="me-2"/>
+            <h5 className="mb-0">Carte Verte — Avantage Collaborateur</h5>
+          </div>
+        </div>
+
+        <div className="card-body px-4 py-4">
+          <p className="fs-6">
+            Tout salarié du Groupe bénéficie d’une
+            <strong className="text-success"> réduction de 50 % </strong>
+            sur la souscription à la
+            <strong> Carte Verte </strong>
+            auprès de <strong>SANLAM</strong>.
           </p>
+          <div className="bg-light p-3 rounded-3 mb-4">
+            Vous êtes invité(e) à vous présenter directement
+            au bureau direct <strong>Sanlam</strong> pour effectuer
+            votre souscription ou obtenir des informations complémentaires.
+          </div>
 
           <hr />
+          <h6 className="fw-bold mb-3">Coordonnées</h6>
 
-          <h5>Coordonnées</h5>
+          <div className="row g-3">
+            <div className="col-md-6">
+              <div className="border rounded-3 p-3 h-100 bg-white shadow-sm">
+                <div className="d-flex align-items-center mb-2">
+                  <FaMapMarkerAlt className="text-success me-2"/>
+                  <strong>Adresse</strong>
+                </div>
+                <div>
+                  216, Boulevard Mohammed Zerktouni
+                </div>
+              </div>
+            </div>
 
-          <p className="fw-semibold mb-1">
-            📍 Adresse :
-          </p>
-          <p>
-            216, Boulevard Mohammed Zerktouni
-          </p>
+            <div className="col-md-6">
+              <div className="border rounded-3 p-3 h-100 bg-white shadow-sm">
+                <div className="d-flex align-items-center mb-2">
+                  <FaUserTie className="text-success me-2"/>
+                  <strong>Contact</strong>
+                </div>
+                <div>
+                  Mme Asmaa Basli
+                </div>
+              </div>
+            </div>
 
-          <p className="fw-semibold mb-1">
-            👤 Contact :
-          </p>
-          <p>
-            Mme Asmaa Basli
-          </p>
+          </div>
 
         </div>
       </div>
+
     </div>
   );
 };

@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./../styles/ForgotPassword.css";
 import background from "./../0002.jpg";
 import logo from "./../logo.png";
+import { forgotPassword } from "../services/AuthService";
 export const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,14 +22,7 @@ export const ForgotPassword = () => {
 
     try {
       // Call your Spring Boot API here
-      await fetch("http://localhost:8080/api/auth/forgot-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
-
+      const res = await forgotPassword(email);
       // Always show generic message (security best practice)
       setSubmitted(true);
     } catch (err) {

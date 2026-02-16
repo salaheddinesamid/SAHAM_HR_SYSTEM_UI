@@ -10,6 +10,7 @@ import WebSocketTester from './routes/WebSocketTest';
 import { AltLogin } from './routes/AltLogin';
 import { ForgotPassword } from './routes/ForgotPassword';
 import { SetupPassword } from './routes/SetupPassword';
+import ResetPasswordPage from './routes/ResetPassword';
 
 function App() {
 
@@ -50,6 +51,7 @@ function App() {
         }/>
       <Route path='/login' element={<AltLogin/>}/>
       <Route path='/forgot-password' element={<ForgotPassword/>}/>
+      <Route path='/reset-password' element={<ResetPasswordPage/>}/>
       <Route path='/setup-password' element={<SetupPassword/>}/>
       <Route path='/websocket' element={<WebSocketTester/>}/>
      </Routes>

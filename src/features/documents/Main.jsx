@@ -2,7 +2,6 @@ import { useState } from "react";
 import { requestDocument } from "../../services/DocumentService";
 import { Alert, CircularProgress, Snackbar } from "@mui/material";
 import { CheckIcon, TriangleAlert } from "lucide-react";
-import { UserInformationCard } from "../profile/UserInformationCard";
 import { DocumentRequestHistory } from "./components/DocumentRequestHistory";
 import { EmployeeDocumentRequestHistory } from "./components/EmployeeDocumentRequests";
 
@@ -138,7 +137,7 @@ export const DocumentRequest = ()=>{
     ]
     return(
         <div style={{ padding: "20px" }}>
-              <div style={{ display: "flex", gap: "10px", margin: "0px 0px" }}>
+            <div style={{ display: "flex", gap: "10px", margin: "0px 0px" }}>
                 {services.map((service) => (
                   <p
                     key={service.id}
