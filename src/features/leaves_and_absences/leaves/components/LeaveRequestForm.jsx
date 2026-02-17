@@ -51,17 +51,12 @@ export const LeaveRequestForm = ({user})=>{
         const email = user?.email;
         try {
             setRequestLoading(true);
-            const formData = new FormData();
             const payload = {
               ...requestDto,
               totalDays,
             };
-            
-            formData.append("requestDto", new Blob([JSON.stringify(payload)], { type: "application/json" }));
-    
-            //formData.append("file",selectedFile);
             console.log(requestDto);
-            await applyLeave(email, formData);
+            await applyLeave(email, payload);
             // if success, display a snackbar:
             setSubmitSuccess(true);
             // init the request dto:
