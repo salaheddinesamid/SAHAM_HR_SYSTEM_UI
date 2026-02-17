@@ -45,8 +45,6 @@ export const LeaveRequestForm = ({user})=>{
             comment: "",
         })
     };
-    
-    
     const handleSubmit = async () => {
         const email = user?.email;
         try {
