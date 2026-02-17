@@ -1,7 +1,6 @@
 import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { useState } from "react";
-import { rejectSubordinatesLeave } from "../../../../services/LeaveService";
-import { rejectAbsence } from "../../../../services/AbsenceService";
+import { rejectSubordinate } from "../../../../services/AbsenceService";
 
 export const AbsenceRejectionDialog = ({open, onClose, request, onSuccess})=>{
     const [loading, setLoading] = useState(false);
@@ -10,7 +9,7 @@ export const AbsenceRejectionDialog = ({open, onClose, request, onSuccess})=>{
     const handleConfirm = async()=>{
         try{
             setLoading(true);
-            const res = await rejectAbsence(request?.referenceNumber);
+            const res = await rejectSubordinate(request?.referenceNumber);
             if(res === 200){
                 onSuccess();
                 onClose();

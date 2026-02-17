@@ -69,10 +69,9 @@ export const getAllAbsenceRequestsForHR = async(pageNumber, pageSize)=>{
  * @param {*} refNumber 
  * @returns 
  */
-export const approveSubordinate = async(email, refNumber)=>{
+export const approveSubordinate = async(refNumber)=>{
     const response = await AbsenceAPI.put("/requests/subordinates/approve-request",null,{
         params : {
-            approvedBy  : email,
             refNumber : refNumber
         }
     });

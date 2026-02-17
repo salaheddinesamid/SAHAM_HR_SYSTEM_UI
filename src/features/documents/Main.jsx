@@ -85,7 +85,7 @@ export const DocumentRequest = ()=>{
                     Demande de documents RH
                 </Typography>
                 <Typography variant="body2" color="text.secondary" mb={3}>
-                    Sélectionnez les documents que vous souhaitez recevoir.
+                    Merci de sélectionner le type de document que vous souhaitez demander. Votre demande sera traitée par le service RH.
                 </Typography>
                 
                 <Stack spacing={1.5}>

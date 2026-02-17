@@ -207,7 +207,7 @@ export const SubordinatesAbsenceRequestsHistory = ({ manager }) => {
             totalElements={totalElements}
             currentSize={pageSize}
             handleOpenApprovalDialog={handleOpenApprovalDialog}
-            handleOpenRejectionDialog={handleOpenApprovalDialog}
+            handleOpenRejectionDialog={handleOpenRejectionDialog}
             />
         </div>
       )}

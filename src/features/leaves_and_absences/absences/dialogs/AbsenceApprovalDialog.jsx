@@ -1,5 +1,5 @@
 import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
-import { approveAbsence } from "../../../../services/AbsenceService";
+import { approveAbsence, approveSubordinate } from "../../../../services/AbsenceService";
 import { useState } from "react";
 
 export const AbsenceApprovalDialog = ({ open, onClose, request, onSuccess}) => {
@@ -10,7 +10,7 @@ export const AbsenceApprovalDialog = ({ open, onClose, request, onSuccess}) => {
         const refNumber = request?.referenceNumber; // Reference Number
         try {
             setLoading(true);
-            const res = await approveAbsence(refNumber);
+            const res = await approveSubordinate(refNumber);
             if(res === 200){
                 onSuccess();
                 onClose(); // Refresh list
