@@ -13,8 +13,8 @@ export const getAllHolidays = async()=>{
  * @param {*} requestDto 
  * @returns 
  */
-export const updateHoliday = async(name, requestDto)=>{
-    const repsonse = await HolidaysAPI.put(`/update/${name}`, requestDto);
+export const updateHoliday = async(name, type, requestDto)=>{
+    const repsonse = await HolidaysAPI.put(`/update/${name}/${type}`, requestDto);
     return repsonse.status;
 }
 /**

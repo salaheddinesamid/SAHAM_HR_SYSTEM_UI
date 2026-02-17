@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./styles/ProfileManagement.css";
-import { getEmployee, updatePassword } from "../../services/EmployeeService";
+import { getEmployee, updatePassword, uploadProfilePicture } from "../../services/EmployeeService";
 import axios from "axios";
 import { CircularProgress, IconButton, Paper } from "@mui/material";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -46,21 +46,11 @@ const ProfilePictureUploader = ({ employeeId }) => {
 
   const handleUpload = async () => {
     if (!file) return;
-
-    const formData = new FormData();
-    formData.append("file", file);
-
-    try {
-      await axios.post(
-        `/api/profile-picture/upload/${employeeId}`,
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" }
-        }
-      );
-
-      window.location.reload(); // quick refresh
-    } catch (err) {
+    try{
+      const formData = new FormData();
+      formData.append("multipartFile", file);
+      const res = await uploadProfilePicture(formData)
+    }catch (err) {
       console.error(err);
     }
   };

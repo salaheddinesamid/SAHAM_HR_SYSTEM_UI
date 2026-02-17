@@ -67,6 +67,24 @@ export const updateEmployee = async(employeeId, requestDto)=>{
     const response = await EmployeeApi.patch(`update/${employeeId}`, requestDto);
     return response;
 }
+/**
+ * 
+ * @param {*} image 
+ * @returns 
+ */
+export const uploadProfilePicture = async(image) =>{
+    const response = await EmployeeApi.patch("update/profile-picture/", image);
+    return response.status;
+}
+
+export const getProfilePicture = async(picturePATH) =>{
+    const response = await EmployeeApi.get("")
+} 
+/**
+ * 
+ * @param {*} managerName 
+ * @returns 
+ */
 export const verifyManager = async(managerName)=>{
     const response = await EmployeeApi.get("managers/verify", {
         params : {

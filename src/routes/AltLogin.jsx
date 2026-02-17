@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import back from "../0002.jpg";
 import "../styles/Login.css";
 import logo from "../logo.png";
-import LoginIcon from "@mui/icons-material/Login";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useNavigate } from "react-router-dom";
@@ -79,13 +78,6 @@ export const AltLogin = () => {
       <div className="overlay">
         <div className="top-bar">
           <img src={logo} alt="logo" className="top-logo" />
-          <button
-            className="login-btn top-right-btn"
-            onClick={() => setShowForm(!showForm)}
-          >
-            <LoginIcon />
-            &nbsp; Connexion
-          </button>
         </div>
 
         <div className="hero-content">
