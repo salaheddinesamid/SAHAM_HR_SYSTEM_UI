@@ -7,17 +7,20 @@ import { LoanRequest } from "./components/LoanRequest";
 export const Loan = ()=>{
     
     const user = JSON.parse(localStorage.getItem("userDetails"));
+    const userRoles = user?.roles;
     const [selectedService, setSelectedService] = useState(1);
     // This array contains services provided and rendered by Loan service
     const services = [
-        {id: 1, name: "Nouvelle Demande", view: <LoanRequest/>},
-        {id: 2, name: "Statut des demandes", view:<LoanHistory user={user}/>},
-        {id: 3, name: "Les demandes en attente", view:<EmployeeLoanRequests/>}
+        {id: 1, name: "Nouvelle Demande", view: <LoanRequest/>, allowedRoles : ["EMPLOYEE", "HR", "MANAGER"]},
+        {id: 2, name: "Statut des demandes", view:<LoanHistory user={user}/>, allowedRoles : ["EMPLOYEE", "MANAGER", "HR"]},
+        {id: 3, name: "Les demandes en attente", view:<EmployeeLoanRequests/>, allowedRoles : ["HR"]}
     ]
+    const filteredServices = services.filter((service)=>
+        !service.allowedRoles || service.allowedRoles.some(role => userRoles.includes(role)));
     return(
         <div style={{ padding: "20px" }}>
             <div style={{ display: "flex", gap: "10px", margin: "0px 0px" }}>
-                {services.map((service) => (
+                {filteredServices.map((service) => (
                     <p
                     key={service.id}
                     style={{
@@ -31,7 +34,7 @@ export const Loan = ()=>{
                 ))}
             </div>
             <div className="row">
-                {services.map((s) => (s.id === selectedService ? s.view : ""))}
+                {filteredServices.map((s) => (s.id === selectedService ? s.view : ""))}
             </div>
         </div>
     )
