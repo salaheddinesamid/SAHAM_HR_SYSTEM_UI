@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { requestDocument } from "../../services/DocumentService";
-import { Alert, Box, Button, Checkbox, CircularProgress, Divider, FormControlLabel, Paper, Snackbar, Stack, Typography } from "@mui/material";
-import { CheckIcon, TriangleAlert } from "lucide-react";
+import { Alert, Box, Checkbox, CircularProgress, Divider, FormControlLabel, Paper, Snackbar, Stack, Typography } from "@mui/material";
 import { DocumentRequestHistory } from "./components/DocumentRequestHistory";
 import { EmployeeDocumentRequestHistory } from "./components/EmployeeDocumentRequests";
 
 export const DocumentRequest = ()=>{
     const user = JSON.parse(localStorage.getItem("userDetails"));
+    const userRoles = user?.roles;
     const [selectedService, setSelectedService] = useState(1);
     const [requestLoading, setRequestLoading] = useState(false);
     const [submitSuccess,setSubmitSuccess] = useState(false);
@@ -139,14 +139,17 @@ export const DocumentRequest = ()=>{
 }
 
     const services = [
-        {id: 1, name: "Nouvelle Demande", view: <RequestForm user={user}/>},
-        {id: 2, name: "Statut des demandes", view:<DocumentRequestHistory user={user}/>},
-        {id: 3, name: "Les demandes des collaborateurs", view:<EmployeeDocumentRequestHistory/>},
+        {id: 1, name: "Nouvelle Demande", view: <RequestForm user={user}/>, allowedRoles : ["EMPLOYEE"]},
+        {id: 2, name: "Statut des demandes", view:<DocumentRequestHistory user={user}/>, allowedRoles : ["EMPLOYEE"]},
+        {id: 3, name: "Les demandes des collaborateurs", view:<EmployeeDocumentRequestHistory/>, allowedRoles : ["HR"]},
     ]
+
+    const filteredServices = services.filter(service =>
+        !service.allowedRoles || service.allowedRoles.some(role => userRoles.includes(role)));
     return(
         <div style={{ padding: "20px" }}>
             <div style={{ display: "flex", gap: "10px", margin: "0px 0px" }}>
-                {services.map((service) => (
+                {filteredServices.map((service) => (
                   <p
                     key={service.id}
                     style={{
@@ -160,7 +163,7 @@ export const DocumentRequest = ()=>{
                 ))}
               </div>
               <div className="row">
-                {services.map((s) => (s.id === selectedService ? s.view : ""))}
+                {filteredServices.map((s) => (s.id === selectedService ? s.view : ""))}
               </div>
         </div>
     )
