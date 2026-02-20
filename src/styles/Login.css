@@ -68,16 +68,6 @@
   z-index: 20;
 }
 
-.login-container {
-  background: white;
-  border-radius: 12px;
-  padding: 40px 35px;
-  width: 100%;
-  max-width: 380px;
-  text-align: center;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
 .login-title {
   font-weight: 700;
   color: #004170;
@@ -130,6 +120,7 @@
   padding: 40px 35px;
   width: 380px;
   text-align: center;
+  margin-right: 30px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 

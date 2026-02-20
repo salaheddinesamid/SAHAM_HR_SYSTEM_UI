@@ -8,6 +8,9 @@ import {
 } from "@mui/material";
 import "./styles/Dashboard.css";
 import { Overview } from "./components/Overview";
+import { EmployeeAnalytics } from "./components/EmployeeAnalytics";
+import { LeaveAnalytics } from "./components/LeaveAnalytics";
+import { AbsenceAnalytics } from "./components/AbsenceAnalytics";
 
 export const AnalyticsDashboard = () => {
 
@@ -27,35 +30,22 @@ export const AnalyticsDashboard = () => {
   return (
     <Box className="analytics-container">
       
-      <Paper elevation={1} className="analytics-header">
-        <Box className="header-left">
-          <Typography variant="h5" fontWeight={600}>
-            {views[selectedView].label}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Tableau de bord analytique RH
-          </Typography>
-        </Box>
-
-        <Tabs
-          value={selectedView}
-          onChange={handleChangeView}
-          textColor="primary"
-          indicatorColor="primary"
-          className="header-tabs"
-        >
-          {views.map(view => (
-            <Tab
-              key={view.id}
-              label={view.label}
-              disableRipple
-            />
-          ))}
-        </Tabs>
-      </Paper>
-
       <Box className="analytics-content">
-        {views.find((view)=> view.id === selectedView)?.view}
+        {/** Employee Analytics Part */}
+        <Box mt={0} mb={5}>
+          <EmployeeAnalytics/>
+        </Box>
+        <Box
+        mb={3}
+        display="grid"
+        gridTemplateColumns={{
+          xs: "1fr",
+          md: "repeat(2, 1fr)",
+        }}
+        gap={3}>
+          <LeaveAnalytics/>
+          <AbsenceAnalytics/>
+        </Box>
       </Box>
 
     </Box>

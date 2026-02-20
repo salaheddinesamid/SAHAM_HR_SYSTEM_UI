@@ -142,7 +142,7 @@ export const AltLogin = () => {
             />
 
             <button
-              className="login-btn crm-btn"
+              className="login-btn"
               onClick={handleLogin}
               disabled={loading}
             >

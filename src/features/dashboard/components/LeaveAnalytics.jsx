@@ -1,10 +1,11 @@
 import { Box, Paper, Typography } from "@mui/material";
 import { StatCard } from "./StatCard";
+
 import { PieChart } from '@mui/x-charts/PieChart';
 
 const data = [
-      { label: 'Group C', value: 300, color: '#FFBB28' },
-      { label: 'Group D', value: 200, color: '#FF8042' },
+  { label: 'Congés Annuel', value: 400, color: '#0088FE' },
+  { label: 'Congés Exceptionnel', value: 300, color: '#00C49F' }
 ];
 
 const settings = {
@@ -24,7 +25,7 @@ export default function DonutChart() {
 }
 
 
-export const AbsenceAnalytics = () => {
+export const LeaveAnalytics = () => {
   return (
     <Paper
       elevation={0}
@@ -37,13 +38,14 @@ export const AbsenceAnalytics = () => {
     >
       <Box mb={3}>
         <Typography variant="h4" fontWeight={700} color="#004170">
-          Analyse des absences
+          Analyse des congés
         </Typography>
 
         <Typography color="text.secondary">
-          Indicateurs clés sur l’absentéisme des collaborateurs
+          Statistiques d’utilisation et de gestion des congés
         </Typography>
       </Box>
+
       <Box
         display="grid"
         gridTemplateColumns={{ xs: "1fr", md: "320px 1fr" }}
@@ -57,10 +59,10 @@ export const AbsenceAnalytics = () => {
           gridTemplateColumns={{ xs: "1fr", sm: "repeat(2,1fr)" }}
           gap={3}
         >
-          <StatCard label="Nombre total d’absences" value={248} />
-          <StatCard label="Taux d’absentéisme (%)" value={"3.4%"} />
-          <StatCard label="Moyenne jours / employé" value={2.1} />
-          <StatCard label="Département le plus impacté" value="IT" />
+          <StatCard label="Total congés demandés" value={600} />
+          <StatCard label="Congés approuvés" value={520} />
+          <StatCard label="Demandes en attente" value={34} />
+          <StatCard label="Solde moyen restant" value={"12 jours"} />
         </Box>
       </Box>
     </Paper>
