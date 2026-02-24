@@ -6,12 +6,8 @@ import { LoanAPI } from "../apis/LoanAPI"
  * @param {*} token
  * @returns 
  */
-export const applyLoan = async(email,requestDto)=>{
-    const response = await LoanAPI.post("/apply",requestDto,{
-        params : {
-            email : email
-        }
-    });
+export const applyLoan = async(requestDto)=>{
+    const response = await LoanAPI.post("/apply",requestDto);
     return response.status;
 }
 /**

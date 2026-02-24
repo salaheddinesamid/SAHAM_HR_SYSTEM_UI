@@ -34,10 +34,9 @@ export const AdvanceForm = () =>{
     
     // handle submit both requests (Pret/Avance)
     const handleSubmitRequest = async(request)=>{
-        const email = user?.email;
         try{
             setLoading(true);
-            const res = await applyLoan(email,request);
+            const res = await applyLoan(request);
             if(res === 200){
                 setSuccess(true);
                 handleCleanDto();

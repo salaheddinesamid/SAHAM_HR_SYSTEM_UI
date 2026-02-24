@@ -52,7 +52,7 @@ function App() {
       <Route path='/login' element={<AltLogin/>}/>
       <Route path='/forgot-password' element={<ForgotPassword/>}/>
       <Route path='/reset-password' element={<ResetPasswordPage/>}/>
-      <Route path='/setup-password' element={<SetupPassword/>}/>
+      <Route path='/password-setup' element={<SetupPassword/>}/>
       <Route path='/websocket' element={<WebSocketTester/>}/>
      </Routes>
     </BrowserRouter>
