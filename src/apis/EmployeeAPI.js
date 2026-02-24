@@ -43,8 +43,8 @@ EmployeeApi.interceptors.response.use(
             // Server responded with an error
             // Return server error message or default to generic
             const message =
-                error.response.data?.message || `Error ${error.response.status}: ${error.response.statusText}`;
-            return Promise.reject({ message });
+                error.response?.message || `Error ${error.response.status}: ${error.response.statusText}`;
+            return Promise.reject({ error });
         }
     }
 );

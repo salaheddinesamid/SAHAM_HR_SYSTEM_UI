@@ -73,7 +73,11 @@ export const updateEmployee = async(employeeId, requestDto)=>{
  * @returns 
  */
 export const uploadProfilePicture = async(image) =>{
-    const response = await EmployeeApi.patch("update/profile-picture/", image);
+    const response = await EmployeeApi.patch("update/profile-picture/", image, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        }
+    });
     return response.status;
 }
 
