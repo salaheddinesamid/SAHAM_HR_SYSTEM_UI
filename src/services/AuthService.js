@@ -33,10 +33,9 @@ export const resetPassword = async(email, token, newPassword) =>{
  * 
  * @returns 
  */
-export const setupPassword = async(email, token, password) =>{
+export const setupPassword = async(token, password) =>{
     const res = await AuthAPI.post("setup-password",null,{
         params : {
-            email : email,
             token : token,
             newPassword : password
         }

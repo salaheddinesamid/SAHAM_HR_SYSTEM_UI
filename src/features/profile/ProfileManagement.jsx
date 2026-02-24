@@ -182,7 +182,7 @@ const PersonalDetails = ({ data }) => (
   <Section title="Informations personnelles">
     <Field label="Nom" value={data?.lastName} />
     <Field label="Prénom" value={data?.firstName} />
-    <Field label="Date de naissance" value={data?.birthDate} />
+    <Field label="Date de naissance" value={data?.birthDate?.toString()} />
     <Field label="Nationalité" value={data?.nationality} />
     <Field label="CIN" value={data?.cin} />
     <Field label="Situation familiale" value={data?.familySituation} />

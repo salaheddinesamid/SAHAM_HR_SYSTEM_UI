@@ -46,7 +46,7 @@ export const SetupPassword = () => {
     setLoading(true);
 
     try {
-        const response = await setupPassword();
+        const response = await setupPassword(token, password);
         setSuccess(true);
         // Redirect after 3 seconds
         if(response === 200){
