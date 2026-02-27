@@ -105,7 +105,7 @@ export const verifyManager = async(managerName)=>{
  * @returns 
  */
 export const updatePassword = async(email, request) =>{
-    const response = await EmployeeApi.put("update/password", request, {
+    const response = await EmployeeApi.patch("update/password", request, {
         params : {
             email : email
         }

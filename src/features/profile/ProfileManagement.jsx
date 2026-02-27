@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import "./styles/ProfileManagement.css";
 import { getEmployee, updatePassword, uploadProfilePicture } from "../../services/EmployeeService";
 import axios from "axios";
-import { CircularProgress, IconButton, Paper } from "@mui/material";
+import { Alert, CircularProgress, IconButton, Paper, Snackbar } from "@mui/material";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { mapEmployeeFamilyStatus } from "../../utils/ProfileManagement";
+import { CheckIcon, TriangleAlert } from "lucide-react";
 
 const Section = ({ title, children }) => (
   <div className="profile-section">
@@ -82,7 +83,7 @@ const PasswordManagement = ({employeeDetails}) =>{
   });
   
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
   const isPasswordValid = ()=>{
@@ -104,11 +105,13 @@ const PasswordManagement = ({employeeDetails}) =>{
       }
       setLoading(true);
       const res = await updatePassword(email, request);
-      setSuccess(true);
-      clearFields();
+      if(res === 200){
+        setSuccess(true);
+        clearFields();
+      }
     }catch(err){
       console.log(err);
-      setError(err);
+      setError(err?.message);
     }finally{
       setLoading(false);
     }
@@ -116,6 +119,34 @@ const PasswordManagement = ({employeeDetails}) =>{
 
   return(
     <Paper style={{padding : 20}}>
+      <Snackbar
+        open={success}
+        autoHideDuration={4000}
+        onClose={() => setSuccess(false)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert
+          severity="success" 
+          icon={<CheckIcon fontSize="inherit" />}
+          sx={{ width: '100%' }}
+        >
+         Les informations ont été modifiées.
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={error !== null}
+        autoHideDuration={4000}
+        onClose={() => setError("")}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert 
+          severity="error" 
+          icon={<TriangleAlert fontSize="inherit"/>}
+          sx={{ width: '100%' }}
+        >
+          {error}
+        </Alert>
+      </Snackbar>
       {loading && (
         <CircularProgress/>
       )}
@@ -249,7 +280,7 @@ export const ProfileManagement = () => {
       <ProfessionalDetails data={employeeDetails?.professionalDetails} />
       <SocialDetails data={employeeDetails?.socialDetails} />
       <ContactDetails data={employeeDetails?.contactDetails} />
-      <PasswordManagement/>
+      <PasswordManagement employeeDetails={employeeDetails}/>
     </div>
   );
 };
