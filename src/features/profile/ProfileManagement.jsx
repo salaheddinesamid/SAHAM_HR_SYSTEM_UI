@@ -5,6 +5,7 @@ import axios from "axios";
 import { CircularProgress, IconButton, Paper } from "@mui/material";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { mapEmployeeFamilyStatus } from "../../utils/ProfileManagement";
 
 const Section = ({ title, children }) => (
   <div className="profile-section">
@@ -185,8 +186,8 @@ const PersonalDetails = ({ data }) => (
     <Field label="Date de naissance" value={data?.birthDate?.toString()} />
     <Field label="Nationalité" value={data?.nationality} />
     <Field label="CIN" value={data?.cin} />
-    <Field label="Situation familiale" value={data?.familySituation} />
-    <Field label="Nombre d’enfants" value={data?.childrenCount} />
+    <Field label="Situation familiale" value={mapEmployeeFamilyStatus(data?.familyStatus)} />
+    <Field label="Nombre d’enfants" value={data?.numberOfChildren} />
     <Field label="Adresse" value={data?.address} />
   </Section>
 );
