@@ -17,7 +17,7 @@ const settings = {
   hideLegend: true,
 };
 
-export default function DonutChart() {
+export default function DonutChart({data}) {
   return (
     <PieChart
       series={[{ innerRadius: 50, outerRadius: 100, data, arcLabel: 'value' }]}
@@ -44,6 +44,10 @@ const entities  = [
 export const LeaveAnalytics = () => {
 
   const [data, setData] = useState({});
+  const [chartData, setChartData] = useState([
+    { label: 'Congés Annuel', value: 0, color: '#0088FE' },
+    { label: 'Congés Exceptionnel', value: 0, color: '#00C49F' }
+  ])
   const [loading, setLoading] = useState(false);
 
   // Filters
@@ -57,7 +61,11 @@ export const LeaveAnalytics = () => {
     try{
       setLoading(true);
       const res = await getLeaveAnalyticsOverview(type, from, to, department, entity)
-      setData(res);
+      setData(res); // update the data
+      setChartData((prev)=>[
+        {...prev[0], value : res?.totalAnnualLeaveRequests},
+        {...prev[1], value : res?.totalExceptionalLeaveRequests},
+      ])
       console.log("Current entity: ", currentEntity);
     }catch(err){
       console.log(err);
@@ -122,7 +130,7 @@ export const LeaveAnalytics = () => {
         gap={4}
         alignItems="center"
       >
-        <DonutChart />
+        <DonutChart data={chartData}/>
 
         <Box
           display="grid"
@@ -133,8 +141,7 @@ export const LeaveAnalytics = () => {
           <StatCard label="Congés approuvés" value={data?.totalApprovedLeaves || 0} />
           <StatCard label="Congés rejetés" value={data?.totalRejectedLeaves || 0} />
           <StatCard label="Demandes en attente" value={data?.totalPendingLeaveRequests || 0 } />
-          <StatCard label="Solde moyen restant" value={"12 jours"} /> 
-          <StatCard label="Solde moyen restant" value={"12 jours"} />
+          <StatCard label="Solde moyen restant" value={`${data?.leaveDaysRate || 0} jours`} /> 
         </Box>
       </Box>
     </Paper>
