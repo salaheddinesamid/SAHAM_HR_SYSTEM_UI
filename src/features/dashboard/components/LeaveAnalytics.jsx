@@ -138,9 +138,9 @@ export const LeaveAnalytics = () => {
           gap={3}
         >
           <StatCard label="Total congés demandés" value={data?.totalRequests || 0} />
-          <StatCard label="Congés approuvés" value={data?.totalApprovedLeaves || 0} />
-          <StatCard label="Congés rejetés" value={data?.totalRejectedLeaves || 0} />
-          <StatCard label="Demandes en attente" value={data?.totalPendingLeaveRequests || 0 } />
+          <StatCard label="Congés approuvés" bgColor={"#00e676"} value={data?.totalApprovedLeaves || 0} />
+          <StatCard label="Congés rejetés" bgColor={"#e57373"} value={data?.totalRejectedLeaves || 0} />
+          <StatCard label="Demandes en attente" bgColor={"#ffe0b2"} value={data?.totalPendingLeaveRequests || 0 } />
           <StatCard label="Solde moyen restant" value={`${data?.leaveDaysRate || 0} jours`} /> 
         </Box>
       </Box>

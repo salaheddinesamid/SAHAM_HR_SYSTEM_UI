@@ -22,3 +22,16 @@ export const getLeaveAnalyticsOverview = async(type, from, to, department, entit
     });
     return response.data;
 }
+
+export const getAbsenceAnalyticsOverview = async(type, from, to, department, entity)=>{
+    const response = await AnalyticsAPI.get("absences/overview", {
+        params : {
+            type : type,
+            entity : entity,
+            from : from,
+            to : to,
+            department : department
+        }
+    });
+    return response.data;
+}
