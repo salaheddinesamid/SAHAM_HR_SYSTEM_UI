@@ -36,13 +36,7 @@ export const AnalyticsDashboard = () => {
           <EmployeeAnalytics/>
         </Box>
         <Box
-        mb={3}
-        display="grid"
-        gridTemplateColumns={{
-          xs: "1fr",
-          md: "repeat(2, 1fr)",
-        }}
-        gap={3}>
+        mb={3}>
           <LeaveAnalytics/>
           <AbsenceAnalytics/>
         </Box>

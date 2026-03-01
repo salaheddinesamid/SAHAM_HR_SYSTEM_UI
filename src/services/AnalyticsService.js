@@ -9,3 +9,16 @@ export const getEmployeeAnlayticsOverview = async(department, entity)=>{
     });
     return response.data;
 }
+
+export const getLeaveAnalyticsOverview = async(type, from, to, department, entity)=>{
+    const response = await AnalyticsAPI.get("leaves/overview", {
+        params : {
+            type : type,
+            entity : entity,
+            from : from,
+            to : to,
+            department : department
+        }
+    });
+    return response.data;
+}
