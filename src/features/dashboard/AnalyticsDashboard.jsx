@@ -1,10 +1,6 @@
 import { useState } from "react";
 import {
   Box,
-  Tabs,
-  Tab,
-  Typography,
-  Paper
 } from "@mui/material";
 import "./styles/Dashboard.css";
 import { Overview } from "./components/Overview";
@@ -13,19 +9,6 @@ import { LeaveAnalytics } from "./components/LeaveAnalytics";
 import { AbsenceAnalytics } from "./components/AbsenceAnalytics";
 
 export const AnalyticsDashboard = () => {
-
-  const views = [
-    { id: 0, label: "Aperçu" , view: <Overview/>},
-    { id: 1, label: "Absences" },
-    { id: 2, label: "Congés" },
-    { id: 3, label: "Collaborateurs" }
-  ];
-
-  const [selectedView, setSelectedView] = useState(0);
-
-  const handleChangeView = (_, newValue) => {
-    setSelectedView(newValue);
-  };
 
   return (
     <Box className="analytics-container">
