@@ -38,7 +38,7 @@ export const Login = () => {
 
         const accessToken = token?.accessToken;
         // store the token in JS Cookie:
-        Cookies.set("accessToken", accessToken, { expires: 1, secure: true, sameSite: "Strict" })
+        Cookies.set("accessToken", accessToken, { expires: 1, secure: false, sameSite: "Lax" })
 
         // store user details on localstorage:
         localStorage.setItem("userDetails",JSON.stringify(userDetails));
