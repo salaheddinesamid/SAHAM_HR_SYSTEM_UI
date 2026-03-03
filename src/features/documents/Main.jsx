@@ -45,7 +45,7 @@ export const DocumentRequest = ()=>{
                 }
             })
         }
-
+        
         const handleSubmit = async()=>{
             const email = user?.email;
             try{
@@ -59,8 +59,6 @@ export const DocumentRequest = ()=>{
             }finally{
                 setRequestLoading(false);
             }
-            console.log(requestDto);
-            
         }
         return (
         <Box sx={{ maxWidth: 650, mx: "auto", mt: 3 }}>

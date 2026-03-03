@@ -58,12 +58,10 @@ export const AbsenceRequestHistoryForHR = () => {
     const fetchRequests = async (page, size) => {
         try {
             setLoading(true);
-            console.log("...Fetching data")
             const data = await getAllAbsenceRequestsForHR(page, size);
             setRequests(data?.content || []);
             setFilteredRequests(data?.content || []);
             setTotalElements(data?.totalElements);
-            console.log(data?.content)
         } catch (err) {
             console.error("Failed to fetch subordinates' leave requests:", err);
             setError("Une erreur s'est produite lors du chargement des demandes.");

@@ -6,7 +6,6 @@ import "bootstrap/dist/css/bootstrap.css"
 import { useEffect } from 'react';
 import { ServiceProvider, ViewProvider } from './context/ViewNavigatorContext';
 import { ProtectedRoute } from './ProtectedRoute';
-import WebSocketTester from './routes/WebSocketTest';
 import { AltLogin } from './routes/AltLogin';
 import { ForgotPassword } from './routes/ForgotPassword';
 import { SetupPassword } from './routes/SetupPassword';
@@ -53,7 +52,6 @@ function App() {
       <Route path='/forgot-password' element={<ForgotPassword/>}/>
       <Route path='/reset-password' element={<ResetPasswordPage/>}/>
       <Route path='/password-setup' element={<SetupPassword/>}/>
-      <Route path='/websocket' element={<WebSocketTester/>}/>
      </Routes>
     </BrowserRouter>
   );

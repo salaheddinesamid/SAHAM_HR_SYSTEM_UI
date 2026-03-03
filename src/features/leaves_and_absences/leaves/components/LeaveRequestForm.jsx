@@ -65,7 +65,6 @@ export const LeaveRequestForm = ({user})=>{
               type: "",
               comment: "",
             })
-            console.log("Submitting request:", payload);
             cleanRequest();
             //alert("Demande envoyée avec succès !");
         } catch (err) {

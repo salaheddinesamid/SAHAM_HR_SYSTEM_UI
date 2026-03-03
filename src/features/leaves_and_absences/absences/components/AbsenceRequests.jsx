@@ -6,7 +6,7 @@ import { Search } from "@mui/icons-material";
 import { LeaveRequestCancellationDialog } from "../../leaves/dialogs/LeaveRequestCancellationDialog";
 import { AbsenceTypesMapper, leaveStatusMapper } from "../../utils/LeaveUtils";
 
-const AbsenceRequestsTable = ({requests, loading, currentPage, currentSize, setCurrentPage, handleChangeRowsPerPage, totalElements, onClickCancel})=>{
+const AbsenceRequestsTable = ({requests, currentPage, currentSize, setCurrentPage, handleChangeRowsPerPage, totalElements, onClickCancel})=>{
     return (
     <Table>
       <TableHead>
@@ -120,9 +120,8 @@ export const AbsenceRequests = ({user, filters})=>{
             setRequests(res?.content);
             setFilteredRequest(res?.content);
             setTotalElements(res?.totalElements);
-            console.log(res);
         }catch(err){
-
+          console.log(err);
         }finally{
             setLoading(false);
         }

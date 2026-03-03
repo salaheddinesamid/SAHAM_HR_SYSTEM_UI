@@ -1,28 +1,15 @@
 import {
   CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  IconButton,
   Toolbar,
   Box,
   TextField,
   InputAdornment,
 } from "@mui/material";
 import { useEffect, useState, useCallback, use } from "react";
-import { Check, X } from "lucide-react";
-import { Download, Search } from "@mui/icons-material";
-import { approveSubordinate, downloadAbsenceMedicaleCertificate, getAllSubordinatesAbsenceRequests } from "../../../../services/AbsenceService";
-import { AbsenceTypesMapper, leaveStatusMapper } from "../../utils/LeaveUtils";
+import { Search } from "@mui/icons-material";
+import { downloadAbsenceMedicaleCertificate, getAllSubordinatesAbsenceRequests } from "../../../../services/AbsenceService"
 import { saveAs } from "file-saver";
-import { LocalDateTimeMapper } from "../../../../utils/LocalDateTimeMapper";
 import { EmployeesAbsenceRequestsTable } from "./EmloyeesAbsenceRequestsTable";
 import { AbsenceRequestApprovalDialog } from "../dialogs/AbsenceRequestApprovalDialog";
 import { AbsenceRequestRejectionDialog } from "../dialogs/AbsenceRequestRejectionDialog";

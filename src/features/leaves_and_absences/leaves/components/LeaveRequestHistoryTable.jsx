@@ -3,7 +3,6 @@ import { leaveStatusMapper, LeaveTypesMapper } from "../../utils/LeaveUtils";
 import { LocalDateTimeMapper } from "../../../../utils/LocalDateTimeMapper";
 
 export const LeaveRequestHistoryTable = ({
-  loading,
   requests,
   onClickCancel,
   currentPage,

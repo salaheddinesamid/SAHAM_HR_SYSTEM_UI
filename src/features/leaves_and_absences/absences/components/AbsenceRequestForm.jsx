@@ -4,10 +4,8 @@ import { CheckIcon, TriangleAlert } from "lucide-react";
 import { useEffect, useState } from "react"
 import { dateFormatter, totalLeaveDaysCalculator } from "../../utils/LeaveUtils";
 import { applyAbsence } from "../../../../services/AbsenceService";
-import Cookies from "js-cookie";
 
 export const AbsenceRequestForm = ({user})=>{
-    const token = Cookies.get("accessToken");
     const [requestDto,setRequestDto] = useState({
         type : "",
         startDate : "",
@@ -46,7 +44,6 @@ export const AbsenceRequestForm = ({user})=>{
         setRequestDto((prev)=>(
             {...prev, [name] : value}
         ));
-        console.log(requestDto);
     }
     const handleFileChange = (e)=>{
       const file = e.target.files[0];
@@ -66,7 +63,6 @@ export const AbsenceRequestForm = ({user})=>{
             if (requestDto.type === "SICKNESS" && medicalCertificate) {
                 requestData.append("medicalCertificate", medicalCertificate);
             }
-            console.log(requestDto);
             const res = await applyAbsence(email, requestData);
             if(res === 200){
                 setSubmitSuccess(true);

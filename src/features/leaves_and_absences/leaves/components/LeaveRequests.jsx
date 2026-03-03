@@ -122,8 +122,8 @@ export const LeaveRequests = ({user, filters})=>{
             setRequests(res?.content);
             setFilteredRequest(res?.content);
             setTotalElements(res?.totalElements);
-            console.log(res);
         }catch(err){
+          console.log(err);
         }finally{
             setLoading(false);
         }
