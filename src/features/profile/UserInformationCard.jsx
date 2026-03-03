@@ -1,33 +1,8 @@
 import { useEffect, useState } from "react";
 import { getEmployee } from "../../services/EmployeeService";
 
-export const UserInformationCard = ({exception,email}) => {
-    const [user,setUser] = useState(null);
-    const [error,setError] = useState("");
-    const [loading,setLoading] = useState(false);
-    
-    const fetchUser = async()=>{
-        try{
-            setLoading(true);
-            const res = await getEmployee(email);
-            console.log(res)
-            setUser(res);
-        }catch(err){
-            console.log(err);
-            setError(err.message)
-        }finally{
-            setLoading(false);
-        }
-    }
-    
-    useEffect(() => {
-        fetchUser();
-    }, []);
-    
-    if (loading) {
-        return <p>Loading user info...</p>;
-    }
-
+export const UserInformationCard = () => {
+    const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   const EmployeeBalance = ({balanceDetails})=>{
     return(
         <div className="row mt-3">
@@ -66,7 +41,7 @@ export const UserInformationCard = ({exception,email}) => {
   return (
     <div className="user-information-card card shadow p-3 rounded-3">
       <div className="card-body">
-         <EmployeeBalance balanceDetails={user?.balanceDetails}/>
+         <EmployeeBalance balanceDetails={userDetails?.balanceDetails}/>
       </div>
     </div>
   );

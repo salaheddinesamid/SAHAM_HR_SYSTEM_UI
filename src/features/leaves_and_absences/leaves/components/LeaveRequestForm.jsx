@@ -3,6 +3,7 @@ import { CheckIcon, TriangleAlert } from "lucide-react";
 import { useEffect, useState } from "react"
 import { applyLeave, getTotalLeaveDays } from "../../../../services/LeaveService";
 import { dateFormatter, totalLeaveDaysCalculator } from "../../utils/LeaveUtils";
+import { UserInformationCard } from "../../../profile/UserInformationCard";
 
 export const LeaveRequestForm = ({user})=>{
     const [requestDto, setRequestDto] = useState({
@@ -139,6 +140,11 @@ export const LeaveRequestForm = ({user})=>{
           {error}
         </Alert>
       </Snackbar>
+      <div style={{
+        marginBottom : "20px"
+      }}>
+        <UserInformationCard/>
+      </div>
       {requestLoading && (
         <div
           style={{
