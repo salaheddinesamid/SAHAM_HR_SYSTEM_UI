@@ -71,6 +71,7 @@ export const servicesConfig = [
       { id: 3, name: "Prêts", view: <Loan/>, icon: <RealEstateAgentIcon />, color: "#E3F2FD" },
       { id: 7, name: "Mes dépenses", view: <Expenses/> , icon: <Wallet />, color: "#E3F2FD" },
     ],
+    allowedRoles : ["EMPLOYEE", "HR", "MANAGER"]
   },
   {
     id: 3, 
@@ -85,6 +86,7 @@ export const servicesConfig = [
       { id: 5, name: "Tribus", color: "#FFF3E0", icon : <Groups2Icon/>},
       { id: 6, name: "Evénements SAHAM", icon : <CelebrationIcon/>, color: "#FFF3E0" },
     ],
+    allowedRoles : ["EMPLOYEE", "HR", "MANAGER"]
   },
   {
     id: 4, 
@@ -100,6 +102,7 @@ export const servicesConfig = [
       { id: 6, name: "Campagne de Vaccination", icon: <Syringe />, color: "#E8F5E9" },
       
     ],
+    allowedRoles : ["EMPLOYEE", "HR", "MANAGER"]
   },
   {
     id: 5, 
@@ -115,6 +118,7 @@ export const servicesConfig = [
       { id: 7, name: "Performance, feedback et évaluations", icon: <AssessmentIcon />, color: "#F3E5F5" },
       { id: 8, name: "Départ à la retraite, fin de contrat ou démission", icon: <ExitToAppIcon />, color: "#F3E5F5" },
     ],
+    allowedRoles : ["EMPLOYEE", "HR", "MANAGER"]
   },
   {
     id: 6, 
@@ -124,5 +128,6 @@ export const servicesConfig = [
     subServices: [
       { id: 1, name: "Dashboard RH", icon: <ChartNoAxesCombined />, color: "#E0F7FA" , view: <AnalyticsDashboard/>},
     ],
+    allowedRoles : ["HR"]
   }
 ];

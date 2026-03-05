@@ -10,9 +10,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ProfileManagement } from "../features/profile/ProfileManagement";
 
 export const Dashboard = () => {
+  const [user, setUser] = useState(null);
   const [openServices, setOpenServices] = useState([]);
   const { selectedService, selectService } = useService();
-
+  const filteredServices = servicesConfig.filter(service =>
+    !service.allowedRoles || service.allowedRoles.some(role => user?.roles.includes(role)));
   // Toggle open/close for sidebar sections
   const toggleService = (serviceName) => {
     setOpenServices((prev) =>
@@ -33,6 +35,12 @@ export const Dashboard = () => {
     }
   }, [selectedService]);
 
+  useEffect(()=>{
+    setUser(
+      JSON.parse(localStorage.getItem("userDetails"))
+    )
+  },[])
+
   return (
     <div className="dashboard">
       <div className="left-side">
@@ -41,7 +49,7 @@ export const Dashboard = () => {
         </div>
 
         <div className="left-side-services">
-          {servicesConfig.map((s) => {
+          {filteredServices.map((s) => {
             const isOpen =
               openServices.includes(s.name) ||
               s.subServices?.some((sub) => sub.name === selectedService.name);

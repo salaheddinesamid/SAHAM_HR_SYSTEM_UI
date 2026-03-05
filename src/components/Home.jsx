@@ -1,10 +1,18 @@
 import { servicesConfig } from "./servicesConfig";
 import "../styles/Home.css";
 import { useService } from "../context/ViewNavigatorContext";
+import { useEffect, useState } from "react";
 
 export const Home = () => {
-  
+  const [user, setUser] = useState(null);
   const {service, selectService} = useService();
+  const filteredServices = servicesConfig.filter(service =>
+    !service.allowedRoles || service.allowedRoles.some(role => user?.roles.includes(role)));
+  useEffect(()=>{
+    setUser(
+      JSON.parse(localStorage.getItem("userDetails"))
+    )
+  },[])
   return (
     <div className="home-container">
       <div className="home-header">
@@ -13,7 +21,7 @@ export const Home = () => {
 
       <div className="home-content">
         <div className="">
-          {servicesConfig.filter((s)=> s.id !== 10).map((s) => (
+          {filteredServices.filter((s)=> s.id !== 10).map((s) => (
             s.id !== 1 && (
                 <div key={s.id} className="row">
                     <h3>{s.name}</h3>
