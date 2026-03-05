@@ -129,3 +129,29 @@ export const downloadAbsenceMedicaleCertificate = async(path)=>{
     });
     return response.data;
 }
+/**
+ * 
+ * @param {*} refNumber 
+ * @returns 
+ */
+export const cancelAbsenceRequest = async(refNumber)=>{
+    const response = await AbsenceAPI.put("/requests/cancel",null, {
+        params : {
+            refNumber : refNumber
+        }
+    })
+    return response.status;
+}
+/**
+ * 
+ * @param {*} refNumber 
+ * @returns 
+ */
+export const cancelAbsence = async(refNumber) =>{
+    const response = await AbsenceAPI.put("cancel", null, {
+        params : {
+            refNumber : refNumber
+        }
+    });
+    return response.status;
+}

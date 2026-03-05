@@ -140,7 +140,7 @@ export const LeaveRequestForm = ({user})=>{
         </Alert>
       </Snackbar>
       <div style={{
-        marginBottom : "20px"
+        marginBottom : "40px"
       }}>
         <UserInformationCard/>
       </div>

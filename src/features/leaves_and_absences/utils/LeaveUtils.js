@@ -27,6 +27,8 @@ export const leaveStatusMapper = (status) => {
         return { message: "En attente", color: "bg-warning text-dark" };
       case "CANCELED":
         return { message: "Annulée", color: "bg-secondary" };
+      case "CANCELLED":
+        return { message: "Annulée", color: "bg-secondary" };
       default:
         return { message: "Inconnue", color: "bg-light text-dark" };
       }

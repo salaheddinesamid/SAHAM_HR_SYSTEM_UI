@@ -5,6 +5,7 @@ import { LocalDateTimeMapper } from "../../../../utils/LocalDateTimeMapper";
 import { Search } from "@mui/icons-material";
 import { LeaveRequestCancellationDialog } from "../../leaves/dialogs/LeaveRequestCancellationDialog";
 import { AbsenceTypesMapper, leaveStatusMapper } from "../../utils/LeaveUtils";
+import { AbsenceRequestCancellationDialog } from "../dialogs/AbsenceRequestCancellationDialog";
 
 const AbsenceRequestsTable = ({requests, currentPage, currentSize, setCurrentPage, handleChangeRowsPerPage, totalElements, onClickCancel})=>{
     return (
@@ -207,7 +208,7 @@ export const AbsenceRequests = ({user, filters})=>{
           />
         </>
       )}
-      <LeaveRequestCancellationDialog
+      <AbsenceRequestCancellationDialog
         open={cancelDialogOpen}
         onClose={handleCloseCancellationDialog}
         request={selectedRequest}
