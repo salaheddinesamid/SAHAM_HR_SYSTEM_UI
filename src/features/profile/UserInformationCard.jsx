@@ -1,14 +1,13 @@
-import { useEffect, useState } from "react";
-import { getEmployee } from "../../services/EmployeeService";
 
 export const UserInformationCard = () => {
     const userDetails = JSON.parse(localStorage.getItem("userDetails"));
-  const EmployeeBalance = ({balanceDetails})=>{
-    return(
+    
+    const EmployeeBalance = ({balanceDetails})=>{
+        return(
         <div className="row mt-3">
             <div className="row">
                 <div className="col">
-                    <p>Solde {balanceDetails?.year} : <b>{balanceDetails?.currentBalance} Jour (s)</b></p>
+                    <p>Solde {balanceDetails?.year -1} : <b>{balanceDetails?.previousYearBalance} Jour (s)</b></p>
                 </div>
                 
                 <div className="col">
@@ -16,7 +15,9 @@ export const UserInformationCard = () => {
                 </div>
                 
                 <div className="col">
-                    <p>Jours Cumulés : <b>{balanceDetails?.accumulatedBalance} Jour (s)</b></p>
+                    <p> Droit à fin {new Date().toLocaleString('fr-FR', { month: 'long' })} :
+                        <b> {balanceDetails?.accumulatedBalance} Jour(s)</b>
+                    </p>
                 </div>
                 
                 <div className="col">
@@ -24,7 +25,7 @@ export const UserInformationCard = () => {
                 </div>
                 
                 <div className="col">
-                    <p>Reliquat : <b>{balanceDetails?.reminderBalance} Jour (s)</b></p>
+                    <p>Solde : <b>{balanceDetails?.reminderBalance} Jour (s)</b></p>
                 </div>
             </div>
             <div className="row">
