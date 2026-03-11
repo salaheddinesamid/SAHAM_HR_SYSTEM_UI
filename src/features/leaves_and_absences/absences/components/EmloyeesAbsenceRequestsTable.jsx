@@ -35,7 +35,7 @@ export const EmployeesAbsenceRequestsTable = ({
                 const { message, color } = loanStatusMapper(req.status);
                 const type = AbsenceTypesMapper(req?.type)
                 return (
-                <TableRow key={req.id}>
+                <TableRow key={req.id} style={{backgroundColor : req?.status === "IN_PROCESS" ? "#fff9c4" : "white"}}>
                     <TableCell>{req.requestedBy}</TableCell>
                     <TableCell>{type}</TableCell>
                     <TableCell>{LocalDateTimeMapper(req.startDate)}</TableCell>

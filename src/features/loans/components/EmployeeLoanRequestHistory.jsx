@@ -181,7 +181,7 @@ export const EmployeeLoanRequests = ()=>{
                                         const { message, color } = loanStatusMapper(r.status);
                                         
                                         return (
-                                        <TableRow key={r.id || r.issueDate} hover>
+                                        <TableRow key={r.id || r.issueDate} hover style={{backgroundColor : r?.status === "IN_PROCESS" ? "#fff9c4" : "white"}}>
                                             <TableCell sx={{ fontWeight: 500 }}>
                                                 {r?.employeeDetails?.employeeName}
                                             </TableCell>

@@ -24,7 +24,7 @@ const AbsenceRequestsTable = ({requests, currentPage, currentSize, setCurrentPag
 
       <TableBody>
         {requests?.map((req, index) => (
-          <TableRow key={req.id || index}>
+          <TableRow key={req.id || index} style={{backgroundColor : req?.status === "IN_PROCESS" ? "#fff9c4" : "white"}}>
             <TableCell>{req.referenceNumber}</TableCell>
             <TableCell>{AbsenceTypesMapper(req.type)}</TableCell>
             <TableCell>{LocalDateTimeMapper(req.startDate)}</TableCell>

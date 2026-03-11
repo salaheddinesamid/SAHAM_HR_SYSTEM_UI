@@ -31,7 +31,7 @@ const LeaveRequestsTable = ({requests, loading, currentPage, currentSize, setCur
                     </TableHead>
                     <TableBody>
                         {requests?.map((req, index) => (
-                            <TableRow key={req.id || index}>
+                            <TableRow key={req.id || index} style={{backgroundColor : req?.status === "IN_PROCESS" ? "#fff9c4" : "white"}}>
                                 <TableCell>{req.refNumber}</TableCell>
                                 <TableCell>{LeaveTypesMapper(req.type)}</TableCell>
                                 <TableCell>{LocalDateTimeMapper(req.startDate)}</TableCell>
