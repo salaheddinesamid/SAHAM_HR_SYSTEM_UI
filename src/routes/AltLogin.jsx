@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import back from "../0002.jpg";
 import "../styles/Login.css";
 import logo from "../logo.png";
+import bgLogo from "../logo_bg.png"
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useNavigate } from "react-router-dom";
@@ -14,12 +15,13 @@ import {
   InputAdornment,
   TextField,
 } from "@mui/material";
+import { LockKeyhole } from "lucide-react";
 
 export const AltLogin = () => {
   const [showForm, setShowForm] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [loginError, setLoginError] = useState("");
-  const [loginSuccessMessage, setLoginSuccessMessage] = useState("");
+  const [loginError, setLoginError] = useState(null);
+  const [loginSuccessMessage, setLoginSuccessMessage] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
@@ -51,7 +53,6 @@ export const AltLogin = () => {
   const handleLogin = async () => {
     try {
       setLoading(true);
-      setLoginError("");
 
       const res = await authenticate(loginDetails);
 
@@ -75,33 +76,31 @@ export const AltLogin = () => {
       className="login-full"
       style={{ backgroundImage: `url(${back})` }}
     >
-      <div className="overlay">
-        <div className="top-bar">
-          <img src={logo} alt="logo" className="top-logo" />
+      <div className="row" style={{width : "100%", padding : 30}}>
+        <div className="col-xl-8" style={{padding : 30}}>
+          <div className="mb-4">
+            <img src={logo} alt="logo" className="top-logo" />
+          </div>
+          <div style={{paddingTop : 20, paddingLeft : 10 ,color :"white"}}>
+            <h1><b>Bienvenue sur My HR SAHAM</b></h1>
+            <p>Plateforme de gestion des ressources humaines</p>
+          </div>
         </div>
-
-        <div className="hero-content">
-          <h1>Bienvenue sur My HR SAHAM</h1>
-          <p>Plateforme de gestion des ressources humaines</p>
-        </div>
-      </div>
-
-      {showForm && (
-        <div className="login-form-overlay">
+        <div className="col-xl-4" style={{padding : 30}}>
           <div className="login-container">
             <div className="login-header">
-              <img src={logo} alt="logo" />
+              <img src={bgLogo} alt="logo" style={{height : "80px", marginBottom : "30px"}}/>
               <h2>Connexion</h2>
               <p>Accédez à votre espace professionnel</p>
             </div>
 
-            {loginError && (
+            {loginError !== null && (
               <Alert severity="error" sx={{ mb: 2 }}>
                 {loginError}
               </Alert>
             )}
 
-            {loginSuccessMessage && (
+            {loginSuccessMessage !== null && (
               <Alert severity="success" sx={{ mb: 2 }}>
                 {loginSuccessMessage}
               </Alert>
@@ -156,9 +155,13 @@ export const AltLogin = () => {
             <div className="login-footer">
               <a href="forgot-password">Mot de passe oublié ?</a>
             </div>
+            <div className="secured-connection mt-4">
+              <p><b><LockKeyhole /> Connexion sécurisée</b></p>
+              <p>Vos données sont protégées</p>
+            </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };
