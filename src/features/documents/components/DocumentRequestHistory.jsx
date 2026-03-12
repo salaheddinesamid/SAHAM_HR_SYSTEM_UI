@@ -46,7 +46,7 @@ const RequestsTable = ({filteredRequests, totalElements, currentPageNumber, page
             const { message, color } = StatusMapper(r.status);
 
             return (
-              <TableRow key={r.id}>
+              <TableRow key={r.id} style={{backgroundColor : r?.status === "IN_PROCESS" ? "#fff9c4" : "white"}}>
                 <TableCell>{r.refNumber}</TableCell>
                 <TableCell>
                   {LocalDateTimeMapper(r.requestDate)}
