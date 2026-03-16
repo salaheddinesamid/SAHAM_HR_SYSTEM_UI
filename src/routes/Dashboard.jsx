@@ -113,7 +113,7 @@ export const Dashboard = () => {
               cursor : "pointer"
             }} onClick={()=> selectService({
                 id: 7, 
-                name: "Profile", 
+                name: "Profil", 
                 view: <ProfileManagement/>,
                 color: "#E0F7FA", // Light cyan
               })}>

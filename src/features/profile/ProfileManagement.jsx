@@ -7,6 +7,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { mapEmployeeFamilyStatus } from "../../utils/ProfileManagement";
 import { CheckIcon, TriangleAlert } from "lucide-react";
+import { ProfilePicture } from "./components/ProfilePicture";
 
 const Section = ({ title, children }) => (
   <div className="profile-section">
@@ -51,7 +52,8 @@ const ProfilePictureUploader = ({ employeeId }) => {
     try{
       const formData = new FormData();
       formData.append("multipartFile", file);
-      const res = await uploadProfilePicture(formData)
+      const res = await uploadProfilePicture(formData);
+      console.log(res);
     }catch (err) {
       console.error(err);
     }
@@ -256,18 +258,19 @@ const ContactDetails = ({ data }) => (
 
 export const ProfileManagement = () => {
   const [employeeDetails, setEmployeeDetails] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const fetchEmployeeDetails = async() =>{
     const authUserEmail = JSON.parse(localStorage.getItem("userDetails"))?.email
     try{
+      setLoading(true);
       const res = await getEmployee(authUserEmail);
-      console.log(res);
       setEmployeeDetails(res);
     }catch(err){
       console.log(err);
     }
     finally{
-      console.log(employeeDetails);
+      setLoading(false);
     }
   }
   useEffect(()=>{
@@ -275,12 +278,38 @@ export const ProfileManagement = () => {
   },[])
   return (
     <div className="profile-container">
-      <ProfileHeader employee={employeeDetails} />
-      <PersonalDetails data={employeeDetails} />
-      <ProfessionalDetails data={employeeDetails?.professionalDetails} />
-      <SocialDetails data={employeeDetails?.socialDetails} />
-      <ContactDetails data={employeeDetails?.contactDetails} />
-      <PasswordManagement employeeDetails={employeeDetails}/>
+      {loading && (
+        <div className="row" style={{justifyContent : "center", alignItems : "center"}}>
+          <CircularProgress/>
+        </div>
+      )}
+      {!loading && employeeDetails === null && (
+        <p>Error</p>
+      )}
+      {!loading && employeeDetails !== null && (
+        <>
+      <div className="row">
+        <div className="col-xl-2">
+          <ProfilePicture id={employeeDetails?.employeeId} path={employeeDetails?.profilePictureUrl}/>
+        </div>
+        <div className="col-xl-10">
+          <PersonalDetails data={employeeDetails} />
+        </div>
+      </div>
+      <div className="row mt-4">
+        <ProfessionalDetails data={employeeDetails?.professionalDetails} />
+      </div>
+      <div className="row">
+        <SocialDetails data={employeeDetails?.socialDetails} />
+      </div>
+      <div className="row">
+        <ContactDetails data={employeeDetails?.contactDetails} />
+      </div>
+      <div className="row">
+        <PasswordManagement employeeDetails={employeeDetails}/>
+      </div>
+      </>
+      )}
     </div>
   );
 };

@@ -73,7 +73,7 @@ export const updateEmployee = async(employeeId, requestDto)=>{
  * @returns 
  */
 export const uploadProfilePicture = async(image) =>{
-    const response = await EmployeeApi.patch("update/profile-picture/", image, {
+    const response = await EmployeeApi.put("update/profile-picture/", image, {
         headers: {
             "Content-Type": "multipart/form-data",
         }
@@ -81,9 +81,18 @@ export const uploadProfilePicture = async(image) =>{
     return response.status;
 }
 
-export const getProfilePicture = async(picturePATH) =>{
-    const response = await EmployeeApi.get("")
-} 
+export const getProfilePicture = async (userId, path) => {
+
+  const response = await EmployeeApi.get("profile-picture", {
+    params: {
+      userId: userId,
+      picturePath: path
+    },
+    responseType: "blob"
+  });
+
+  return response;
+};
 /**
  * 
  * @param {*} managerName 
