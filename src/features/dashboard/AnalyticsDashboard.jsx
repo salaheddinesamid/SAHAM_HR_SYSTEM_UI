@@ -7,6 +7,7 @@ import { Overview } from "./components/Overview";
 import { EmployeeAnalytics } from "./components/EmployeeAnalytics";
 import { LeaveAnalytics } from "./components/LeaveAnalytics";
 import { AbsenceAnalytics } from "./components/AbsenceAnalytics";
+import { LoanAnalytics } from "./components/LoanAnalytics";
 
 export const AnalyticsDashboard = () => {
 
@@ -22,6 +23,7 @@ export const AnalyticsDashboard = () => {
         mb={3}>
           <LeaveAnalytics/>
           <AbsenceAnalytics/>
+          <LoanAnalytics/>
         </Box>
       </Box>
 
