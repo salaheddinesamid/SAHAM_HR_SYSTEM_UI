@@ -43,6 +43,7 @@ import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import { GreenCardDetails } from "../features/advantages/green_card/Main";
 import Groups2Icon from '@mui/icons-material/Groups2';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import { ThirdPartyPayer } from "../features/advantages/third-party-payer/ThirdPartyPayer";
 
 
 export const servicesConfig = [
@@ -98,8 +99,9 @@ export const servicesConfig = [
       { id: 2, name: "Avantage Multirisque Habitation", icon: <MapsHomeWorkIcon />, color: "#E8F5E9", view: <HomeInsuranceDetails/>},
       { id: 3, name: "Avantage Carte Verte", icon: <CardGiftcardIcon />, color: "#E8F5E9", view : <GreenCardDetails/>},
       { id: 4, name: "Mes remboursements médicaux", icon: <AttachMoneyIcon />, color: "#E8F5E9" },
-      { id: 5, name: "Conventions & Tiers Payant", icon: <HandCoins />, color: "#E8F5E9" },
-      { id: 6, name: "Campagne de Vaccination", icon: <Syringe />, color: "#E8F5E9" },
+      { id: 5, name: "Conventions", icon: <HandCoins />, color: "#E8F5E9" },
+      { id: 6, name: "Tiers Payant", icon: <HandCoins />, color: "#E8F5E9", view: <ThirdPartyPayer/>},
+      { id: 7, name: "Campagne de Vaccination", icon: <Syringe />, color: "#E8F5E9" },
       
     ],
     allowedRoles : ["EMPLOYEE", "HR", "MANAGER"]

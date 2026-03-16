@@ -17,7 +17,7 @@ export const PDFViewer = ({ pdfUrl }) => {
   };
 
   return (
-    <div className="pdf-container">
+    <div className="pdf-container" style={{display : "flex",justifyContent : "center", alignItems : "center"}}>
         
       <Document
         file={pdfUrl}
