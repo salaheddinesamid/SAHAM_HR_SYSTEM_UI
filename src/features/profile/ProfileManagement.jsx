@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "./styles/ProfileManagement.css";
-import { getEmployee, updatePassword, uploadProfilePicture } from "../../services/EmployeeService";
-import axios from "axios";
+import { getEmployee, updatePassword } from "../../services/EmployeeService";
 import { Alert, CircularProgress, IconButton, Paper, Snackbar } from "@mui/material";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -52,8 +51,6 @@ const ProfilePictureUploader = ({ employeeId }) => {
     try{
       const formData = new FormData();
       formData.append("multipartFile", file);
-      const res = await uploadProfilePicture(formData);
-      console.log(res);
     }catch (err) {
       console.error(err);
     }

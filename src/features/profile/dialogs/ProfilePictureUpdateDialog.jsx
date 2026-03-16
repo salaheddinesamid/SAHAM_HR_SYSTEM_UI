@@ -1,7 +1,7 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, styled, Typography } from "@mui/material"
 import { CloudUpload } from "lucide-react";
 import { useState } from "react"
-import { uploadProfilePicture } from "../../../services/EmployeeService";
+import { updateProfilePicture, uploadProfilePicture } from "../../../services/EmployeeService";
 
 
 
@@ -31,7 +31,7 @@ export const ProfilePictureUpdateDialog = ({open, onClose, onSuccess}) =>{
     const handleUpdate = async ()=>{
         try{
             setLoading(true);
-            const res = await uploadProfilePicture(selectedImage);
+            const res = await updateProfilePicture(selectedImage);
             if(res === 200){
                 onClose();
                 onSuccess();

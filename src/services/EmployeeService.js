@@ -72,14 +72,23 @@ export const updateEmployee = async(employeeId, requestDto)=>{
  * @param {*} image 
  * @returns 
  */
-export const uploadProfilePicture = async(image) =>{
-    const response = await EmployeeApi.put("update/profile-picture/", image, {
-        headers: {
-            "Content-Type": "multipart/form-data",
-        }
-    });
-    return response.status;
-}
+export const updateProfilePicture = async (image) => {
+
+  const formData = new FormData();
+  formData.append("image", image);
+
+  const response = await EmployeeApi.put(
+    "/update/profile-picture",
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    }
+  );
+
+  return response.status;
+};
 
 export const getProfilePicture = async (userId, path) => {
 
