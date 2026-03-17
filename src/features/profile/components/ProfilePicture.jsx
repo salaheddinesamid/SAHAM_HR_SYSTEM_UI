@@ -64,9 +64,9 @@ export const ProfilePicture = ({ id, path, name }) => {
         }}
       >
 
-        {loading ? (
+        {loading && image === null ? (
           <div>Loading...</div>
-        ) : image ? (
+        ) : image !== null ? (
           <img
             src={image}
             alt="profile"

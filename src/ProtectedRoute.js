@@ -10,7 +10,7 @@ export const ProtectedRoute = ({children})=>{
     const navigate = useNavigate();
 
     useEffect(()=>{
-        if(!userDetails && !accessToken){
+        if(!userDetails || !accessToken){
             navigate('/login',{
                 state : {
                     message : "",

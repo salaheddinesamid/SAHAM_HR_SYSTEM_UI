@@ -187,18 +187,6 @@ export const LoanAnalytics = ()=>{
             <Box>
                 <BarsDataset/>
             </Box>
-            <Box
-              display="grid"
-              gridTemplateColumns={{ xs: "1fr", sm: "repeat(2,1fr)" }}
-              gap={3}
-            >
-              <StatCard label="Total prêts demandés" value={data?.totalRequests || 0} />
-              <StatCard label="Total avances demandés" value={data?.totalRequests || 0} />
-              <StatCard label="Congés approuvés" bgColor={"#00e676"} value={data?.totalApprovedLeaves || 0} />
-              <StatCard label="Congés rejetés" bgColor={"#e57373"} value={data?.totalRejectedLeaves || 0} />
-              <StatCard label="Demandes en attente" bgColor={"#ffe0b2"} value={data?.totalPendingLeaveRequests || 0 } />
-              <StatCard label="Solde moyen restant" value={`${data?.leaveDaysRate || 0} jours`} /> 
-            </Box>
           </Box>
         </Paper>
     );
