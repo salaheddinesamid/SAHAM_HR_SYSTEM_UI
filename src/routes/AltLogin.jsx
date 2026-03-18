@@ -58,7 +58,7 @@ export const AltLogin = () => {
 
       const bearerToken = res?.data?.bearerToken;
       const userDetails = res?.data?.userDetails;
-
+      setLoginError(null)
       setLoginSuccessMessage("Connexion réussie, redirection...");
 
       if (res) postAuthentication(bearerToken, userDetails);
