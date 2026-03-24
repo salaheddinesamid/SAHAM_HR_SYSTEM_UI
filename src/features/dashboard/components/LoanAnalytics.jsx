@@ -1,7 +1,6 @@
 import { Box, Paper, TextField, Typography } from "@mui/material";
 import { useState } from "react"
 import { BarChart } from '@mui/x-charts/BarChart';
-import { StatCard } from "./StatCard";
 
 export const dataset = [
   {

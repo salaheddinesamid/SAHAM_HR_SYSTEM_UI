@@ -123,7 +123,6 @@ export const LeaveAnalytics = () => {
           </select>
         </Box>
       </Box>
-
       <Box
         display="grid"
         gridTemplateColumns={{ xs: "1fr", md: "320px 1fr" }}
@@ -131,7 +130,6 @@ export const LeaveAnalytics = () => {
         alignItems="center"
       >
         <DonutChart data={chartData}/>
-
         <Box
           display="grid"
           gridTemplateColumns={{ xs: "1fr", sm: "repeat(2,1fr)" }}
@@ -141,7 +139,6 @@ export const LeaveAnalytics = () => {
           <StatCard label="Congés approuvés" bgColor={"#00e676"} value={data?.totalApprovedLeaves || 0} />
           <StatCard label="Congés rejetés" bgColor={"#e57373"} value={data?.totalRejectedLeaves || 0} />
           <StatCard label="Demandes en attente" bgColor={"#ffe0b2"} value={data?.totalPendingLeaveRequests || 0 } />
-          <StatCard label="Solde moyen restant" value={`${data?.leaveDaysRate || 0} jours`} /> 
         </Box>
       </Box>
     </Paper>
