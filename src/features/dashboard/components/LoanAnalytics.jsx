@@ -1,6 +1,7 @@
 import { Box, Paper, TextField, Typography } from "@mui/material";
 import { useState } from "react"
 import { BarChart } from '@mui/x-charts/BarChart';
+import { generateYears } from "../../payrolls/utils/YearsGeneratror";
 
 export const dataset = [
   {
@@ -109,9 +110,9 @@ const entities  = [
     { id : 2, label : "SAHAM Finances", value : "SAHAM_FINANCES"},
     { id : 3, label : "SAHAM Foundation", value : "SAHAM_FOUNDATION"}
 ]
-
 export const LoanAnalytics = ()=>{
 
+    const years = generateYears(2010, new Date().getFullYear);
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("");
@@ -120,9 +121,7 @@ export const LoanAnalytics = ()=>{
     const [currentType, setCurrentType] = useState("ALL");
     const [currentEntity, setCurrentEntity] = useState("ALL");
     const [currentDepartment, setCurrentDepartment] = useState("ALL");
-    const [fromDate, setFromDate] = useState(null);
-    const [toDate, setToDate] = useState(null);
-
+    const [selectedYear, setSelectedYear] = useState();
     const fetchData = async()=>{
         try{
 
@@ -165,8 +164,12 @@ export const LoanAnalytics = ()=>{
               display : "flex",
               justifyContent : "space-between"
             }}>
-              <TextField type="date" value={fromDate} onChange={(e)=> setFromDate(e.target.value)} label="From" InputLabelProps={{shrink : true}}/>
-              <TextField type="date" value={toDate} onChange={(e)=> setToDate(e.target.value)} label="To" InputLabelProps={{shrink : true}}/>
+              <select name="" id="" value={selectedYear} onChange={(e)=> setSelectedYear(e.target.value)}>
+                    <option value="">Filtrer par département</option>
+                    {departments.map((e)=>(
+                        <option value={e.value} key={e.id}>{e.label}</option>
+                    ))}
+                </select>
               <select name="" id="" value={currentDepartment} onChange={(e)=> setCurrentDepartment(e.target.value)}>
                     <option value="">Filtrer par département</option>
                     {departments.map((e)=>(
