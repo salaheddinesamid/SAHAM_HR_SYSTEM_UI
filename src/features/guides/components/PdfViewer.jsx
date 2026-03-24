@@ -17,9 +17,10 @@ export const PDFViewer = ({ pdfUrl }) => {
   };
 
   return (
-    <div className="pdf-container" style={{display : "flex",justifyContent : "center", alignItems : "center"}}>
+    <div className="pdf-container" style={{display : "inline",justifyContent : "center", alignItems : "center"}}>
         
-      <Document
+      <div>
+        <Document
         file={pdfUrl}
         onLoadSuccess={onDocumentLoadSuccess}
         scale={1.3}
@@ -32,6 +33,7 @@ export const PDFViewer = ({ pdfUrl }) => {
           width={600} // You can make this responsive
         />
       </Document>
+      </div>
       
       <div className="controls">
         <button className='control-btn' disabled={pageNumber <= 1} onClick={() => setPageNumber(pageNumber - 1)}>
