@@ -9,6 +9,7 @@ export const ExpenseAnalytics = () =>{
       sx={{
         p: 4,
         borderRadius: 4,
+        marginTop : 5,
         background: "linear-gradient(145deg,#ffffff,#f4f7fb)",
         boxShadow: "0 10px 35px rgba(0,0,0,0.12)",
       }}
