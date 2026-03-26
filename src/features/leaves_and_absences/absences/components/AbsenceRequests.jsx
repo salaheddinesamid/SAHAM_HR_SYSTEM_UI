@@ -154,6 +154,10 @@ export const AbsenceRequests = ({user, filters})=>{
         </div>
       )}
 
+      {!loading && requests.length === 0 && (
+        <p className="text-center">Aucune demande trouvée.</p>
+      )}
+
       {!loading && requests.length > 0 && (
         <>
           <Toolbar sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
