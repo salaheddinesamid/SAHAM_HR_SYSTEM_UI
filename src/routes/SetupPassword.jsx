@@ -3,6 +3,8 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import "./../styles/SetupPassword.css";
 import background from "./../0002.jpg";
 import { setupPassword } from "../services/AuthService";
+import Cookies from "js-cookie"
+import axios from "axios";
 
 export const SetupPassword = () => {
   const [searchParams] = useSearchParams();
@@ -46,12 +48,21 @@ export const SetupPassword = () => {
     setLoading(true);
 
     try {
-        const response = await setupPassword(token, password);
-        setSuccess(true);
-        // Redirect after 3 seconds
-        if(response === 200){
-            setTimeout(() => navigate("/login"), 3000);
+      const accessToken = Cookies.get("accessToken");
+      const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}`,null,{
+        params : {
+          token : token,
+          newPassword : password
+        },
+        headers : {
+          Authorization : `Bearer ${accessToken}`
         }
+      })
+      setSuccess(true);
+      // Redirect after 3 seconds
+      if(response === 200){
+        setTimeout(() => navigate("/login"), 3000);
+      }
     } catch (err) {
         setError("Activation failed. Token may be expired.");
     } finally {
