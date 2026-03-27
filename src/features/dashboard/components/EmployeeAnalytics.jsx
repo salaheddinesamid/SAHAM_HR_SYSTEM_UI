@@ -106,21 +106,18 @@ export const EmployeeAnalytics = () => {
           icon={<PeopleAltIcon />}
           label="Effectif total"
           value={data?.totalEmployees}
-          bgColor={"#80cbc4"}
         />
 
         <StatCard
           icon={<MaleIcon />}
           label="Nombre d’hommes"
           value={data?.totalMaleEmployees}
-          bgColor={"#0277bd"}
         />
 
         <StatCard
           icon={<FemaleIcon />}
           label="Nombre de femmes"
           value={data?.totalFemaleEmployees}
-          bgColor={"#f06292"}
         />
       </Box>
     </Paper>

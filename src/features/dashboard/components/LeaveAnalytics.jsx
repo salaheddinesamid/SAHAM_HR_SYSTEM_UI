@@ -45,8 +45,8 @@ export const LeaveAnalytics = () => {
 
   const [data, setData] = useState({});
   const [chartData, setChartData] = useState([
-    { label: 'Congés Annuel', value: 0, color: '#0088FE' },
-    { label: 'Congés Exceptionnel', value: 0, color: '#00C49F' }
+    { label: 'Congés Annuel', value: 0},
+    { label: 'Congés Exceptionnel', value: 0}
   ])
   const [loading, setLoading] = useState(false);
 
@@ -136,9 +136,9 @@ export const LeaveAnalytics = () => {
           gap={3}
         >
           <StatCard label="Total congés demandés" value={data?.totalRequests || 0} />
-          <StatCard label="Congés approuvés" bgColor={"#00e676"} value={data?.totalApprovedLeaves || 0} />
-          <StatCard label="Congés rejetés" bgColor={"#e57373"} value={data?.totalRejectedLeaves || 0} />
-          <StatCard label="Demandes en attente" bgColor={"#ffe0b2"} value={data?.totalPendingLeaveRequests || 0 } />
+          <StatCard label="Congés approuvés" value={data?.totalApprovedLeaves || 0} />
+          <StatCard label="Congés rejetés" value={data?.totalRejectedLeaves || 0} />
+          <StatCard label="Demandes en attente" value={data?.totalPendingLeaveRequests || 0 } />
         </Box>
       </Box>
     </Paper>

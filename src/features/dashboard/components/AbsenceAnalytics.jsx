@@ -4,11 +4,6 @@ import { PieChart } from '@mui/x-charts/PieChart';
 import { useEffect, useState } from "react";
 import { getAbsenceAnalyticsOverview } from "../../../services/AnalyticsService";
 
-const data = [
-      { label: 'Group C', value: 300, color: '#FFBB28' },
-      { label: 'Group D', value: 200, color: '#FF8042' },
-];
-
 const settings = {
   margin: { right: 5 },
   width: 200,
@@ -16,7 +11,7 @@ const settings = {
   hideLegend: true,
 };
 
-export default function DonutChart() {
+export default function DonutChart({data}) {
   return (
     <PieChart
       series={[{ innerRadius: 50, outerRadius: 100, data, arcLabel: 'value' }]}
@@ -40,10 +35,17 @@ const entities  = [
     { id : 2, label : "SAHAM Finances", value : "SAHAM_FINANCES"},
     { id : 3, label : "SAHAM Foundation", value : "SAHAM_FOUNDATION"}
 ]
+
+
 export const AbsenceAnalytics = () => {
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const [chartData, setChartData] = useState([
+    { label: 'Congés Annuel', value: 10},
+    { label: 'Congés Exceptionnel', value: 20}
+  ])
 
   // Filters
   const [currentEntity, setCurrentEntity] = useState("ALL");
@@ -115,7 +117,7 @@ export const AbsenceAnalytics = () => {
           gridTemplateColumns={{ xs: "1fr", md: "320px 1fr" }}
           gap={4}
           alignItems="center">
-            <DonutChart />
+            <DonutChart data={chartData}/>
             <Box
             display="grid"
             gridTemplateColumns={{ xs: "1fr", sm: "repeat(2,1fr)" }}
