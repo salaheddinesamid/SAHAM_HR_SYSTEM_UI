@@ -16,14 +16,13 @@ const chartSetting = {
   height: 300,
 };
 
-export default function BarsDataset({data}) {
+export default function BarsDataset({data, dataKey}) {
   return (
     <BarChart
       dataset={data}
-      xAxis={[{ dataKey: 'month' }]}
+      xAxis={[{ dataKey: 'month' }]} // define the xAxis placeholders
       series={[
-        { dataKey: 'prêts', label: 'Prêts', valueFormatter },
-        { dataKey: 'avances', label: 'Avances', valueFormatter }
+        { dataKey: 'totalAmount', label: 'totalAmount', valueFormatter }
       ]}
       {...chartSetting}
       colors={['#2e7d32', '#ed6c02', '#d32f2f', '#9c27b0']}

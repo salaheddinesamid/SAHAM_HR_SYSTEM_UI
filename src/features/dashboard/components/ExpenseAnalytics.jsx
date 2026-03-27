@@ -58,23 +58,14 @@ export const ExpenseAnalytics = () =>{
         <p>Aucune donnée de dépense disponible</p>
       )}
       <Box
-        display="grid"
+        display="flex"
         gridTemplateColumns={{ xs: "1fr", md: "320px 1fr" }}
         gap={4}
         alignItems="center"
       >
         <BarsDataset data={dataSet}/>
 
-        <Box
-          display="grid"
-          gridTemplateColumns={{ xs: "1fr", sm: "repeat(2,1fr)" }}
-          gap={3}
-        >
-          <StatCard label="Dépenses totales" value="120,000 MAD" />
-          <StatCard label="Croissance (%)" value="+8.2%" />
-          <StatCard label="Catégorie principale" value="Salaries" />
-          <StatCard label="Département le plus dépensier" value="IT" />
-        </Box>
+        
       </Box>
     </Paper>
   );
