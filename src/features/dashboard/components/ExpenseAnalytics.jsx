@@ -1,8 +1,34 @@
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, CircularProgress, Paper, Typography } from "@mui/material";
 import { StatCard } from "./StatCard";
-import BarsDataset from "./LoanAnalytics";
+import { useEffect, useState } from "react";
+import { getExpenseAnalyticsOverview } from "../../../services/AnalyticsService";
+import BarsDataset from "./BarDataset";
+import { generateYears } from "../../payrolls/utils/YearsGeneratror";
 
 export const ExpenseAnalytics = () =>{
+
+    const years = generateYears(2010, new Date().getFullYear);
+    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+    const [dataSet, setDataSet] = useState([]);
+    const [overviewData, setOverviewData] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    const fetchData = async(year) =>{
+        try{
+            setLoading(true);
+            const res = await getExpenseAnalyticsOverview(year)
+            setDataSet(res);
+            console.log(res);
+        }catch(err){
+            console.log(err);
+        }finally{
+            setLoading(false);
+        }
+    }
+
+    useEffect(()=>{
+        fetchData(selectedYear);
+    }, [])
     return (
     <Paper
       elevation={0}
@@ -23,23 +49,31 @@ export const ExpenseAnalytics = () =>{
           Indicateurs clés sur l’absentéisme des collaborateurs
         </Typography>
       </Box>
+
+      {loading && dataSet.length === 0 && (
+        <CircularProgress/>
+      )}
+
+      {!loading && dataSet.length === 0 && (
+        <p>Aucune donnée de dépense disponible</p>
+      )}
       <Box
         display="grid"
         gridTemplateColumns={{ xs: "1fr", md: "320px 1fr" }}
         gap={4}
         alignItems="center"
       >
-        <BarsDataset />
+        <BarsDataset data={dataSet}/>
 
         <Box
           display="grid"
           gridTemplateColumns={{ xs: "1fr", sm: "repeat(2,1fr)" }}
           gap={3}
         >
-          <StatCard label="Nombre total d’absences" value={0} />
-          <StatCard label="Taux d’absentéisme (%)" value={"3.4%"} />
-          <StatCard label="Moyenne jours / employé" value={2.1} />
-          <StatCard label="Département le plus impacté" value="IT" />
+          <StatCard label="Dépenses totales" value="120,000 MAD" />
+          <StatCard label="Croissance (%)" value="+8.2%" />
+          <StatCard label="Catégorie principale" value="Salaries" />
+          <StatCard label="Département le plus dépensier" value="IT" />
         </Box>
       </Box>
     </Paper>

@@ -2,6 +2,7 @@ import { Box, Paper, TextField, Typography } from "@mui/material";
 import { useState } from "react"
 import { BarChart } from '@mui/x-charts/BarChart';
 import { generateYears } from "../../payrolls/utils/YearsGeneratror";
+import { StatCard } from "./StatCard";
 
 export const dataset = [
   {
@@ -91,6 +92,7 @@ export default function BarsDataset() {
         { dataKey: 'avances', label: 'Avances', valueFormatter }
       ]}
       {...chartSetting}
+      colors={['#2e7d32', '#ed6c02', '#d32f2f', '#9c27b0']}
     />
   );
 }
@@ -185,9 +187,21 @@ export const LoanAnalytics = ()=>{
             </Box>
           </Box>
     
-          <Box>
+          <Box display="grid"
+          gridTemplateColumns={{ xs: "1fr", md: "320px 1fr" }}
+          gap={4}
+          alignItems="center">
             <Box>
                 <BarsDataset/>
+            </Box>
+            <Box
+            display="grid"
+            gridTemplateColumns={{ xs: "1fr", sm: "repeat(2,1fr)" }}
+            gap={3}>
+                <StatCard label="Nombre total d’absences" value={data?.totalAbsenceRequests || 0} />
+                <StatCard label="Taux d’absentéisme (%)" value={"3.4%"} />
+                <StatCard label="Moyenne jours / employé" value={2.1} />
+                <StatCard label="Département le plus impacté" value="IT" />
             </Box>
           </Box>
         </Paper>

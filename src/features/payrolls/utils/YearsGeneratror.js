@@ -1,4 +1,4 @@
-export const generateYears =(from, to) =>{
+export const generateYears = (from, to) =>{
   const years = [];
   for (let year = from; year <= to; year++) {
     years.push(year);

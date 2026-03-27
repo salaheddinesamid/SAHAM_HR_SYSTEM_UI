@@ -11,10 +11,18 @@ const settings = {
   hideLegend: true,
 };
 
-export default function DonutChart({data}) {
+export default function DonutChart({ data }) {
   return (
     <PieChart
-      series={[{ innerRadius: 50, outerRadius: 100, data, arcLabel: 'value' }]}
+      series={[
+        {
+          innerRadius: 50,
+          outerRadius: 100,
+          data,
+          arcLabel: 'value',
+        },
+      ]}
+      colors={['#d32f2f', '#9c27b0']}
       {...settings}
     />
   );
