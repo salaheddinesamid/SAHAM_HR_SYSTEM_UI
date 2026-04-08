@@ -1,4 +1,4 @@
-import { Box, Paper, TextField, Typography } from "@mui/material";
+import { Box, CircularProgress, Paper, TextField, Typography } from "@mui/material";
 import { StatCard } from "./StatCard";
 import { PieChart } from '@mui/x-charts/PieChart';
 import { useEffect, useState } from "react";
@@ -47,21 +47,31 @@ const entities  = [
 
 export const AbsenceAnalytics = () => {
 
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]); // 
+  const [loading, setLoading] = useState(false); // Loading state
+  const [error, setError] = useState(null); // Error state
 
   const [chartData, setChartData] = useState([
     { label: 'Congés Annuel', value: 10},
     { label: 'Congés Exceptionnel', value: 20}
   ])
 
-  // Filters
-  const [currentEntity, setCurrentEntity] = useState("ALL");
-  const [currentType, setCurrentType] = useState("ALL");
-  const [currentDepartment, setCurrentDepartment] = useState("ALL");
+  // Filters:
+  const [currentEntity, setCurrentEntity] = useState("ALL"); // Current Entity
+  const [currentType, setCurrentType] = useState("ALL"); // Current Type
+  const [currentDepartment, setCurrentDepartment] = useState("ALL"); // Current Department
   const [from, setFrom] = useState(null);
   const [to, setTo] = useState(null);
 
+
+  /**
+   * Fetch data from the server
+   * @param {*} type 
+   * @param {*} from 
+   * @param {*} to 
+   * @param {*} entity 
+   * @param {*} department 
+   */
   const fetchData = async(type, from, to, entity, department) =>{
     try{
       setLoading(true);
@@ -120,22 +130,30 @@ export const AbsenceAnalytics = () => {
               ))}
               </select>
       </Box>
-      <Box
+      {loading && data === null && (
+        <CircularProgress/>
+      )}
+      {!loading && data === null && (
+        <p className="text-center"></p>
+      )}
+      {!loading && data !== null && (
+        <Box
+        display="grid"
+        gridTemplateColumns={{ xs: "1fr", md: "320px 1fr" }}
+        gap={4}
+        alignItems="center">
+          <DonutChart data={chartData}/>
+          <Box
           display="grid"
-          gridTemplateColumns={{ xs: "1fr", md: "320px 1fr" }}
-          gap={4}
-          alignItems="center">
-            <DonutChart data={chartData}/>
-            <Box
-            display="grid"
-            gridTemplateColumns={{ xs: "1fr", sm: "repeat(2,1fr)" }}
-            gap={3}>
-              <StatCard label="Nombre total d’absences" value={data?.totalAbsenceRequests || 0} />
-              <StatCard label="Taux d’absentéisme (%)" value={"3.4%"} />
-              <StatCard label="Moyenne jours / employé" value={2.1} />
-              <StatCard label="Département le plus impacté" value="IT" />
-            </Box>
+          gridTemplateColumns={{ xs: "1fr", sm: "repeat(2,1fr)" }}
+          gap={3}>
+            <StatCard label="Nombre total d’absences" value={data?.totalAbsenceRequests || 0} />
+            <StatCard label="Taux d’absentéisme (%)" value={"3.4%"} />
+            <StatCard label="Moyenne jours / employé" value={2.1} />
+            <StatCard label="Département le plus impacté" value="IT" />
           </Box>
+        </Box>
+      )}
     </Paper>
   );
 };

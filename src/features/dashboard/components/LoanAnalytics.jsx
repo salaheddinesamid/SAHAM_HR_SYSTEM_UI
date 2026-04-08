@@ -186,15 +186,12 @@ export const LoanAnalytics = ()=>{
               </select>
             </Box>
           </Box>
-    
-          <Box display="grid"
-          gridTemplateColumns={{ xs: "1fr", md: "320px 1fr" }}
-          gap={4}
-          alignItems="center">
-            <Box>
-                <BarsDataset/>
-            </Box>
-            <Box
+          <Box display="flex">
+            <div className="col-xl-8">
+              <BarsDataset/>
+            </div>
+            <div className="col-xl-4">
+              <Box
             display="grid"
             gridTemplateColumns={{ xs: "1fr", sm: "repeat(2,1fr)" }}
             gap={3}>
@@ -203,6 +200,7 @@ export const LoanAnalytics = ()=>{
                 <StatCard label="Moyenne jours / employé" value={2.1} />
                 <StatCard label="Département le plus impacté" value="IT" />
             </Box>
+            </div>
           </Box>
         </Paper>
     );

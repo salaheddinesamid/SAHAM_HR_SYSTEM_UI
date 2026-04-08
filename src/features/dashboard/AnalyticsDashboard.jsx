@@ -24,10 +24,10 @@ export const AnalyticsDashboard = () => {
           <div className="col"><AbsenceAnalytics/></div>
         </div>
         <div className="row">
-          <div className="col">
+          <div className="col-xl-12">
             <LoanAnalytics/>
           </div>
-          <div className="col">
+          <div className="col-xl-12">
             <ExpenseAnalytics/>
           </div>
         </div>
