@@ -80,31 +80,28 @@ export const ExpenseAnalytics = () =>{
         alignItems="center"
       >
         <Box sx={{
-                      display : "flex",
-                      justifyContent : "space-between"
-                    }}>
-                      <select name="" id="" value={selectedYear} onChange={(e)=> setSelectedYear(e.target.value)}>
-                            <option value="">Filtrer par département</option>
-                            {departments.map((e)=>(
-                                <option value={e.value} key={e.id}>{e.label}</option>
-                            ))}
-                        </select>
-                      <select name="" id="" value={currentDepartment} onChange={(e)=> setCurrentDepartment(e.target.value)}>
-                            <option value="">Filtrer par département</option>
-                            {departments.map((e)=>(
-                                <option value={e.value} key={e.id}>{e.label}</option>
-                            ))}
-                        </select>
-                        <select name="" id="" value={currentEntity} onChange={(e)=> setCurrentEntity(e.target.value)}>
-                            <option value="">Filtrer par entité</option>
-                            {entities.map((e)=>(
-                                <option value={e.value} key={e.id}>{e.label}</option>
-                            ))}
-                      </select>
-                    </Box>
+          
+        }}>
+          <select name="" id="" value={selectedYear} onChange={(e)=> setSelectedYear(e.target.value)}>
+            <option value="">Filtrer par département</option>
+            {departments.map((e)=>(
+              <option value={e.value} key={e.id}>{e.label}</option>
+            ))}
+          </select>
+          <select name="" id="" value={currentDepartment} onChange={(e)=> setCurrentDepartment(e.target.value)}>
+            <option value="">Filtrer par département</option>
+            {departments.map((e)=>(
+              <option value={e.value} key={e.id}>{e.label}</option>
+            ))}
+          </select>
+          <select name="" id="" value={currentEntity} onChange={(e)=> setCurrentEntity(e.target.value)}>
+            <option value="">Filtrer par entité</option>
+            {entities.map((e)=>(
+              <option value={e.value} key={e.id}>{e.label}</option>
+            ))}
+          </select>
+        </Box>
         <BarsDataset data={dataSet}/>
-
-        
       </Box>
     </Paper>
   );
